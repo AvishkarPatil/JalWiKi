@@ -1,4 +1,4 @@
-<h2 align="center">JalWiki</h2>
+<h2 align="center">JalWiKi: A Digital Platform for Water Conservation</h2>
 
 <h3 align="center">Empowering Knowledge Sharing and Collaboration.</h3>
 
@@ -37,6 +37,11 @@ We’re committed to evolving Jalwiki with exciting new features:
 - 📲 **Mobile App Development:** Create a dedicated mobile app for seamless access on the go.
 - 🤝 **Community Feedback Integration:** Build tools for easier feedback, voting, and collaborative editing.
 
+<h3>Current Status & Roadmap</h3>
+<p>
+At present, we have built the core user model and the basic framework of JalWiKi. Our next steps include expanding the content repository, developing interactive water maps, and integrating our community forums and AI chat support. We plan to add multi-language support and a mobile app in future updates.
+</p>
+
 ### Technology Stack
 
 - **Python 3.11**: Backend programming language.
@@ -47,7 +52,7 @@ We’re committed to evolving Jalwiki with exciting new features:
 - **REST APIs**: For communication between frontend and backend.
 
 
-For any questions or support, please feel free to reach out to me.
+For any questions or support, please feel free to reach out to me.<a href="mailto:itsaitsavipatil@gmail.com">itsaitsavipatil@gmail.com</a> 
 
 
 <h6><p><i>This project is licensed under the <strong>MIT License</strong>.</i></p></h6>

@@ -1,9 +1,14 @@
+<h2 align="center">🌊 JalWiKi: Digital Platform for Water Conservation</h2>
+
+<h3 align="center">Empowering Knowledge Sharing and Collaboration for Sustainable Water Management</h3>
+
 <div align="center">
-  <img src="static/JalWiKi.png" alt="JalWiKi Logo" width="150" height="150">
-  
-  ## 🌊 JalWiKi: Digital Platform for Water Conservation
-  
-  #### *Empowering Knowledge Sharing and Collaboration for Sustainable Water Management*
+<img src="static/JalWiKi.png" alt="JalWiKi Logo" width="150" height="150">
+</div>
+
+<p align="center"><b>JalWiKi</b> is a comprehensive digital platform designed to combat water scarcity through collaborative knowledge sharing. Built with modern web technologies, it serves as a centralized hub where water conservation experts, enthusiasts, and learners can contribute, discover, and implement sustainable water management solutions with detailed guides, benefits, materials, and step-by-step instructions</p><br>
+
+<div align="center"> 
   
   [![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
   [![Django](https://img.shields.io/badge/Django-5.1.6-green?style=for-the-badge&logo=django&logoColor=white)](https://djangoproject.com)
@@ -18,17 +23,19 @@
   
 </div>
 
-<br>
 
-<div align="center">
+### Table of Contents
+- [Key Features](#key-features)
+- [Technology Stack](#technology-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation](#installation)
+- [API Documentation](#api-documentation)
+- [Screenshots](#screenshots)
+- [Contributing](#-contributing)
+- [Support & Contact](#-support--contact)
 
-## 🌟 About JalWiKi
-
-**JalWiKi** is a comprehensive digital platform designed to combat water scarcity through collaborative knowledge sharing. Built with modern web technologies, it serves as a centralized hub where water conservation experts, enthusiasts, and learners can contribute, discover, and implement sustainable water management solutions with detailed guides, benefits, materials, and step-by-step instructions.
-
-</div>
-
-## ✨ Key Features
+---
+### Key Features
 
 - **📚 Collaborative Knowledge Platform**: Wikipedia-style editing with secure authentication and responsive design
 - **💧 Comprehensive Technique Database**: Searchable conservation methods with regional mapping and visual guides
@@ -38,7 +45,7 @@
 
 
 
-## 🛠️ Technology Stack
+### Technology Stack
 
 #### **Backend Technologies**
 - ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) **Python 3.11** - Core backend language
@@ -60,8 +67,9 @@
 - ![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=flat&logo=framer&logoColor=blue) **Framer Motion** - Animation library
 - **Google Gemini AI** - AI-powered features
 
+---
 
-## 🚀 Quick Start Guide
+### Quick Start Guide
 
 ### 📋 Prerequisites
 
@@ -72,114 +80,26 @@ Before you begin, ensure you have the following installed:
 - ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-blue?style=flat&logo=postgresql) **PostgreSQL 12 or higher**
 - ![Git](https://img.shields.io/badge/Git-Latest-orange?style=flat&logo=git) **Git** (for version control)
 
-### 🔧 Installation Steps
 
-#### 1️⃣ **Clone the Repository**
-```bash
-git clone https://github.com/yourusername/JalWiKi.git
-cd JalWiKi
-```
+### Installation
+- [Here](Installation.md)
 
-#### 2️⃣ **Backend Setup (Django)**
-```bash
-# Create virtual environment
-python -m venv venv
+### API Documentation
+- [Here](API_DOCUMENTATION.md)
 
-# Activate virtual environment
-# Windows:
-venv\Scripts\activate
-# macOS/Linux:
-source venv/bin/activate
+### Screenshots
+- [Here](SCREENSHOTS.md)
 
-# Install Python dependencies
-pip install -r requirements.txt
+----
 
-# Configure database (update jalwiki_pro/settings.py with your PostgreSQL credentials)
-# Run migrations
-python manage.py migrate
-
-# Create superuser account
-python manage.py createsuperuser
-
-# Start Django development server
-python manage.py runserver 8000
-```
-
-#### 3️⃣ **Frontend Setup (Next.js)**
-```bash
-# Navigate to frontend directory
-cd jalwiki_ui
-
-# Install Node.js dependencies
-npm install
-# or using pnpm (recommended)
-pnpm install
-
-# Start development server
-npm run dev
-# or
-pnpm dev
-```
-
-#### 4️⃣ **Quick Launch (Windows)**
-For Windows users, simply run:
-```batch
-start_project.bat
-```
-This script will automatically start both backend and frontend servers.
-
-### 🌐 **Access the Application**
-
-- **Frontend Application**: [http://localhost:3000](http://localhost:3000)
-- **Django Admin Panel**: [http://localhost:8000/admin](http://localhost:8000/admin)
-- **API Endpoints**: [http://localhost:8000/api/](http://localhost:8000/api/)
-
-
-## 🔧 Configuration
-
-### 🗄️ **Database Setup**
-
-Update `jalwiki_pro/settings.py`:
-
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'jalwiki_db',
-        'USER': 'your_username',
-        'PASSWORD': 'your_password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-```
-
-## 🚀 Deployment
-
-### 🐳 **Docker Deployment**
-
-```dockerfile
-# Dockerfile example
-FROM python:3.11-slim
-
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY . .
-EXPOSE 8000
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-```
-
-## 🤝 Contributing
+### 🤝 Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 
 
-## 📞 Support & Contact
+### 📞 Support & Contact
 
 For questions, support, or collaboration opportunities:
 
@@ -187,11 +107,11 @@ For questions, support, or collaboration opportunities:
 - **🐛 Issues**: [GitHub Issues](https://github.com/yourusername/JalWiKi/issues)
 - **💬 Discussions**: [GitHub Discussions](https://github.com/yourusername/JalWiKi/discussions)
 
-## 📄 License
+### 📄 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
----
+----
 
 <div align="center">
   

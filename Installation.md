@@ -452,8 +452,8 @@ npm run analyze
 - **Django Documentation**: [https://docs.djangoproject.com/](https://docs.djangoproject.com/)
 - **Next.js Documentation**: [https://nextjs.org/docs](https://nextjs.org/docs)
 - **PostgreSQL Documentation**: [https://www.postgresql.org/docs/](https://www.postgresql.org/docs/)
-- **API Documentation**: [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
-- **Screenshots**: [SCREENSHOTS.md](SCREENSHOTS.md)
+- **API Documentation**: [API_DOCUMENTATION.md](API_Documentation.md)
+- **Screenshots**: [SCREENSHOTS.md](Screenshots.md)
 
 ---
 

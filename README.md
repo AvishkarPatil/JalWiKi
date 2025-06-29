@@ -85,10 +85,10 @@ Before you begin, ensure you have the following installed:
 - [Here](Installation.md)
 
 ### API Documentation
-- [Here](API_DOCUMENTATION.md)
+- [Here](API_Documentation.md)
 
 ### Screenshots
-- [Here](SCREENSHOTS.md)
+- [Here](Screenshots.md)
 
 ----
 

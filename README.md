@@ -201,8 +201,4 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
   
   **© 2025 JalWiKi Project. All rights reserved.**
   
-  [![GitHub stars](https://img.shields.io/github/stars/yourusername/JalWiKi?style=social)](https://github.com/yourusername/JalWiKi/stargazers)
-  [![GitHub forks](https://img.shields.io/github/forks/yourusername/JalWiKi?style=social)](https://github.com/yourusername/JalWiKi/network/members)
-  [![GitHub watchers](https://img.shields.io/github/watchers/yourusername/JalWiKi?style=social)](https://github.com/yourusername/JalWiKi/watchers)
-  
 </div>

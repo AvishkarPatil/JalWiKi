@@ -55,6 +55,9 @@
 - ![DRF](https://img.shields.io/badge/DRF-ff1709?style=flat&logo=django&logoColor=white) **Django REST Framework** - API development
 - ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white) **PostgreSQL** - Primary database
 - ![JWT](https://img.shields.io/badge/JWT-000000?style=flat&logo=JSON%20web%20tokens&logoColor=white) **JWT Authentication** - Secure token-based auth
+- ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=axios&logoColor=white) **Axios** - HTTP client
+- ![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=flat&logo=framer&logoColor=blue) **Framer Motion** - Animation library
+- **Google Gemini AI** - AI-powered features
 
 #### **Frontend Technologies**
 - ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white) **Next.js 15.2.4** - React framework
@@ -63,11 +66,6 @@
 - ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white) **Tailwind CSS** - Utility-first CSS framework
 - ![Radix UI](https://img.shields.io/badge/Radix_UI-161618?style=flat&logo=radix-ui&logoColor=white) **Radix UI** - Accessible component primitives
 
-#### **Additional Tools & Libraries**
-- ![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=flat&logo=Firebase&logoColor=white) **Firebase** - Additional services integration
-- ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=axios&logoColor=white) **Axios** - HTTP client
-- ![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=flat&logo=framer&logoColor=blue) **Framer Motion** - Animation library
-- **Google Gemini AI** - AI-powered features
 
 ---
 
@@ -105,9 +103,9 @@ If you have a suggestion that would make this better, please fork the repo and c
 
 For questions, support, or collaboration opportunities:
 
-- **📧 Email**: [itsaitsavipatil@gmail.com](mailto:itsaitsavipatil@gmail.com)
-- **🐛 Issues**: [GitHub Issues](https://github.com/yourusername/JalWiKi/issues)
-- **💬 Discussions**: [GitHub Discussions](https://github.com/yourusername/JalWiKi/discussions)
+- **📧 Email**: [me.avishkarpatil@gmail.com](mailto:me.avishkarpatil@gmail.com)
+- **🐛 Issues**: [GitHub Issues](https://github.com/AvishkarPatil/JalWiKi/issues)
+- **💬 Discussions**: [GitHub Discussions](https://github.com/AvishkarPatil/JalWiKi/discussions)
 
 ### 📄 License
 
@@ -119,7 +117,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
   
   ### 🌊 *"Every drop counts in the journey towards water sustainability"* 🌊
   
-  **Made with ❤️ by [Avishkar Patil](mailto:itsaitsavipatil@gmail.com)**
+  **Made with ❤️ by [Avishkar Patil](https://github.com/avishkarPatil/)**
   
   **© 2025 JalWiKi Project. All rights reserved.**
   

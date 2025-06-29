@@ -1,32 +1,24 @@
 <div align="center">
   
-  # 📸 JalWiKi Platform Screenshots
+  ## 📸 JalWiKi Platform Screenshots
   
   ### *Visual Tour of the Water Conservation Platform*
   
-  ![Screenshots](https://img.shields.io/badge/Screenshots-Platform_Gallery-blue?style=for-the-badge)
-  ![Themes](https://img.shields.io/badge/Themes-Light_%26_Dark-purple?style=for-the-badge)
-  ![UI](https://img.shields.io/badge/UI-Responsive_Design-green?style=for-the-badge)
   
 </div>
 
----
-
-## 🌟 Platform Overview
-
-Explore JalWiKi's comprehensive water conservation platform through these detailed screenshots showcasing both **Light** and **Dark** themes across all major features and functionalities.
 
 ## 📋 Table of Contents
 
-- [🏠 Home Page](#-home-page)
-- [🔐 Authentication System](#-authentication-system)
-- [💧 Water Conservation Techniques](#-water-conservation-techniques)
-- [🤖 AI-Powered Water Solutions](#-ai-powered-water-solutions)
-- [💬 Community Forums](#-community-forums)
-- [🏛️ Government & NGO Integration](#️-government--ngo-integration)
-- [👤 User Profile & Dashboard](#-user-profile--dashboard)
-- [ℹ️ About Page](#ℹ️-about-page)
-- [📄 PDF Export Feature](#-pdf-export-feature)
+- 🏠 [Home Page](#-home-page)
+- 🔐 [Authentication System](#-authentication-system)
+- 💧 [Water Conservation Techniques](#-water-conservation-techniques)
+- 🤖 [AI-Powered Water Solutions](#-ai-powered-water-solutions)
+- 💬 [Community Forums](#-community-forums)
+- 🏛️ [Government & NGO Integration](#️-government--ngo-integration)
+- 👤 [User Profile & Dashboard](#-user-profile--dashboard)
+- ℹ️ [About Page](#ℹ️-about-page)
+- 📄 [PDF Export Feature](#-pdf-export-feature)
 
 ---
 

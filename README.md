@@ -3,7 +3,7 @@
 <h3 align="center">Empowering Knowledge Sharing and Collaboration for Sustainable Water Management</h3>
 
 <div align="center">
-<img src="static/JalWiKi.png" alt="JalWiKi Logo" width="150" height="150">
+<img src="https://i.ibb.co/FL6KV7P9/JalWiKi.png" alt="JalWiKi Logo" width="150" >
 </div>
 
 <p align="center"><b>JalWiKi</b> is a comprehensive digital platform designed to combat water scarcity through collaborative knowledge sharing. Built with modern web technologies, it serves as a centralized hub where water conservation experts, enthusiasts, and learners can contribute, discover, and implement sustainable water management solutions with detailed guides, benefits, materials, and step-by-step instructions</p><br>

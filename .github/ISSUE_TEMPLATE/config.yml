@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/AvishkarPatil/JalWiKi/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📧 Contact Maintainer
+    url: mailto:me.avishkarpatil@gmail.com
+    about: Contact the project maintainer directly
+  - name: 🌐 OSCI Community
+    url: https://www.osconnect.org/projects
+    about: Learn more about Open Source Connect India

@@ -1,0 +1,96 @@
+name: ✨ Feature Request
+description: Suggest a new feature for JalWiKi
+title: "[FEATURE] "
+labels: ["enhancement", "needs-discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! 🚀
+        
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: ✨ Feature Description
+      description: A clear and concise description of the feature you want to request.
+      placeholder: Describe the feature you'd like to see...
+    validations:
+      required: true
+      
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: 🎯 Problem Statement
+      description: Is your feature request related to a problem? Please describe.
+      placeholder: I'm always frustrated when...
+    validations:
+      required: true
+      
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: 💡 Proposed Solution
+      description: Describe the solution you'd like to see implemented.
+      placeholder: I would like to see...
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: component
+    attributes:
+      label: 🧩 Component
+      description: Which part of JalWiKi would this feature affect?
+      options:
+        - Frontend (Next.js/React)
+        - Backend (Django/API)
+        - Database
+        - Authentication
+        - AI Features
+        - Documentation
+        - Mobile App
+        - Other
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 🔥 Priority
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would be helpful
+        - High - Important for my use case
+        - Critical - Blocking my usage
+    validations:
+      required: true
+      
+  - type: textarea
+    id: use-case
+    attributes:
+      label: 🎪 Use Case
+      description: Explain why this feature would be beneficial and how it would be used.
+      placeholder: This feature would help users to...
+    validations:
+      required: true
+      
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔄 Alternatives Considered
+      description: Describe any alternative solutions or features you've considered.
+      placeholder: I've also considered...
+      
+  - type: textarea
+    id: mockups
+    attributes:
+      label: 🎨 Mockups/Examples
+      description: Add any mockups, examples, or references that might help.
+      placeholder: Drag and drop images here or paste URLs
+      
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📋 Additional Context
+      description: Add any other context about the feature request here.
+      placeholder: Any additional information that might be helpful...

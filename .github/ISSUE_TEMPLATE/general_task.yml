@@ -1,0 +1,112 @@
+name: 📋 General Task
+description: Create a general task or improvement for JalWiKi
+title: "[TASK] "
+labels: ["task", "needs-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing to JalWiKi! 💪
+        
+  - type: textarea
+    id: task-description
+    attributes:
+      label: 📋 Task Description
+      description: Describe the task or general issue that needs to be addressed.
+      placeholder: What needs to be done?
+    validations:
+      required: true
+      
+  - type: textarea
+    id: goals
+    attributes:
+      label: 🎯 Goals and Objectives
+      description: What are the goals or outcomes expected from this task?
+      placeholder: The goal is to...
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: task-type
+    attributes:
+      label: 🏷️ Task Type
+      description: What type of task is this?
+      options:
+        - Code Refactoring
+        - Documentation
+        - Testing
+        - Performance Optimization
+        - Security Enhancement
+        - UI/UX Improvement
+        - DevOps/Infrastructure
+        - Research
+        - Other
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: component
+    attributes:
+      label: 🧩 Component
+      description: Which part of JalWiKi does this task involve?
+      options:
+        - Frontend (Next.js/React)
+        - Backend (Django/API)
+        - Database
+        - Authentication
+        - AI Features
+        - Documentation
+        - CI/CD
+        - Other
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 🔥 Priority Level
+      description: How urgent is this task?
+      options:
+        - Low - Can be done later
+        - Medium - Should be done soon
+        - High - Important for next release
+        - Critical - Needs immediate attention
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: 📊 Difficulty Level
+      description: How difficult do you think this task is?
+      options:
+        - Beginner - Good first issue
+        - Intermediate - Some experience needed
+        - Advanced - Requires deep knowledge
+        - Expert - Very complex task
+        
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: ✅ Acceptance Criteria
+      description: What needs to be completed for this task to be considered done?
+      placeholder: |
+        - [ ] Criteria 1
+        - [ ] Criteria 2
+        - [ ] Criteria 3
+    validations:
+      required: true
+      
+  - type: textarea
+    id: resources
+    attributes:
+      label: 📚 Resources and References
+      description: Any relevant links, documentation, or resources.
+      placeholder: Links to documentation, examples, etc.
+      
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📋 Additional Context
+      description: Any additional information, dependencies, or context.
+      placeholder: Any other relevant information...

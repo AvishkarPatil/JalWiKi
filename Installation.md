@@ -469,7 +469,7 @@ If you encounter issues during installation:
 6. **Port Conflicts**: Check if ports 3000 and 8000 are available
 
 ### **Support Channels**
-- **Email**: [itsaitsavipatil@gmail.com](mailto:itsaitsavipatil@gmail.com)
+- **Email**: [me.avishkarpatil@gmail.com](mailto:me.avishkarpatil@gmail.com)
 - **GitHub Issues**: [Create an issue](https://github.com/yourusername/JalWiKi/issues)
 - **Documentation**: Check other documentation files in the repository
 

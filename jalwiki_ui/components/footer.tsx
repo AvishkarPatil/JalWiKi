@@ -53,8 +53,8 @@ export function Footer() {
                 <Linkedin className="h-5 w-5" />
               </Link>
               {/* <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
-                <Rss className="h-5 w-5" /> */}
-              </Link>
+                <Rss className="h-5 w-5" /> 
+              </Link>*/}
             </div>
           </div>
           <div className="text-left">

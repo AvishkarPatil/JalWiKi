@@ -44,7 +44,7 @@ const sampleData: SchemeData[] = [
     imageUrl: 'https://i.ibb.co/xx5GJfL/NJM.jpg',
     isPopular: true,
     audioUrl: '/audio/sample-audio.mp3',
-    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+    youtubeUrl: 'https://www.youtube.com/watch?v=-zeZjy2QGL0'
   },
   {
     id: 2,
@@ -54,7 +54,8 @@ const sampleData: SchemeData[] = [
     pdfUrl: '/documents/jal-shakti-abhiyan.pdf',
     contactEmail: 'jalshakti@gov.in',
     likes: [1],
-    imageUrl: 'https://i.ibb.co/bR2SM6JC/JSA.jpg'
+    imageUrl: 'https://i.ibb.co/bR2SM6JC/JSA.jpg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=ykJ8NSrDvmg'
   },
   {
     id: 3,
@@ -66,7 +67,8 @@ const sampleData: SchemeData[] = [
     likes: [1,2,3,4,5],
     imageUrl: 'https://i.ibb.co/bMr2mmgM/WAid.jpg',
     isPopular: false,
-    audioUrl: '/audio/wateraid.mp3'
+    audioUrl: '/audio/wateraid.mp3',
+    youtubeUrl: 'https://www.youtube.com/@wateraidindia7096'
   },
   {
     id: 4,
@@ -77,7 +79,8 @@ const sampleData: SchemeData[] = [
     contactEmail: 'atalbhujal@gov.in',
     likes: [],
     imageUrl: 'https://i.ibb.co/7tWVKmky/AbhJal.jpg',
-    isPopular: true
+    isPopular: true,
+    youtubeUrl: 'https://www.youtube.com/watch?v=QbEPo4-lyCk'
   },
   {
     id: 5,
@@ -88,7 +91,7 @@ const sampleData: SchemeData[] = [
     contactEmail: 'india@waterforpeople.org',
     likes: [1,2],
     imageUrl: 'https://i.ibb.co/vvrT68LC/Wappl.jpg',
-    youtubeUrl: 'https://www.youtube.com/watch?v=somevideo'
+    youtubeUrl: 'https://www.youtube.com/@WaterForPeopleIndia'
   },
   {
     id: 6,
@@ -98,7 +101,8 @@ const sampleData: SchemeData[] = [
     pdfUrl: '/documents/namami-gange.pdf',
     contactEmail: 'info@nmcg.nic.in',
     likes: [],
-    imageUrl: 'https://i.ibb.co/99mc2Rz2/nmgg.jpg'
+    imageUrl: 'https://i.ibb.co/99mc2Rz2/nmgg.jpg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=WTXjB-aaCSI'
   }
 ];
 

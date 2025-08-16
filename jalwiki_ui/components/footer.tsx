@@ -49,7 +49,7 @@ export function Footer() {
               <Link href="https://github.com/AvishkarPatil/JalWiKi" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
                 <Github className="h-5 w-5" />
               </Link>
-              <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
+              <Link href="https://www.linkedin.com/in/TheAvishkar" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
                 <Linkedin className="h-5 w-5" />
               </Link>
               {/* <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>

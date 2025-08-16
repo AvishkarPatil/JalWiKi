@@ -46,32 +46,32 @@ export function Footer() {
               <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
                 <Twitter className="h-5 w-5" />
               </Link>
-              <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
+              <Link href="https://github.com/AvishkarPatil/JalWiKi" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
                 <Github className="h-5 w-5" />
               </Link>
               <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
                 <Linkedin className="h-5 w-5" />
               </Link>
-              <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
-                <Rss className="h-5 w-5" />
+              {/* <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
+                <Rss className="h-5 w-5" /> */}
               </Link>
             </div>
           </div>
           <div className="text-left">
-            <h3 className="font-medium mb-4">Topics</h3>
+            <h3 className="font-medium mb-4">Techniques</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="#" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
-                  Water Conservation
+                <Link href="https://jalwiki.vercel.app/techniques/drip-irrigation-system" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                  Drip Irrigation System
                 </Link>
               </li>
               <li>
-                <Link href="#" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
-                  Sustainable Irrigation
+                <Link href="https://jalwiki.vercel.app/techniques/contour-farming" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                  Counter Farming
                 </Link>
               </li>
               <li>
-                <Link href="#" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                <Link href="https://jalwiki.vercel.app/techniques/rainwater-harvesting" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
                   Rainwater Harvesting
                 </Link>
               </li>

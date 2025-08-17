@@ -20,23 +20,6 @@ export function Footer() {
               <Link href="/" className="text-xl font-bold tracking-tighter">
                 Jal<span className={darkMode ? "text-blue-400" : "text-blue-600"}>Wiki</span>
               </Link>
-              
-              {/* Dark/Light Mode Toggle */}
-              <button 
-                onClick={toggleDarkMode}
-                className={`p-2 rounded-full ${
-                  darkMode 
-                    ? 'bg-gray-800 text-yellow-300 hover:bg-gray-700' 
-                    : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                } transition-colors duration-200`}
-                aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-              >
-                {darkMode ? (
-                  <Sun className="h-5 w-5" />
-                ) : (
-                  <Moon className="h-5 w-5" />
-                )}
-              </button>
             </div>
             
             <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>

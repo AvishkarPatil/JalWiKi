@@ -56,6 +56,8 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
   const { darkMode } = useTheme(); // Use theme context
   const [activeTab, setActiveTab] = useState("description")
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false)
+  const [shareStatus, setShareStatus] = useState<"idle" | "copied" | "error">("idle")
+  const [shareError, setShareError] = useState<string | null>(null)
 
   // No need for the separate isDarkMode state and useEffect if useTheme provides darkMode directly
   // and the component re-renders when the theme changes.
@@ -154,6 +156,80 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
     }
   };
 
+  // --- Share Button Logic ---
+  // Assumes results.id or results.recommendation_id is a unique identifier.
+  // If not present, falls back to a hash of the title (not ideal for production).
+  function getRecommendationId() {
+    // Try common id fields
+    if ((results as any).id) return (results as any).id;
+    if ((results as any).recommendation_id) return (results as any).recommendation_id;
+    // Fallback: hash the title (not ideal, but better than nothing)
+    if (results.title) {
+      // Simple hash function for fallback
+      let hash = 0, i, chr;
+      for (i = 0; i < results.title.length; i++) {
+        chr = results.title.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0;
+      }
+      return `title-${Math.abs(hash)}`;
+    }
+    return null;
+  }
+
+  const handleShare = async () => {
+    setShareStatus("idle");
+    setShareError(null);
+    const recId = getRecommendationId();
+    if (!recId) {
+      setShareStatus("error");
+      setShareError("No unique identifier found for this recommendation.");
+      return;
+    }
+    // Construct the shareable URL
+    // You may want to adjust the path as per your app's routing
+    const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+    const shareUrl = `${baseUrl}/recommendation/${recId}`;
+
+    // Try to use the Web Share API if available, else fallback to clipboard
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: results.title || "Water Saving Recommendation",
+          text: results.summary || "",
+          url: shareUrl,
+        });
+        setShareStatus("copied");
+      } catch (err) {
+        // User cancelled or error
+        setShareStatus("error");
+        setShareError("Could not share the link.");
+      }
+    } else if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setShareStatus("copied");
+      } catch (err) {
+        setShareStatus("error");
+        setShareError("Could not copy link to clipboard.");
+      }
+    } else {
+      // Fallback: prompt
+      try {
+        window.prompt("Copy this link:", shareUrl);
+        setShareStatus("copied");
+      } catch (err) {
+        setShareStatus("error");
+        setShareError("Could not copy link.");
+      }
+    }
+    // Reset status after a short delay
+    setTimeout(() => {
+      setShareStatus("idle");
+      setShareError(null);
+    }, 2500);
+  };
+
   return (
     <div className="space-y-6">
       <Card className={cn(
@@ -206,11 +282,39 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
                 )}
                 Save PDF
               </Button>
-              <Button variant="outline" size="sm"
-                      className={cn(darkMode ? "text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-gray-100" : "")}>
-                <Share2 className="h-4 w-4 mr-2" />
-                Share
-              </Button>
+              <div className="relative">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleShare}
+                  className={cn(darkMode ? "text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-gray-100" : "")}
+                  aria-label="Share recommendation"
+                >
+                  <Share2 className="h-4 w-4 mr-2" />
+                  {shareStatus === "copied" ? "Link Copied!" : "Share"}
+                </Button>
+                {/* Feedback tooltip/message */}
+                {shareStatus === "error" && (
+                  <div className={cn(
+                    "absolute z-10 left-0 mt-1 px-2 py-1 rounded text-xs whitespace-nowrap",
+                    darkMode
+                      ? "bg-red-900 text-red-200 border border-red-700"
+                      : "bg-red-100 text-red-700 border border-red-300"
+                  )}>
+                    {shareError || "Error sharing"}
+                  </div>
+                )}
+                {shareStatus === "copied" && (
+                  <div className={cn(
+                    "absolute z-10 left-0 mt-1 px-2 py-1 rounded text-xs whitespace-nowrap",
+                    darkMode
+                      ? "bg-green-900 text-green-200 border border-green-700"
+                      : "bg-green-100 text-green-700 border border-green-300"
+                  )}>
+                    Link copied!
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

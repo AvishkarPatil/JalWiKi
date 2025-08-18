@@ -71,7 +71,7 @@ export default function RelatedArticles({ articles }: RelatedArticlesProps) {
       {articles.length > 0 && (
         <div className="mt-4 pt-4 border-t border-purple-200/70 dark:border-purple-800/50">
           <Link
-            href="#"
+            href="/all_articles"  
             className="flex items-center justify-center w-full text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 py-2.5 px-3 rounded-lg hover:bg-purple-100/60 dark:hover:bg-purple-900/30 transition-colors duration-150"
           >
             <span>View all articles</span>

@@ -1,36 +1,35 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Assuming react-router-dom, not Next.js
-import NavLogo from "./NavLogo"; // Ensure NavLogo uses local images from /public folder
+import { useNavigate, Link } from "react-router-dom"; // assuming react-router-dom; not Next.js Link
+
+import NavLogo from "./NavLogo"; // NavLogo should use local images from /public
 import SearchBar from "../SearchBar/SearchBar";
 import CartIcon from "./CartIcon";
 import AuthButton from "./AuthButton";
 import MobileMenu from "./MobileMenu";
 import { FaUserCircle } from "react-icons/fa";
 
-// Helper component to safely render images with error handling
-const SafeImage = ({ src, alt, ...props }) => {
+const SafeImage = ({ src, alt, ...props }: { src: string; alt: string }) => {
   const [imgSrc, setImgSrc] = useState(src);
 
-  const handleError = () => setImgSrc("/fallback-image.png"); // place a fallback image in /public
+  const handleError = () => setImgSrc("/images/fallback-image.png"); // fallback in public/images/
 
   return <img src={imgSrc} alt={alt} onError={handleError} {...props} />;
 };
 
-const Navbar = ({ isAdmin }) => {
+const Navbar = ({ isAdmin }: { isAdmin: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const username = localStorage.getItem("username");
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleNavbar = () => setIsOpen((prev) => !prev);
-  const handleSearch = (e) => setSearchTerm(e.target.value);
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value);
 
   const handleLogout = () => {
-    const confirmed = window.confirm("Are you sure you want to logout?");
-    if (confirmed) {
+    if (window.confirm("Are you sure you want to logout?")) {
       localStorage.setItem("isLoggedIn", "false");
       localStorage.removeItem("username");
       alert("Logout Successful.");
@@ -38,17 +37,14 @@ const Navbar = ({ isAdmin }) => {
     }
   };
 
-  const handleDropdownToggle = () => {
-    setShowDropdown((prev) => !prev);
-  };
+  const handleDropdownToggle = () => setShowDropdown((prev) => !prev);
 
-  const handleClickOutside = (e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
       setShowDropdown(false);
     }
   };
 
-  // Close dropdown on outside click
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -56,141 +52,128 @@ const Navbar = ({ isAdmin }) => {
     };
   }, []);
 
-  // Cleaned and simplified conditional styling
-  const navItemClass = (active) =>
+  const navItemClass = (active: boolean) =>
     `px-4 py-2 cursor-pointer hover:text-blue-600 ${active ? "text-blue-700 font-semibold" : "text-gray-700"}`;
 
+  // Categories array
+  const categories = ["Fashion", "Gifts", "Furniture", "Stationery", "Body-Care"];
+
   return (
-    <nav
-      aria-label="Primary navigation"
-      className="w-full bg-white shadow-md fixed top-0 left-0 z-50"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+    <nav aria-label="Primary navigation" className="bg-white border-b shadow-sm">
+      <div className="container mx-auto flex items-center justify-between px-4 py-3">
+        {/* Nav Logo */}
+        <Link to="/" aria-label="Homepage" className="flex items-center">
+          {/* NavLogo should use local images */}
+          <SafeImage src="/images/logo-light.png" alt="Site Logo" className="h-8 w-auto" />
+        </Link>
 
-        <div className="flex items-center space-x-4">
-          {/* Nav Logo, use SafeImage if NavLogo contains images */}
-          <Link to="/" className="flex items-center" aria-label="Go to homepage">
-            <NavLogo />
-          </Link>
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex space-x-4">
+          {categories.map((category) => (
+            <li key={category} className={navItemClass(false)}>
+              <Link to={`/category/${category.toLowerCase()}`}>{category}</Link>
+            </li>
+          ))}
+        </ul>
 
-          {/* Desktop menu */}
-          <div className="hidden md:flex space-x-4">
-            {["Fashion", "Gifts", "Furniture", "Stationery", "Body-Care"].map((category) => (
-              <Link
-                key={category}
-                to={`/${category.toLowerCase()}`}
-                className={navItemClass(false)}
-              >
-                {category}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Search bar */}
-        <div className="flex-grow max-w-xs mx-4">
-          <SearchBar value={searchTerm} onChange={handleSearch} />
+        {/* Search Bar */}
+        <div className="hidden md:block w-1/3">
+          <SearchBar value={searchTerm} onChange={handleSearch} placeholder="Search products..." />
         </div>
 
         {/* Right side: Cart + User/Auth */}
-        <div className="flex items-center space-x-4">
-
-          <CartIcon aria-label="View cart" />
-
+        <div className="flex items-center space-x-4 relative">
+          <CartIcon />
           {isLoggedIn ? (
             <div className="relative" ref={dropdownRef}>
               <button
-                onClick={handleDropdownToggle}
                 aria-haspopup="true"
                 aria-expanded={showDropdown}
-                aria-label="User menu"
-                className="flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+                onClick={handleDropdownToggle}
+                className="flex items-center space-x-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 rounded"
               >
                 <FaUserCircle size={24} />
-                <span className="hidden sm:inline-block font-medium">{username || "User"}</span>
+                <span>{username || "User"}</span>
               </button>
-
               {showDropdown && (
-                <ul
-                  className="absolute right-0 mt-2 py-2 w-40 bg-white rounded shadow-lg border border-gray-200"
+                <div
+                  className="absolute right-0 mt-2 w-40 bg-white border shadow-md rounded z-50"
                   role="menu"
-                  aria-label="User dropdown"
+                  aria-label="User menu"
                 >
-                  {isAdmin && (
+                  <ul tabIndex={-1} className="flex flex-col outline-none">
+                    {isAdmin && (
+                      <li>
+                        <Link
+                          to="/dashboard"
+                          className="block px-4 py-2 hover:bg-blue-100"
+                          role="menuitem"
+                          onClick={() => setShowDropdown(false)}
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+                    )}
                     <li>
-                      <Link
-                        to="/dashboard"
-                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 hover:bg-blue-100"
                         role="menuitem"
-                        tabIndex={0}
                       >
-                        Dashboard
-                      </Link>
+                        Logout
+                      </button>
                     </li>
-                  )}
-                  <li>
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                      role="menuitem"
-                      tabIndex={0}
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </ul>
+                  </ul>
+                </div>
               )}
             </div>
           ) : (
             <AuthButton />
           )}
 
-          {/* Mobile menu toggle */}
+          {/* Mobile menu toggle button */}
           <button
             onClick={toggleNavbar}
-            aria-label="Toggle mobile menu"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
-            className="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+            className="md:hidden focus:outline-none focus:ring-2 focus:ring-blue-600 rounded"
           >
-            <svg
-              className="h-6 w-6"
-              stroke="currentColor"
-              fill="none"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              {isOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
+            {/* Hamburger Icon */}
+            {isOpen ? (
+              <svg
+                className="w-6 h-6 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg
+                className="w-6 h-6 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 shadow">
-          <MobileMenu
-            categories={["Fashion", "Gifts", "Furniture", "Stationery", "Body-Care"]}
-            isLoggedIn={isLoggedIn}
-            username={username}
-            isAdmin={isAdmin}
-            onLogout={handleLogout}
-            closeMenu={() => setIsOpen(false)}
-          />
-        </div>
+        <MobileMenu
+          categories={categories}
+          isLoggedIn={isLoggedIn}
+          username={username}
+          isAdmin={isAdmin}
+          onLogout={handleLogout}
+          onClose={() => setIsOpen(false)}
+        />
       )}
     </nav>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom"; // assuming react-router-dom; not Next.js Link
+import { useNavigate, Link } from "react-router-dom";
 
-import NavLogo from "./NavLogo"; // NavLogo should use local images from /public
+import NavLogo from "./NavLogo"; // Make sure NavLogo uses /public/images
 import SearchBar from "../SearchBar/SearchBar";
 import CartIcon from "./CartIcon";
 import AuthButton from "./AuthButton";
@@ -11,7 +11,7 @@ import { FaUserCircle } from "react-icons/fa";
 const SafeImage = ({ src, alt, ...props }: { src: string; alt: string }) => {
   const [imgSrc, setImgSrc] = useState(src);
 
-  const handleError = () => setImgSrc("/images/fallback-image.png"); // fallback in public/images/
+  const handleError = () => setImgSrc("/images/fallback-image.png");
 
   return <img src={imgSrc} alt={alt} onError={handleError} {...props} />;
 };
@@ -53,9 +53,10 @@ const Navbar = ({ isAdmin }: { isAdmin: boolean }) => {
   }, []);
 
   const navItemClass = (active: boolean) =>
-    `px-4 py-2 cursor-pointer hover:text-blue-600 ${active ? "text-blue-700 font-semibold" : "text-gray-700"}`;
+    `px-4 py-2 cursor-pointer hover:text-blue-600 ${
+      active ? "text-blue-700 font-semibold" : "text-gray-700"
+    }`;
 
-  // Categories array
   const categories = ["Fashion", "Gifts", "Furniture", "Stationery", "Body-Care"];
 
   return (
@@ -63,7 +64,6 @@ const Navbar = ({ isAdmin }: { isAdmin: boolean }) => {
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
         {/* Nav Logo */}
         <Link to="/" aria-label="Homepage" className="flex items-center">
-          {/* NavLogo should use local images */}
           <SafeImage src="/images/logo-light.png" alt="Site Logo" className="h-8 w-auto" />
         </Link>
 
@@ -96,18 +96,13 @@ const Navbar = ({ isAdmin }: { isAdmin: boolean }) => {
                 <span>{username || "User"}</span>
               </button>
               {showDropdown && (
-                <div
-                  className="absolute right-0 mt-2 w-40 bg-white border shadow-md rounded z-50"
-                  role="menu"
-                  aria-label="User menu"
-                >
-                  <ul tabIndex={-1} className="flex flex-col outline-none">
+                <div className="absolute right-0 mt-2 w-40 bg-white border shadow-md rounded z-50">
+                  <ul className="flex flex-col outline-none">
                     {isAdmin && (
                       <li>
                         <Link
                           to="/dashboard"
                           className="block px-4 py-2 hover:bg-blue-100"
-                          role="menuitem"
                           onClick={() => setShowDropdown(false)}
                         >
                           Dashboard
@@ -118,7 +113,6 @@ const Navbar = ({ isAdmin }: { isAdmin: boolean }) => {
                       <button
                         onClick={handleLogout}
                         className="w-full text-left px-4 py-2 hover:bg-blue-100"
-                        role="menuitem"
                       >
                         Logout
                       </button>
@@ -138,7 +132,6 @@ const Navbar = ({ isAdmin }: { isAdmin: boolean }) => {
             aria-expanded={isOpen}
             className="md:hidden focus:outline-none focus:ring-2 focus:ring-blue-600 rounded"
           >
-            {/* Hamburger Icon */}
             {isOpen ? (
               <svg
                 className="w-6 h-6 text-gray-700"

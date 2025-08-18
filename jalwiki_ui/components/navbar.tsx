@@ -1,237 +1,199 @@
-"use client";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom"; // Assuming react-router-dom, not Next.js
+import NavLogo from "./NavLogo"; // Ensure NavLogo uses local images from /public folder
+import SearchBar from "../SearchBar/SearchBar";
+import CartIcon from "./CartIcon";
+import AuthButton from "./AuthButton";
+import MobileMenu from "./MobileMenu";
+import { FaUserCircle } from "react-icons/fa";
 
-import Link from "next/link";
-import Image from "next/image";
-import {
-  Menu,
-  X,
-  Home,
-  User,
-  Moon,
-  Sun,
-  LogIn,
-  LogOut,
-  Droplet,
-  Info,
-  BrainCircuit,
-  MessageSquare,
-  Library,
-} from "lucide-react";
-import { useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { useTheme } from "@/context/theme-context";
-import { useAuth } from "@/context/auth-context";
-import { cn } from "@/lib/utils";
+// Helper component to safely render images with error handling
+const SafeImage = ({ src, alt, ...props }) => {
+  const [imgSrc, setImgSrc] = useState(src);
 
-export function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const router = useRouter();
-  const pathname = usePathname();
-  const { darkMode, toggleDarkMode } = useTheme();
-  const { user, logout } = useAuth();
+  const handleError = () => setImgSrc("/fallback-image.png"); // place a fallback image in /public
 
-  const isActive = (path: string) => {
-    if (path === "/techniques") return pathname.startsWith("/techniques");
-    if (path === "/forum") return pathname.startsWith("/forum");
-    if (path === "/gov") return pathname.startsWith("/gov");
-    return pathname === path;
+  return <img src={imgSrc} alt={alt} onError={handleError} {...props} />;
+};
+
+const Navbar = ({ isAdmin }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const username = localStorage.getItem("username");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const dropdownRef = useRef(null);
+
+  const toggleNavbar = () => setIsOpen((prev) => !prev);
+  const handleSearch = (e) => setSearchTerm(e.target.value);
+
+  const handleLogout = () => {
+    const confirmed = window.confirm("Are you sure you want to logout?");
+    if (confirmed) {
+      localStorage.setItem("isLoggedIn", "false");
+      localStorage.removeItem("username");
+      alert("Logout Successful.");
+      navigate("/login");
+    }
   };
 
-  const navBg = darkMode
-    ? "bg-gray-900/90 border-gray-800 backdrop-blur-md shadow-lg"
-    : "bg-slate-50/90 border-gray-200 backdrop-blur-md shadow-md";
+  const handleDropdownToggle = () => {
+    setShowDropdown((prev) => !prev);
+  };
 
-  const linkBase =
-    "inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium transition duration-300 ease-in-out";
-  const linkActive = darkMode
-    ? "text-purple-400 bg-purple-500/20 border-b-2 border-purple-400"
-    : "text-purple-600 bg-purple-500/10 border-b-2 border-purple-600";
-  const linkInactive = darkMode
-    ? "text-gray-400 hover:text-purple-400 hover:bg-gray-700/60"
-    : "text-gray-600 hover:text-purple-600 hover:bg-gray-100";
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setShowDropdown(false);
+    }
+  };
 
-  const navItems = [
-    { href: "/", label: "Home", icon: Home },
-    { href: "/techniques", label: "Techniques", icon: Droplet },
-    { href: "/waterai", label: "WaterAI", icon: BrainCircuit },
-    { href: "/gov", label: "Gov & NGO", icon: Library },
-    { href: "/forum", label: "Forums", icon: MessageSquare },
-    { href: "/about", label: "About", icon: Info },
-  ];
+  // Close dropdown on outside click
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Cleaned and simplified conditional styling
+  const navItemClass = (active) =>
+    `px-4 py-2 cursor-pointer hover:text-blue-600 ${active ? "text-blue-700 font-semibold" : "text-gray-700"}`;
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 border-b ${navBg} flex items-center justify-between px-4 md:px-8 py-3`}
-      aria-label="Main Navigation"
+      aria-label="Primary navigation"
+      className="w-full bg-white shadow-md fixed top-0 left-0 z-50"
     >
-      {/* Logo */}
-      <Link href="/" aria-label="Home" className="flex items-center space-x-2">
-        <Image
-          src={darkMode ? "/logo-dark.png" : "/logo-light.png"}
-          alt="Jal Wi Ki Logo"
-          width={140}
-          height={40}
-          priority
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = "/fallback-logo.png";
-          }}
-        />
-      </Link>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
 
-      {/* Desktop Links */}
-      <div className="hidden md:flex items-center space-x-3">
-        {navItems.map(({ href, label, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            className={cn(
-              linkBase,
-              isActive(href) ? linkActive : linkInactive,
-              "flex items-center space-x-1"
-            )}
-            aria-current={isActive(href) ? "page" : undefined}
-          >
-            <Icon size={18} />
-            <span>{label}</span>
+        <div className="flex items-center space-x-4">
+          {/* Nav Logo, use SafeImage if NavLogo contains images */}
+          <Link to="/" className="flex items-center" aria-label="Go to homepage">
+            <NavLogo />
           </Link>
-        ))}
 
-        {/* Theme Toggle */}
-        <button
-          onClick={toggleDarkMode}
-          aria-label="Toggle theme"
-          className="rounded-full p-1 transition-transform hover:scale-110"
-          type="button"
-        >
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+          {/* Desktop menu */}
+          <div className="hidden md:flex space-x-4">
+            {["Fashion", "Gifts", "Furniture", "Stationery", "Body-Care"].map((category) => (
+              <Link
+                key={category}
+                to={`/${category.toLowerCase()}`}
+                className={navItemClass(false)}
+              >
+                {category}
+              </Link>
+            ))}
+          </div>
+        </div>
 
-        {/* Auth Buttons */}
-        {user ? (
-          <>
-            <Link
-              href="/dashboard"
-              className={cn(linkBase, linkInactive, "flex items-center space-x-1")}
-            >
-              <User size={18} />
-              <span>Profile</span>
-            </Link>
-            <button
-              onClick={() => {
-                logout();
-                router.push("/");
-              }}
-              className={cn(linkBase, linkInactive, "flex items-center space-x-1")}
-              type="button"
-            >
-              <LogOut size={18} />
-              <span>Logout</span>
-            </button>
-          </>
-        ) : (
-          <Link
-            href="/auth"
-            className={cn(linkBase, linkInactive, "flex items-center space-x-1")}
+        {/* Search bar */}
+        <div className="flex-grow max-w-xs mx-4">
+          <SearchBar value={searchTerm} onChange={handleSearch} />
+        </div>
+
+        {/* Right side: Cart + User/Auth */}
+        <div className="flex items-center space-x-4">
+
+          <CartIcon aria-label="View cart" />
+
+          {isLoggedIn ? (
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={handleDropdownToggle}
+                aria-haspopup="true"
+                aria-expanded={showDropdown}
+                aria-label="User menu"
+                className="flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+              >
+                <FaUserCircle size={24} />
+                <span className="hidden sm:inline-block font-medium">{username || "User"}</span>
+              </button>
+
+              {showDropdown && (
+                <ul
+                  className="absolute right-0 mt-2 py-2 w-40 bg-white rounded shadow-lg border border-gray-200"
+                  role="menu"
+                  aria-label="User dropdown"
+                >
+                  {isAdmin && (
+                    <li>
+                      <Link
+                        to="/dashboard"
+                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                        role="menuitem"
+                        tabIndex={0}
+                      >
+                        Dashboard
+                      </Link>
+                    </li>
+                  )}
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                      tabIndex={0}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </div>
+          ) : (
+            <AuthButton />
+          )}
+
+          {/* Mobile menu toggle */}
+          <button
+            onClick={toggleNavbar}
+            aria-label="Toggle mobile menu"
+            aria-expanded={isOpen}
+            className="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
           >
-            <LogIn size={18} />
-            <span>Sign In</span>
-          </Link>
-        )}
+            <svg
+              className="h-6 w-6"
+              stroke="currentColor"
+              fill="none"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              {isOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="ml-2 p-1 rounded-md"
-        aria-expanded={mobileMenuOpen}
-        aria-controls="mobile-menu"
-        aria-label="Toggle mobile menu"
-        type="button"
-      >
-        {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
-      </button>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div
-          id="mobile-menu"
-          className="absolute top-full left-0 w-full bg-white dark:bg-gray-900 shadow-md border-t border-gray-200 dark:border-gray-700 md:hidden"
-        >
-          <ul className="flex flex-col px-4 py-3 space-y-1">
-            {navItems.map(({ href, label, icon: Icon }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={cn(
-                    "flex items-center px-3 py-2 rounded-md text-base font-medium",
-                    isActive(href)
-                      ? darkMode
-                        ? "bg-purple-500/30 text-purple-300"
-                        : "bg-purple-100 text-purple-700"
-                      : darkMode
-                      ? "text-gray-300 hover:bg-gray-700 hover:text-purple-400"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                  )}
-                >
-                  <Icon className="mr-2" size={20} />
-                  {label}
-                </Link>
-              </li>
-            ))}
-
-            {/* Theme Toggle */}
-            <li>
-              <button
-                onClick={() => {
-                  toggleDarkMode();
-                  setMobileMenuOpen(false);
-                }}
-                className="flex items-center px-3 py-2 rounded-md text-base font-medium w-full"
-              >
-                {darkMode ? <Sun size={20} className="mr-2" /> : <Moon size={20} className="mr-2" />}
-                Toggle Theme
-              </button>
-            </li>
-
-            {/* Auth Buttons */}
-            <li>
-              {user ? (
-                <>
-                  <Link
-                    href="/dashboard"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center px-3 py-2 rounded-md text-base font-medium"
-                  >
-                    <User className="mr-2" size={20} />
-                    Profile
-                  </Link>
-                  <button
-                    onClick={() => {
-                      logout();
-                      setMobileMenuOpen(false);
-                      router.push("/");
-                    }}
-                    className="flex items-center px-3 py-2 rounded-md text-base font-medium w-full"
-                  >
-                    <LogOut className="mr-2" size={20} />
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <Link
-                  href="/auth"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center px-3 py-2 rounded-md text-base font-medium"
-                >
-                  <LogIn className="mr-2" size={20} />
-                  Sign In
-                </Link>
-              )}
-            </li>
-          </ul>
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200 shadow">
+          <MobileMenu
+            categories={["Fashion", "Gifts", "Furniture", "Stationery", "Body-Care"]}
+            isLoggedIn={isLoggedIn}
+            username={username}
+            isAdmin={isAdmin}
+            onLogout={handleLogout}
+            closeMenu={() => setIsOpen(false)}
+          />
         </div>
       )}
     </nav>
   );
-}
+};
+
+export default Navbar;

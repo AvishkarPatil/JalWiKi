@@ -26,13 +26,13 @@ export function Footer() {
               Exploring sustainable water management and conservation techniques.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
+              <Link href="https://x.com/HeyAvishkar" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
                 <Twitter className="h-5 w-5" />
               </Link>
               <Link href="https://github.com/AvishkarPatil/JalWiKi" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
                 <Github className="h-5 w-5" />
               </Link>
-              <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
+              <Link href="https://www.linkedin.com/in/TheAvishkar" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
                 <Linkedin className="h-5 w-5" />
               </Link>
               {/* <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>

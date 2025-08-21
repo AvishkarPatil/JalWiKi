@@ -50,7 +50,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="https://jalwiki.vercel.app/techniques/contour-farming" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
-                  Counter Farming
+                  Contour Farming
                 </Link>
               </li>
               <li>

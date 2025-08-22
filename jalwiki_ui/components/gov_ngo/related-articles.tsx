@@ -19,7 +19,7 @@ export default function RelatedArticles({ articles }: RelatedArticlesProps) {
 
   if (!articles || articles.length === 0) {
     return (
-      <p className="text-sm text-center text-gray-500 dark:text-gray-400 py-4">
+      <p className="text-sm text-center text-muted-foreground py-4">
         No related articles to display.
       </p>
     );
@@ -44,17 +44,17 @@ export default function RelatedArticles({ articles }: RelatedArticlesProps) {
             {scrollableTickerItems.map((article, index) => (
               <li
                 key={`${article.id}-${index}`}
-                className="mb-3 last:mb-0 border-b border-slate-200 dark:border-slate-700"
+                className="mb-3 last:mb-0 border-b border-border"
               >
                 <Link
                   href="#"
-                  className="block p-3 rounded-lg border border-transparent hover:border-purple-300 dark:hover:border-purple-600 hover:bg-purple-50 dark:hover:bg-gray-700 transition-all duration-200"
+                  className="block p-3 rounded-lg border border-transparent hover:border-primary/50 hover:bg-accent/50 transition-all duration-200"
                 >
-                  <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors leading-tight truncate">
+                  <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors leading-tight truncate">
                     {article.title}
                   </h4>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 flex items-center">
-                     <ArrowRightIcon className="h-3 w-3 mr-1 text-purple-500 dark:text-purple-400" />
+                  <p className="text-xs text-muted-foreground mt-1 flex items-center">
+                     <ArrowRightIcon className="h-3 w-3 mr-1 text-primary" />
                     {article.category}
                   </p>
                 </Link>
@@ -63,16 +63,16 @@ export default function RelatedArticles({ articles }: RelatedArticlesProps) {
           </ul>
         </div>
       ) : (
-         <p className="text-sm text-center text-gray-500 dark:text-gray-400 py-4">
+         <p className="text-sm text-center text-muted-foreground py-4">
            No related articles available for the ticker.
          </p>
       )}
 
       {articles.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-purple-200/70 dark:border-purple-800/50">
+        <div className="mt-4 pt-4 border-t border-border">
           <Link
             href="#"
-            className="flex items-center justify-center w-full text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 py-2.5 px-3 rounded-lg hover:bg-purple-100/60 dark:hover:bg-purple-900/30 transition-colors duration-150"
+            className="flex items-center justify-center w-full text-sm font-medium text-primary hover:text-primary/80 py-2.5 px-3 rounded-lg hover:bg-accent transition-colors duration-150"
           >
             <span>View all articles</span>
             <ChevronRightIcon className="h-4 w-4 ml-1.5" />

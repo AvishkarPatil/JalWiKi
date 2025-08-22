@@ -53,16 +53,16 @@ export default function ForumHomePage() {
 
   if (isLoadingAuth) {
     return (
-      <div className={cn("flex min-h-[calc(100vh-10rem)] items-center justify-center p-4", darkMode ? "bg-gray-950" : "bg-gray-100")}>
-        <Loader2 className="h-16 w-16 animate-spin text-purple-500" />
+      <div className="flex min-h-[calc(100vh-10rem)] items-center justify-center p-4 bg-background">
+        <Loader2 className="h-16 w-16 animate-spin text-primary" />
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className={cn("flex min-h-[calc(100vh-10rem)] items-center justify-center p-4", darkMode ? "bg-gray-950" : "bg-gray-100")}>
-        <Loader2 className="h-16 w-16 animate-spin text-purple-500" />
+      <div className="flex min-h-[calc(100vh-10rem)] items-center justify-center p-4 bg-background">
+        <Loader2 className="h-16 w-16 animate-spin text-primary" />
       </div>
     );
   }
@@ -70,8 +70,8 @@ export default function ForumHomePage() {
   return (
     <ForumLayout>
       {isLoadingData && !error && (
-         <div className={cn("flex min-h-[calc(100vh-20rem)] items-center justify-center p-4")}>
-            <Loader2 className="h-12 w-12 animate-spin text-purple-500" />
+         <div className="flex min-h-[calc(100vh-20rem)] items-center justify-center p-4 bg-background">
+            <Loader2 className="h-12 w-12 animate-spin text-primary" />
          </div>
       )}
       {!isLoadingData && (

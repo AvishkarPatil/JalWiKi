@@ -23,23 +23,23 @@ export default function PDFViewer({ pdfUrl, title, onClose }: PDFViewerProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 animate-fadeIn">
-      <div className="bg-white dark:bg-gray-800 rounded-xl w-full max-w-4xl h-[90vh] flex flex-col shadow-2xl">
-        <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-semibold text-purple-800 dark:text-purple-300 truncate">
+    <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
+      <div className="bg-card text-card-foreground rounded-lg w-full max-w-4xl h-[90vh] flex flex-col shadow-lg border">
+        <div className="flex justify-between items-center p-4 border-b">
+          <h3 className="text-lg font-semibold text-foreground truncate">
             {title}
           </h3>
           <div className="flex space-x-2">
             <button
               onClick={handleDownload}
-              className="p-2 rounded-full bg-purple-100 text-purple-600 hover:bg-purple-200 dark:bg-purple-800 dark:text-purple-200 dark:hover:bg-purple-700 transition-colors"
+              className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
               aria-label="Download PDF"
             >
               <ArrowDownTrayIcon className="h-5 w-5" />
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors"
+              className="p-2 rounded-full hover:bg-muted transition-colors"
               aria-label="Close PDF viewer"
             >
               <XMarkIcon className="h-5 w-5" />
@@ -50,14 +50,14 @@ export default function PDFViewer({ pdfUrl, title, onClose }: PDFViewerProps) {
         <div className="flex-1 relative">
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-600"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
             </div>
           )}
           
           <iframe
             src={pdfUrl}
             title={title}
-            className="w-full h-full rounded-b-xl"
+            className="w-full h-full rounded-b-lg"
             onLoad={() => setIsLoading(false)}
           />
         </div>

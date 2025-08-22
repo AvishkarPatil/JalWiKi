@@ -14,7 +14,7 @@ const loadingMessages = [
 ]
 
 export function ProcessingAnimation() {
-  const { darkMode } = useTheme(); // Get darkMode state
+  const { darkMode } = useTheme(); // Note: Consider removing if not used
   const [messageIndex, setMessageIndex] = useState(0)
 
   useEffect(() => {
@@ -33,20 +33,20 @@ export function ProcessingAnimation() {
           <div
             className={cn(
               "absolute -inset-1.5 rounded-full blur-xl animate-pulse", // Slightly larger inset for better blur visibility
-              darkMode ? "bg-purple-500/20" : "bg-purple-600/20"
+              "bg-primary/20"
             )}
           ></div>
           {/* Adjusted loader icon container for dark mode */}
           <div
             className={cn(
               "relative rounded-full p-4 shadow-lg", // Added shadow for better depth
-              darkMode ? "bg-gray-800" : "bg-white"
+              "bg-card"
             )}
           >
             <Loader2
               className={cn(
                 "h-12 w-12 animate-spin",
-                darkMode ? "text-purple-400" : "text-purple-600"
+                "text-primary"
               )}
             />
           </div>
@@ -56,7 +56,7 @@ export function ProcessingAnimation() {
           <h3
             className={cn(
               "text-xl sm:text-2xl font-semibold", // Made font-semibold and responsive
-              darkMode ? "text-purple-400" : "text-purple-700"
+              "text-foreground"
             )}
           >
             Processing Your Data
@@ -64,7 +64,7 @@ export function ProcessingAnimation() {
           <p
             className={cn(
               "max-w-md mx-auto text-sm sm:text-base", // Responsive text
-              darkMode ? "text-gray-400" : "text-gray-600"
+              "text-muted-foreground"
             )}
           >
             {loadingMessages[messageIndex]}
@@ -75,13 +75,13 @@ export function ProcessingAnimation() {
         <div
           className={cn(
             "w-64 h-2.5 rounded-full overflow-hidden mx-auto", // Centered progress bar, slightly thicker
-            darkMode ? "bg-gray-700" : "bg-gray-200"
+            "bg-muted"
           )}
         >
           <div
             className={cn(
               "h-full rounded-full animate-progress",
-              darkMode ? "bg-purple-500" : "bg-purple-600"
+              "bg-primary"
             )}
           ></div>
         </div>

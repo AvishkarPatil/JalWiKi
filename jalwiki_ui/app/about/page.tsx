@@ -29,13 +29,10 @@ export default function AboutPage() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
   }
 
-  const cardHoverEffect = darkMode
-    ? "hover:border-purple-500/70 hover:shadow-purple-700/20"
-    : "hover:border-purple-300 hover:shadow-purple-300/20";
-
+  const cardHoverEffect = "hover:border-primary/50 hover:shadow-md transition-all duration-200";
 
   return (
-    <div className={cn("min-h-screen transition-colors duration-300", darkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900")}>
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section: Our Mission & About Us */}
       <motion.section
         className="pt-24 pb-16 px-4"
@@ -45,16 +42,13 @@ export default function AboutPage() {
       >
         <div className="max-w-5xl mx-auto text-center">
           <motion.h1
-            className={cn(
-              "text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent",
-              darkMode ? "bg-gradient-to-r from-purple-400 to-purple-200" : "bg-gradient-to-r from-purple-600 to-purple-400"
-            )}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80"
             variants={itemVariants}
           >
             Our Mission: Every Drop Counts
           </motion.h1>
           <motion.p
-            className={cn("text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-8", darkMode ? "text-gray-300" : "text-gray-700")}
+            className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-8 text-muted-foreground"
             variants={itemVariants}
           >
             JalWiki champions water conservation through shared knowledge and community action.
@@ -62,7 +56,7 @@ export default function AboutPage() {
           </motion.p>
           <motion.div variants={itemVariants}>
             <motion.div
-              className={cn("w-24 h-1 mx-auto mb-10", darkMode ? "bg-purple-500" : "bg-purple-600")}
+              className="w-24 h-1 mx-auto mb-10 bg-primary"
               initial={{ width: 0 }}
               animate={{ width: 96 }}
               transition={{ duration: 0.8, delay: 0.4, ease: "circOut" }}
@@ -85,14 +79,14 @@ export default function AboutPage() {
               animate={{ rotate: [0, -15, 15, -15, 0], scale: [1, 1.1, 1, 1.1, 1] }}
               transition={{ duration: 1, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }}
             >
-              <Droplets className={cn("mr-3 h-8 w-8", darkMode ? "text-purple-400" : "text-purple-600")} />
+              <Droplets className="mr-3 h-8 w-8 text-primary" />
             </motion.div>
-            <h2 className={cn("text-2xl md:text-3xl font-bold", darkMode ? "text-white" : "text-gray-900")}>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
               Why We Do This
             </h2>
           </motion.div>
           <motion.p
-            className={cn("text-lg leading-relaxed max-w-3xl mx-auto", darkMode ? "text-gray-300" : "text-gray-700")}
+            className="text-lg leading-relaxed max-w-3xl mx-auto text-muted-foreground"
             variants={itemVariants}
           >
             Water is life. Facing global scarcity, JalWiki unites innovation and wisdom to inspire actionable water-saving solutions for everyone.
@@ -102,7 +96,7 @@ export default function AboutPage() {
 
       {/* What We Provide Section */}
       <motion.section
-        className={cn("py-16 px-4", darkMode ? "bg-gray-900" : "bg-purple-50")}
+        className="py-16 px-4 bg-muted/50"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
@@ -110,7 +104,7 @@ export default function AboutPage() {
       >
         <div className="max-w-5xl mx-auto">
           <motion.h2
-            className={cn("text-3xl md:text-4xl font-bold mb-12 text-center", darkMode ? "text-white" : "text-gray-900")}
+            className="text-3xl md:text-4xl font-bold mb-12 text-center"
             variants={itemVariants}
           >
             What JalWiki Offers
@@ -126,20 +120,19 @@ export default function AboutPage() {
               <motion.div
                 key={item.title}
                 className={cn(
-                  "p-6 rounded-xl shadow-lg transition-all duration-300",
-                  darkMode ? "bg-gray-800 border border-purple-800/30" : "bg-white border border-purple-200",
+                  "p-6 rounded-xl shadow-md border border-border bg-card",
                   cardHoverEffect
                 )}
                 variants={itemVariants}
                 whileHover={{ y: -5, scale: 1.02 }}
               >
                 <div className="flex items-start">
-                  <div className={cn("p-3 rounded-lg mr-4", darkMode ? "bg-purple-800/40" : "bg-purple-100")}>
-                    <item.icon className={cn("h-6 w-6", darkMode ? "text-purple-300" : "text-purple-600")} />
+                  <div className="p-3 rounded-lg mr-4 bg-primary/10">
+                    <item.icon className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className={cn("text-xl font-semibold mb-2", darkMode ? "text-purple-200" : "text-purple-700")}>{item.title}</h3>
-                    <p className={cn(darkMode ? "text-gray-300" : "text-gray-600")}>{item.description}</p>
+                    <h3 className="text-xl font-semibold mb-2 text-primary">{item.title}</h3>
+                    <p className="text-muted-foreground">{item.description}</p>
                   </div>
                 </div>
               </motion.div>
@@ -161,14 +154,14 @@ export default function AboutPage() {
             <motion.div
               animate={{ scale: [1, 1.05, 1], transition: { duration: 1.5, repeat: Infinity, ease: "linear" } }}
             >
-              <Settings className={cn("mr-3 h-8 w-8", darkMode ? "text-purple-400" : "text-purple-600")} />
+              <Settings className="mr-3 h-8 w-8 text-primary" />
             </motion.div>
-            <h2 className={cn("text-2xl md:text-3xl font-bold", darkMode ? "text-white" : "text-gray-900")}>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
               How JalWiki Works
             </h2>
           </motion.div>
           <motion.p
-            className={cn("text-lg leading-relaxed max-w-3xl mx-auto mb-8", darkMode ? "text-gray-300" : "text-gray-700")}
+            className="text-lg leading-relaxed max-w-3xl mx-auto mb-8"
             variants={itemVariants}
           >
             JalWiki is intuitive: Explore curated content, engage in forums, share insights, and find practical water conservation methods.
@@ -182,10 +175,7 @@ export default function AboutPage() {
               whileTap={{ scale: 0.95 }}
             >
               <Button asChild
-                className={cn(
-                  "text-white px-8 py-3 rounded-md shadow-md transition-all text-lg",
-                  darkMode ? "bg-purple-600 hover:bg-purple-700" : "bg-purple-500 hover:bg-purple-600"
-                )}
+                className="px-8 py-3 text-lg"
               >
                 <Link href="/techniques">Explore Techniques</Link>
               </Button>
@@ -196,7 +186,7 @@ export default function AboutPage() {
 
       {/* Team Section */}
       <motion.section
-        className={cn("py-16 px-4", darkMode ? "bg-gray-900" : "bg-purple-50")}
+        className="py-16 px-4 bg-muted/50"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
@@ -204,7 +194,7 @@ export default function AboutPage() {
       >
         <div className="max-w-6xl mx-auto">
           <motion.h2
-            className={cn("text-3xl md:text-4xl font-bold mb-16 text-center", darkMode ? "text-white" : "text-gray-900")}
+            className="text-3xl md:text-4xl font-bold mb-16 text-center text-foreground"
             variants={itemVariants}
           >
             Meet the Team
@@ -226,7 +216,7 @@ export default function AboutPage() {
                 <div className="relative mb-4">
                   <div className={cn(
                     "w-36 h-36 rounded-full overflow-hidden border-4 relative z-10 transition-all duration-300 group-hover:shadow-2xl",
-                    darkMode ? "border-purple-600 group-hover:border-purple-400" : "border-purple-500 group-hover:border-purple-300"
+"border-primary/50 group-hover:border-primary/80"
                   )}>
                     <Image
                       src={member.image || "/placeholder.svg"}
@@ -238,15 +228,15 @@ export default function AboutPage() {
                   </div>
                   <div className={cn(
                     "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-full -z-10 transition-all duration-300 opacity-0 group-hover:opacity-100",
-                    darkMode ? "bg-gradient-to-br from-purple-700/20 to-purple-900/30" : "bg-gradient-to-br from-purple-300/20 to-purple-500/30"
+                    "bg-gradient-to-br from-primary/10 to-primary/20"
                   )}></div>
                 </div>
                 <div className={cn(
                   "px-6 py-4 rounded-xl shadow-lg text-center w-full mt-[-35px] pt-8 transition-all duration-300",
-                  darkMode ? "bg-gray-800 border border-purple-800/30 group-hover:bg-gray-700/80" : "bg-white border border-purple-200 group-hover:bg-purple-100/50"
+                  "bg-card border border-border group-hover:bg-accent/50"
                 )}>
-                  <h3 className={cn("font-bold text-lg", darkMode ? "text-purple-200" : "text-purple-700")}>{member.name}</h3>
-                  <p className={cn(darkMode ? "text-purple-400/80" : "text-purple-500")}>{member.role}</p>
+                  <h3 className="font-bold text-lg text-foreground">{member.name}</h3>
+                  <p className="text-muted-foreground">{member.role}</p>
                 </div>
               </motion.div>
             ))}
@@ -270,14 +260,14 @@ export default function AboutPage() {
                 transition: { duration: 2, repeat: Infinity, ease: "easeInOut" }
               }}
             >
-              <Zap className={cn("mr-3 h-8 w-8", darkMode ? "text-purple-400" : "text-purple-600")} />
+              <Zap className="mr-3 h-8 w-8 text-primary" />
             </motion.div>
-            <h2 className={cn("text-2xl md:text-3xl font-bold", darkMode ? "text-white" : "text-gray-900")}>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
               Join Our Water-Wise Community
             </h2>
           </motion.div>
           <motion.p
-            className={cn("text-lg leading-relaxed max-w-3xl mx-auto mb-8", darkMode ? "text-gray-300" : "text-gray-700")}
+            className="text-lg leading-relaxed max-w-3xl mx-auto mb-8 text-muted-foreground"
             variants={itemVariants}
           >
             Whether saving water at home, optimizing farm irrigation, or sharing expertise—JalWiki is your platform. Let's conserve water, together.
@@ -286,13 +276,13 @@ export default function AboutPage() {
             {/* Corrected Button Animation */}
             <motion.div
               className="inline-block" // Ensures the motion.div behaves like a button
-              whileHover={{ scale: 1.05, boxShadow: darkMode ? "0 0 25px rgba(168, 85, 247, 0.5)" : "0 0 25px rgba(128, 90, 213, 0.5)" }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 25px var(--primary/0.5)" }}
               whileTap={{ scale: 0.95 }}
             >
               <Button asChild
                 className={cn(
                   "text-white px-10 py-4 rounded-lg shadow-xl transition-all text-xl font-semibold",
-                  darkMode ? "bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900" : "bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800"
+"bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80"
                 )}
               >
                 <Link href="/forum">Visit the Forum</Link>

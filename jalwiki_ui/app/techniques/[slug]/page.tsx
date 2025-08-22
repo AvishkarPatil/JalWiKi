@@ -105,8 +105,8 @@ export default function TechniqueDetailPage() {
   // --- Auth Loading State --- Added
   if (isLoadingAuth) {
     return (
-      <div className={cn("flex min-h-screen items-center justify-center p-4", darkMode ? "bg-gray-950" : "bg-gray-100")}>
-        <Loader2 className="h-16 w-16 animate-spin text-purple-500" />
+      <div className="flex min-h-screen items-center justify-center p-4 bg-background">
+        <Loader2 className="h-16 w-16 animate-spin text-primary" />
       </div>
     );
   }
@@ -119,10 +119,7 @@ export default function TechniqueDetailPage() {
   // --- Data Loading State ---
   if (isLoadingData) {
     return (
-      <div className={cn(
-        "flex flex-col min-h-screen transition-colors duration-300",
-        darkMode ? "bg-gray-950" : "bg-gray-50"
-      )}>
+      <div className="flex flex-col min-h-screen bg-background">
         <main className="flex-1 container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center mb-8">
@@ -131,29 +128,25 @@ export default function TechniqueDetailPage() {
                 Back to Techniques
               </Button>
             </div>
-            <div className={cn(
-              "rounded-lg shadow-sm border p-6 space-y-6",
-              darkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"
-            )}>
-              <Skeleton className={cn("h-10 w-3/4", darkMode ? "bg-gray-700" : "bg-gray-200")} />
+            <div className="rounded-lg shadow-sm border overflow-hidden bg-card text-card-foreground border-border">
+              <Skeleton className="h-10 w-3/4 bg-muted" />
               <div className="flex flex-wrap items-center gap-4">
-                <Skeleton className={cn("h-6 w-24 rounded-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                <Skeleton className={cn("h-6 w-32 rounded-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                <Skeleton className={cn("h-6 w-28 rounded-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
+                <Skeleton className="h-6 w-24 rounded-full bg-muted" />
+                <Skeleton className="h-6 w-32 rounded-full bg-muted" />
+                <Skeleton className="h-6 w-28 rounded-full bg-muted" />
               </div>
-              <Skeleton className={cn("h-[400px] w-full rounded-lg", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-              <div className={cn("flex space-x-1 mb-6", darkMode ? "border-b border-gray-700" : "border-b")}>
-                <Skeleton className={cn("h-10 w-24 rounded-t-md", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                <Skeleton className={cn("h-10 w-32 rounded-t-md opacity-70", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                <Skeleton className={cn("h-10 w-28 rounded-t-md opacity-70", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                <Skeleton className={cn("h-10 w-24 rounded-t-md opacity-70", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                <Skeleton className={cn("h-10 w-24 rounded-t-md opacity-70", darkMode ? "bg-gray-700" : "bg-gray-200")} />
+              <div className="h-[300px] w-full rounded-lg bg-muted" />
+              <div className="flex space-x-1 mb-6 border-b border-border">
+                <Skeleton className="h-10 w-24 rounded-t-md bg-muted" />
+                <Skeleton className="h-10 w-32 rounded-t-md opacity-70 bg-muted" />
+                <Skeleton className="h-10 w-28 rounded-t-md opacity-70 bg-muted" />
+                <Skeleton className="h-10 w-24 rounded-t-md opacity-70 bg-muted" />
               </div>
               <div className="space-y-3">
-                <Skeleton className={cn("h-5 w-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                <Skeleton className={cn("h-5 w-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                <Skeleton className={cn("h-5 w-5/6", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                <Skeleton className={cn("h-5 w-3/4", darkMode ? "bg-gray-700" : "bg-gray-200")} />
+                <Skeleton className="h-5 w-full bg-muted" />
+                <Skeleton className="h-5 w-full bg-muted" />
+                <Skeleton className="h-5 w-5/6 bg-muted" />
+                <Skeleton className="h-5 w-3/4 bg-muted" />
               </div>
             </div>
           </div>
@@ -165,23 +158,17 @@ export default function TechniqueDetailPage() {
   // --- Not Found State ---
   if (!technique) {
     return (
-      <div className={cn(
-        "flex flex-col min-h-screen transition-colors duration-300",
-        darkMode ? "bg-gray-950 text-gray-200" : "bg-gray-50 text-gray-900"
-      )}>
+      <div className="flex flex-col min-h-screen bg-background text-foreground">
         <main className="flex-1 container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto text-center py-12">
-            <div className={cn(
-              "mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4",
-              darkMode ? "bg-purple-900/50" : "bg-purple-100"
-            )}>
-              <WaterIcon className={cn("h-8 w-8", darkMode ? "text-purple-400" : "text-purple-700")} />
+            <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-primary/10">
+              <WaterIcon className="h-8 w-8 text-primary" />
             </div>
             <h2 className="text-2xl font-bold mb-2">Technique Not Found</h2>
-            <p className={cn("mb-6", darkMode ? "text-gray-400" : "text-gray-600")}>
+            <p className="mb-6 text-muted-foreground">
               The technique you're looking for doesn't exist or has been removed.
             </p>
-            <Button asChild className={cn(darkMode ? "bg-purple-600 hover:bg-purple-700" : "bg-purple-700 hover:bg-purple-800")}>
+            <Button asChild>
               <Link href="/techniques">Browse All Techniques</Link>
             </Button>
           </div>
@@ -192,17 +179,11 @@ export default function TechniqueDetailPage() {
 
   // --- Render Technique Detail Page (Only if authenticated and data loaded) ---
   return (
-    <div className={cn(
-      "flex flex-col min-h-screen transition-colors duration-300",
-      darkMode ? "bg-gray-950 text-gray-200" : "bg-gray-50 text-gray-900"
-    )}>
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center mb-6">
-            <Button variant="ghost" size="sm" className={cn(
-              "flex items-center gap-1",
-              darkMode ? "text-gray-400 hover:text-gray-100 hover:bg-gray-800" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-            )} asChild>
+            <Button variant="ghost" size="sm" className="flex items-center gap-1 text-muted-foreground hover:text-foreground hover:bg-accent" asChild>
               <Link href="/techniques">
                 <ArrowLeft className="h-4 w-4" />
                 Back to Techniques
@@ -210,10 +191,7 @@ export default function TechniqueDetailPage() {
             </Button>
           </div>
 
-          <article className={cn(
-            "rounded-lg shadow-sm border overflow-hidden transition-colors duration-300",
-            darkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"
-          )}>
+          <article className="rounded-lg shadow-sm border overflow-hidden bg-card text-card-foreground border-border">
             <div className="relative h-[300px] md:h-[400px] w-full">
               <Image
                 src={technique.main_image || "/placeholder.svg"}
@@ -222,13 +200,13 @@ export default function TechniqueDetailPage() {
                 className="object-cover"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end">
-                <div className="p-6 text-white w-full">
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/30 to-transparent flex items-end">
+                <div className="p-6 text-card w-full">
                   <h1 className="text-3xl md:text-4xl font-bold mb-3 drop-shadow-md">{technique.title}</h1>
                   <div className="flex flex-wrap gap-2 mb-2">
-                    <Badge className="bg-purple-600 hover:bg-purple-700 capitalize">{technique.impact} impact</Badge>
+                    <Badge className="bg-primary hover:bg-primary/90 capitalize">{technique.impact} impact</Badge>
                     {technique.categories.slice(0, 3).map((category: Category) => (
-                      <Badge key={category.id} variant="outline" className="bg-white/20 text-white border-white/40 backdrop-blur-sm">
+                      <Badge key={category.id} variant="secondary" className="bg-background/80 text-foreground backdrop-blur-sm">
                         {category.name}
                       </Badge>
                     ))}
@@ -238,14 +216,8 @@ export default function TechniqueDetailPage() {
             </div>
 
             <div className="p-6">
-              <div className={cn(
-                "flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center mb-6 pb-4 gap-y-3",
-                darkMode ? "border-b border-gray-700" : "border-b"
-              )}>
-                <div className={cn(
-                  "flex flex-wrap items-center gap-x-4 gap-y-1 text-sm",
-                  darkMode ? "text-gray-400" : "text-gray-500"
-                )}>
+              <div className="flex flex-col sm:flex-row flex-wrap justify-between items-start sm:items-center mb-6 pb-4 gap-y-3 border-b border-border">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1" title={`Added by User ID ${technique.added_by}`}>
                     <User className="h-4 w-4" />
                     <span>Added by User #{technique.added_by}</span>
@@ -261,14 +233,9 @@ export default function TechniqueDetailPage() {
                 </div>
                 <div className="flex gap-2">
                   <Button
-                    variant="outline"
+                    variant={isLiked ? "destructive" : "outline"}
                     size="sm"
-                    className={cn(
-                      "flex items-center gap-1",
-                      isLiked
-                        ? (darkMode ? "text-red-400 border-red-700/50 hover:bg-red-900/30" : "text-red-500 border-red-300 hover:bg-red-50")
-                        : (darkMode ? "border-gray-600 hover:bg-gray-700" : "border-gray-300 hover:bg-gray-100")
-                    )}
+                    className="flex items-center gap-1"
                     onClick={() => setIsLiked(!isLiked)}
                   >
                     <Heart className={`h-4 w-4 ${isLiked ? "fill-current" : ""}`} />
@@ -279,19 +246,14 @@ export default function TechniqueDetailPage() {
                     size="sm"
                     className={cn(
                       "flex items-center gap-1",
-                      isBookmarked
-                        ? (darkMode ? "text-purple-400 border-purple-700/50 hover:bg-purple-900/30" : "text-purple-700 border-purple-300 hover:bg-purple-50")
-                        : (darkMode ? "border-gray-600 hover:bg-gray-700" : "border-gray-300 hover:bg-gray-100")
+                      isBookmarked && "bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
                     )}
                     onClick={() => setIsBookmarked(!isBookmarked)}
                   >
                     <Bookmark className={`h-4 w-4 ${isBookmarked ? "fill-current" : ""}`} />
                     <span>{isBookmarked ? "Saved" : "Save"}</span>
                   </Button>
-                  <Button variant="outline" size="sm" className={cn(
-                    "flex items-center gap-1",
-                    darkMode ? "border-gray-600 hover:bg-gray-700" : "border-gray-300 hover:bg-gray-100"
-                  )}>
+                  <Button variant="outline" size="sm" className="flex items-center gap-1">
                     <Share2 className="h-4 w-4" />
                     <span>Share</span>
                   </Button>

@@ -32,7 +32,7 @@ import {
 } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { getWaterEfficiencyRecommendation, type GeminiRecommendation } from "@/lib/gemini-api"
-import { useTheme } from "@/context/theme-context"
+// Removed useTheme as we're using design system tokens
 import { cn } from "@/lib/utils"
 
 const formSchema = z.object({
@@ -58,7 +58,6 @@ const formSchema = z.object({
 })
 
 export function WaterEfficiencyForm() {
-  const { darkMode } = useTheme();
   const [isProcessing, setIsProcessing] = useState(false)
   const [results, setResults] = useState<GeminiRecommendation | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
@@ -125,8 +124,7 @@ export function WaterEfficiencyForm() {
 
   if (results) {
     return (
-      // Corrected: Set max-w-5xl for the results container to match the form's width
-      <div className="mx-auto max-w-5xl"> {/* <<<< CORRECTED THIS LINE */}
+      <div className="mx-auto max-w-5xl">
         <RecommendationResults
           results={results}
           onStartNew={() => {
@@ -147,10 +145,7 @@ export function WaterEfficiencyForm() {
   }
 
   return (
-    <Card className={cn(
-      "shadow-xl mx-auto max-w-5xl", // Form card is max-w-5xl
-      darkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"
-    )}>
+    <Card className="shadow-xl mx-auto max-w-5xl bg-card border-border">
       <CardContent className="pt-6 sm:pt-8 px-4 sm:px-6 md:px-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
@@ -162,14 +157,14 @@ export function WaterEfficiencyForm() {
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center gap-2">
-                      <MapPin className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                      <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>Location</FormLabel>
+                      <MapPin className="h-4 w-4 text-primary" />
+                      <FormLabel className="text-sm font-medium text-foreground">Location</FormLabel>
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} />
+                            <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
                           </TooltipTrigger>
-                          <TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}>
+                          <TooltipContent className="bg-popover text-popover-foreground border-border">
                             <p className="w-[200px] text-xs">Helps us understand your climate context</p>
                           </TooltipContent>
                         </Tooltip>
@@ -179,14 +174,10 @@ export function WaterEfficiencyForm() {
                       <Input
                         placeholder="Enter your location"
                         {...field}
-                        className={cn(
-                          darkMode
-                            ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500"
-                            : "bg-white border-gray-300 focus:border-purple-500"
-                        )}
+                        className="bg-background text-foreground border-border placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2"
                       />
                     </FormControl>
-                    <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                    <FormMessage className="text-destructive" />
                   </FormItem>
                 )}
               />
@@ -197,14 +188,14 @@ export function WaterEfficiencyForm() {
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center gap-2">
-                      <User className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                      <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>User Type</FormLabel>
+                      <User className="h-4 w-4 text-primary" />
+                      <FormLabel className="text-sm font-medium text-foreground">User Type</FormLabel>
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} />
+                            <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
                           </TooltipTrigger>
-                          <TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}>
+                          <TooltipContent className="bg-popover text-popover-foreground border-border">
                             <p className="w-[200px] text-xs">Select the category that best describes your water usage</p>
                           </TooltipContent>
                         </Tooltip>
@@ -212,25 +203,19 @@ export function WaterEfficiencyForm() {
                     </div>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className={cn(
-                          darkMode
-                            ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:ring-purple-500"
-                            : "bg-white border-gray-300 focus:ring-purple-500"
-                        )}>
+                        <SelectTrigger className="bg-background text-foreground border-border focus:ring-ring">
                           <SelectValue placeholder="Select user type" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className={cn(
-                        darkMode ? "bg-gray-800 text-gray-200 border-gray-700" : ""
-                      )}>
-                        <SelectItem value="household" className={cn(darkMode ? "focus:bg-gray-700" : "")}>Household</SelectItem>
-                        <SelectItem value="agriculture" className={cn(darkMode ? "focus:bg-gray-700" : "")}>Agriculture</SelectItem>
-                        <SelectItem value="industry" className={cn(darkMode ? "focus:bg-gray-700" : "")}>Industry</SelectItem>
-                        <SelectItem value="institution" className={cn(darkMode ? "focus:bg-gray-700" : "")}>Institution</SelectItem>
-                        <SelectItem value="other" className={cn(darkMode ? "focus:bg-gray-700" : "")}>Other</SelectItem>
+                      <SelectContent className="bg-popover text-popover-foreground border-border">
+                        <SelectItem value="household">Household</SelectItem>
+                        <SelectItem value="agriculture">Agriculture</SelectItem>
+                        <SelectItem value="industry">Industry</SelectItem>
+                        <SelectItem value="institution">Institution</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
                       </SelectContent>
                     </Select>
-                    <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                    <FormMessage className="text-destructive" />
                   </FormItem>
                 )}
               />
@@ -241,23 +226,53 @@ export function WaterEfficiencyForm() {
               <FormField control={form.control} name="waterUsage" render={({ field }) => (
                 <FormItem>
                   <div className="flex items-center gap-2">
-                    <BarChart2 className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                    <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>Water Usage</FormLabel>
-                    <TooltipProvider><Tooltip><TooltipTrigger asChild><InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} /></TooltipTrigger><TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}><p className="w-[200px] text-xs">Daily/Monthly water consumption in liters/gallons</p></TooltipContent></Tooltip></TooltipProvider>
+                    <BarChart2 className="h-4 w-4 text-primary" />
+                    <FormLabel className="text-sm font-medium text-foreground">Water Usage</FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-popover text-popover-foreground border-border">
+                          <p className="w-[200px] text-xs">Daily/Monthly water consumption in liters/gallons</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
-                  <FormControl><Input placeholder="Optional, e.g., 500 liters/day" {...field} className={cn(darkMode ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500" : "bg-white border-gray-300 focus:border-purple-500")} /></FormControl>
-                  <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                  <FormControl>
+                    <Input 
+                      placeholder="Optional, e.g., 500 liters/day" 
+                      {...field} 
+                      className="bg-background text-foreground border-border placeholder:text-muted-foreground focus:ring-ring" 
+                    />
+                  </FormControl>
+                  <FormMessage className="text-destructive" />
                 </FormItem>
               )} />
               <FormField control={form.control} name="currentWaterResource" render={({ field }) => (
                 <FormItem>
                   <div className="flex items-center gap-2">
-                    <Droplet className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                    <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>Current Water Resource</FormLabel>
-                    <TooltipProvider><Tooltip><TooltipTrigger asChild><InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} /></TooltipTrigger><TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}><p className="w-[200px] text-xs">Your primary source of water (e.g., municipal, well, river)</p></TooltipContent></Tooltip></TooltipProvider>
+                    <Droplet className="h-4 w-4 text-primary" />
+                    <FormLabel className="text-sm font-medium text-foreground">Current Water Resource</FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-popover text-popover-foreground border-border">
+                          <p className="w-[200px] text-xs">Your primary source of water (e.g., municipal, well, river)</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
-                  <FormControl><Input placeholder="Optional, e.g., Municipal" {...field} className={cn(darkMode ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500" : "bg-white border-gray-300 focus:border-purple-500")} /></FormControl>
-                  <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                  <FormControl>
+                    <Input 
+                      placeholder="Optional, e.g., Municipal" 
+                      {...field} 
+                      className="bg-background text-foreground border-border placeholder:text-muted-foreground focus:ring-ring" 
+                    />
+                  </FormControl>
+                  <FormMessage className="text-destructive" />
                 </FormItem>
               )} />
             </div>
@@ -266,12 +281,27 @@ export function WaterEfficiencyForm() {
             <FormField control={form.control} name="currentPractices" render={({ field }) => (
               <FormItem>
                 <div className="flex items-center gap-2">
-                  <Settings className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                  <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>Current Water Practices</FormLabel>
-                  <TooltipProvider><Tooltip><TooltipTrigger asChild><InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} /></TooltipTrigger><TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}><p className="w-[200px] text-xs">Describe what you're already doing to conserve water</p></TooltipContent></Tooltip></TooltipProvider>
+                  <Settings className="h-4 w-4 text-primary" />
+                  <FormLabel className="text-sm font-medium text-foreground">Current Water Practices</FormLabel>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-popover text-popover-foreground border-border">
+                        <p className="w-[200px] text-xs">Describe what you're already doing to conserve water</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
-                <FormControl><Textarea placeholder="Optional, e.g., low-flow showerheads, fixing leaks" className={cn("resize-none", darkMode ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500" : "bg-white border-gray-300 focus:border-purple-500")} {...field} /></FormControl>
-                <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                <FormControl>
+                  <Textarea 
+                    placeholder="Optional, e.g., low-flow showerheads, fixing leaks" 
+                    className="resize-none bg-background text-foreground border-border placeholder:text-muted-foreground focus:ring-ring" 
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage className="text-destructive"/>
               </FormItem>
             )} />
 
@@ -281,30 +311,60 @@ export function WaterEfficiencyForm() {
                 <FormField control={form.control} name="size" render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center gap-2">
-                      <Home className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                      <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>
+                      <Home className="h-4 w-4 text-primary" />
+                      <FormLabel className="text-sm font-medium text-foreground">
                         {userType === "household" && "Household Size"}
                         {userType === "agriculture" && "Farm Size (e.g., acres)"}
                         {userType === "industry" && "Facility Size (e.g., sq ft)"}
                         {userType === "institution" && "Institution Size (e.g., students, beds)"}
                         {userType === "other" && "Size"}
                       </FormLabel>
-                      <TooltipProvider><Tooltip><TooltipTrigger asChild><InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} /></TooltipTrigger><TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}><p className="w-[200px] text-xs">Number of people or size of your facility</p></TooltipContent></Tooltip></TooltipProvider>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-popover text-popover-foreground border-border">
+                            <p className="w-[200px] text-xs">Number of people or size of your facility</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
-                    <FormControl><Input placeholder="Optional" {...field} className={cn(darkMode ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500" : "bg-white border-gray-300 focus:border-purple-500")} /></FormControl>
-                    <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                    <FormControl>
+                      <Input 
+                        placeholder="Optional" 
+                        {...field} 
+                        className="bg-background text-foreground border-border placeholder:text-muted-foreground focus:ring-ring" 
+                      />
+                    </FormControl>
+                    <FormMessage className="text-destructive" />
                   </FormItem>
                 )} />
               )}
               <FormField control={form.control} name="waterUsageAreas" render={({ field }) => (
                 <FormItem>
                   <div className="flex items-center gap-2">
-                    <Droplet className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                    <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>Water Usage Areas</FormLabel>
-                    <TooltipProvider><Tooltip><TooltipTrigger asChild><InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} /></TooltipTrigger><TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}><p className="w-[200px] text-xs">List areas where you use water (e.g., kitchen, bathroom, irrigation)</p></TooltipContent></Tooltip></TooltipProvider>
+                    <Droplet className="h-4 w-4 text-primary" />
+                    <FormLabel className="text-sm font-medium text-foreground">Water Usage Areas</FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-popover text-popover-foreground border-border">
+                          <p className="w-[200px] text-xs">List areas where you use water (e.g., kitchen, bathroom, irrigation)</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
-                  <FormControl><Input placeholder="Optional, e.g., kitchen, bathroom, irrigation" {...field} className={cn(darkMode ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500" : "bg-white border-gray-300 focus:border-purple-500")} /></FormControl>
-                  <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                  <FormControl>
+                    <Input 
+                      placeholder="Optional, e.g., kitchen, bathroom, irrigation" 
+                      {...field} 
+                      className="bg-background text-foreground border-border placeholder:text-muted-foreground focus:ring-ring" 
+                    />
+                  </FormControl>
+                  <FormMessage className="text-destructive"/>
                 </FormItem>
               )} />
             </div>
@@ -315,23 +375,47 @@ export function WaterEfficiencyForm() {
                 <FormField control={form.control} name="landArea" render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center gap-2">
-                      <Crop className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                      <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>Land Area</FormLabel>
-                      <TooltipProvider><Tooltip><TooltipTrigger asChild><InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} /></TooltipTrigger><TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}><p className="w-[200px] text-xs">Size in acres/hectares</p></TooltipContent></Tooltip></TooltipProvider>
+                      <Crop className="h-4 w-4 text-primary" />
+                      <FormLabel className="text-sm font-medium text-foreground">Land Area</FormLabel>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-popover text-popover-foreground border-border">
+                            <p className="w-[200px] text-xs">Size in acres/hectares</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
-                    <FormControl><Input placeholder="Optional, e.g., 10 acres" {...field} className={cn(darkMode ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500" : "bg-white border-gray-300 focus:border-purple-500")} /></FormControl>
-                    <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                    <FormControl>
+                      <Input 
+                        placeholder="Optional, e.g., 10 acres" 
+                        {...field} 
+                        className="bg-background text-foreground border-border placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2" 
+                      />
+                    </FormControl>
+                    <FormMessage className="text-destructive" />
                   </FormItem>
                 )} />
                 <FormField control={form.control} name="cropType" render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center gap-2">
-                      <Crop className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                      <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>Crop Type</FormLabel>
-                      <TooltipProvider><Tooltip><TooltipTrigger asChild><InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} /></TooltipTrigger><TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}><p className="w-[200px] text-xs">Type of crops you grow</p></TooltipContent></Tooltip></TooltipProvider>
+                      <User className="h-4 w-4 text-primary" />
+                      <FormLabel className="text-sm font-medium text-foreground">User Type</FormLabel>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-popover text-popover-foreground border-border">
+                            <p className="w-[200px] text-xs">Select the category that best describes you</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
-                    <FormControl><Input placeholder="Optional, e.g., Corn, Wheat" {...field} className={cn(darkMode ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500" : "bg-white border-gray-300 focus:border-purple-500")} /></FormControl>
-                    <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                    <FormControl><Input placeholder="Optional, e.g., Corn, Wheat" {...field} className="bg-background text-foreground border-border placeholder:text-muted-foreground focus:border-accent" /></FormControl>
+                    <FormMessage className="text-destructive" />
                   </FormItem>
                 )} />
               </div>
@@ -342,12 +426,27 @@ export function WaterEfficiencyForm() {
               <FormField control={form.control} name="industryType" render={({ field }) => (
                 <FormItem>
                   <div className="flex items-center gap-2">
-                    <Building2 className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                    <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>Industry Type</FormLabel>
-                    <TooltipProvider><Tooltip><TooltipTrigger asChild><InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} /></TooltipTrigger><TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}><p className="w-[200px] text-xs">Type of industry or manufacturing</p></TooltipContent></Tooltip></TooltipProvider>
+                    <Building2 className="h-4 w-4 text-primary" />
+                    <FormLabel className="text-sm font-medium text-foreground">Industry Type</FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-popover text-popover-foreground border-border">
+                          <p className="w-[200px] text-xs">Type of industry or manufacturing</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
-                  <FormControl><Input placeholder="Optional, e.g., Textile, Food Processing" {...field} className={cn(darkMode ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500" : "bg-white border-gray-300 focus:border-purple-500")} /></FormControl>
-                  <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                  <FormControl>
+                    <Input 
+                      placeholder="Optional, e.g., Textile, Food Processing" 
+                      {...field} 
+                      className="bg-background text-foreground border-border placeholder:text-muted-foreground focus:ring-ring" 
+                    />
+                  </FormControl>
+                  <FormMessage className="text-destructive"/>
                 </FormItem>
               )} />
             )}
@@ -359,26 +458,32 @@ export function WaterEfficiencyForm() {
               render={({ field }) => (
                 <FormItem>
                   <div className="flex items-center gap-2">
-                    <BrainCircuit className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                    <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>Awareness Level</FormLabel>
-                    <TooltipProvider><Tooltip><TooltipTrigger asChild><InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} /></TooltipTrigger><TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}><p className="w-[200px] text-xs">Your familiarity with water conservation techniques</p></TooltipContent></Tooltip></TooltipProvider>
+                    <BrainCircuit className="h-4 w-4 text-primary" />
+                    <FormLabel className="text-sm font-medium text-foreground">Awareness Level</FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-popover text-popover-foreground border-border">
+                          <p className="w-[200px] text-xs">Your familiarity with water conservation techniques</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className={cn(
-                        darkMode ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:ring-purple-500"
-                                 : "bg-white border-gray-300 focus:ring-purple-500"
-                      )}>
+                      <SelectTrigger className="bg-background text-foreground border-border hover:bg-accent">
                         <SelectValue placeholder="Select your awareness level" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className={cn(darkMode ? "bg-gray-800 text-gray-200 border-gray-700" : "")}>
-                      <SelectItem value="beginner" className={cn(darkMode ? "focus:bg-gray-700" : "")}>Beginner</SelectItem>
-                      <SelectItem value="intermediate" className={cn(darkMode ? "focus:bg-gray-700" : "")}>Intermediate</SelectItem>
-                      <SelectItem value="expert" className={cn(darkMode ? "focus:bg-gray-700" : "")}>Expert</SelectItem>
+                    <SelectContent className="bg-popover text-popover-foreground border-border">
+                      <SelectItem value="beginner">Beginner (Just starting to learn)</SelectItem>
+                      <SelectItem value="intermediate">Intermediate (Some knowledge)</SelectItem>
+                      <SelectItem value="advanced">Advanced (Extensive knowledge)</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                  <FormMessage className="text-destructive" />
                 </FormItem>
               )}
             />
@@ -390,22 +495,28 @@ export function WaterEfficiencyForm() {
               render={({ field: { value, onChange, ...fieldProps } }) => (
                 <FormItem>
                   <div className="flex items-center gap-2">
-                    <ImageIcon className={cn("h-4 w-4", darkMode ? "text-purple-400" : "text-purple-600")} />
-                    <FormLabel className={cn("text-sm font-medium", darkMode ? "text-gray-200" : "text-gray-800")}>Image Upload (Optional)</FormLabel>
-                    <TooltipProvider><Tooltip><TooltipTrigger asChild><InfoCircle className={cn("h-4 w-4 cursor-help", darkMode ? "text-gray-500" : "text-gray-400")} /></TooltipTrigger><TooltipContent className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600" : "")}><p className="w-[200px] text-xs">Upload an image of your space for more accurate recommendations</p></TooltipContent></Tooltip></TooltipProvider>
+                    <FormLabel className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <ImageIcon className="h-4 w-4 text-primary" />
+                      Upload Image
+                    </FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <InfoCircle className="h-4 w-4 cursor-help text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-popover text-popover-foreground border-border">
+                          <p className="w-[200px] text-xs">Upload an image of your space for more accurate recommendations</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
                   <FormControl>
-                    <div className={cn(
-                      "border-2 border-dashed rounded-lg p-4 transition-colors",
-                      darkMode
-                        ? "border-gray-600 hover:border-purple-500 bg-gray-800/50"
-                        : "border-gray-200 hover:border-purple-300 bg-gray-50/50"
-                    )}>
+                    <div className="border-2 border-dashed border-border rounded-lg p-4 transition-colors hover:border-primary/50 bg-muted/50">
                       {!imagePreview ? (
                         <div className="flex flex-col items-center justify-center py-4">
-                          <ImageIcon className={cn("h-8 w-8 mb-2", darkMode ? "text-gray-600" : "text-gray-400")} />
-                          <p className={cn("text-sm mb-2", darkMode ? "text-gray-400" : "text-gray-500")}>Drag and drop or click to upload</p>
-                          <p className={cn("text-xs", darkMode ? "text-gray-500" : "text-gray-400")}>JPG, PNG (max 5MB)</p>
+                          <ImageIcon className="h-8 w-8 mb-2 text-muted-foreground/70" />
+                          <p className="text-sm mb-2 text-muted-foreground">Drag and drop or click to upload</p>
+                          <p className="text-xs text-muted-foreground/70">JPG, PNG (max 5MB)</p>
                           <Input
                             type="file"
                             accept="image/*"
@@ -418,7 +529,7 @@ export function WaterEfficiencyForm() {
                             type="button"
                             variant="outline"
                             size="sm"
-                            className={cn("mt-2", darkMode ? "bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600" : "bg-white")}
+                            className="mt-2 bg-background hover:bg-accent hover:text-accent-foreground"
                             onClick={() => document.getElementById("image-upload")?.click()}
                           >
                             Select File
@@ -447,19 +558,14 @@ export function WaterEfficiencyForm() {
                       )}
                     </div>
                   </FormControl>
-                  <FormMessage className={cn(darkMode ? "text-red-400" : "")}/>
+                  <FormMessage className="text-destructive"/>
                 </FormItem>
               )}
             />
 
             <Button
               type="submit"
-              className={cn(
-                "w-full text-white font-semibold py-3",
-                darkMode
-                  ? "bg-purple-600 hover:bg-purple-700 focus:ring-purple-500"
-                  : "bg-purple-700 hover:bg-purple-800 focus:ring-purple-600"
-              )}
+              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold py-3"
               disabled={isProcessing}
             >
               {isProcessing ? (

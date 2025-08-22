@@ -25,18 +25,13 @@ export default function HomePage() {
       </section>
 
       {/* What We Do Section */}
-      <section
-        className={cn(
-          "relative py-16 px-4 sm:px-6 lg:px-8",
-          darkMode ? "bg-gray-900" : "bg-white" // Dark mode background
-        )}
-      >
+      <section className="relative py-16 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="container mx-auto max-w-4xl text-center">
           <div className="flex flex-col items-center justify-center gap-6">
             {/* "Get Started" Button - Accent color, generally works for both themes */}
             <Button
               asChild
-              className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-md shadow-md transition-all"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-md shadow transition-all"
             >
               <Link href="/techniques">Get Started</Link>
             </Button>
@@ -47,9 +42,7 @@ export default function HomePage() {
               }}
               className={cn(
                 "flex items-center justify-center w-10 h-10 rounded-full bg-transparent transition-colors",
-                darkMode
-                  ? "text-purple-400 hover:bg-purple-800/30" // Dark mode scroll button
-                  : "text-purple-600 hover:bg-purple-50" // Light mode scroll button
+                "text-primary hover:bg-accent/50"
               )}
               aria-label="Scroll to next section"
             >
@@ -60,19 +53,10 @@ export default function HomePage() {
       </section>
 
       {/* Our Services Section */}
-      <section
-        id="services"
-        className={cn(
-          "py-16 px-4 sm:px-6 lg:px-8",
-          darkMode ? "bg-gray-800" : "bg-blue-50" // Dark mode background
-        )}
-      >
+      <section id="services" className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/50">
         <div className="container mx-auto max-w-6xl">
           <h2
-            className={cn(
-              "text-3xl font-bold text-center mb-12",
-              darkMode ? "text-gray-100" : "text-gray-900" // Dark mode heading
-            )}
+            className="text-3xl font-bold text-center mb-12 text-foreground"
           >
             Our Services
           </h2>
@@ -81,18 +65,10 @@ export default function HomePage() {
       </section>
 
       {/* Who Are Our Users Section */}
-      <section
-        className={cn(
-          "py-16 px-4 sm:px-6 lg:px-8",
-          darkMode ? "bg-gray-900" : "bg-white" // Dark mode background
-        )}
-      >
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="container mx-auto max-w-6xl">
           <h2
-            className={cn(
-              "text-3xl font-bold text-center mb-12",
-              darkMode ? "text-gray-100" : "text-gray-900" // Dark mode heading
-            )}
+            className="text-3xl font-bold text-center mb-12 text-foreground"
           >
             Who Are Our Users
           </h2>
@@ -101,24 +77,14 @@ export default function HomePage() {
       </section>
 
       {/* Quote Box Section */}
-      <section
-        className={cn(
-          "py-16 px-4 sm:px-6 lg:px-8",
-          darkMode ? "bg-gray-900" : "bg-white" // Dark mode background
-        )}
-      >
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="container mx-auto max-w-4xl">
           <QuoteBox /> {/* Assumed to be themed */}
         </div>
       </section>
 
       {/* Hashtag Section */}
-      <section
-        className={cn(
-          "py-16 px-4 sm:px-6 lg:px-8",
-          darkMode ? "bg-gray-900" : "bg-white" // Dark mode background
-        )}
-      >
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="container mx-auto max-w-6xl">
           <HashtagSection /> {/* Assumed to be themed */}
         </div>

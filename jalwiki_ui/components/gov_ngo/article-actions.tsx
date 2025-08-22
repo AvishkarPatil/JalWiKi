@@ -100,44 +100,35 @@ export default function ArticleActions({
 
   const iconButtonBaseStyle = `
     flex items-center p-1.5 sm:p-2 rounded-full transition-all duration-200 ease-in-out
-    focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-purple-500 focus:ring-opacity-60
-    dark:focus:ring-offset-slate-800
+    focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-primary focus:ring-opacity-60
+    focus:ring-offset-background
   `
   const iconButtonDefaultState = `
-    text-gray-500 dark:text-gray-400
-    hover:bg-gray-100 dark:hover:bg-slate-700
+    text-muted-foreground hover:bg-accent hover:text-accent-foreground
   `
   const audioActiveState = `
-    bg-purple-600 text-white hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600
+    bg-primary text-primary-foreground hover:bg-primary/90
   `
 
   return (
-    <div className="flex items-center justify-between flex-wrap gap-x-1 gap-y-2">
+    <div className="flex items-center justify-between flex-wrap gap-x-1 gap-y-2 p-2 rounded-lg bg-card/50">
       {/* Left Group: Like, Bookmark */}
       <div className="flex items-center space-x-1 sm:space-x-2">
         <button
           onClick={handleLikeClick}
-          className={`${iconButtonBaseStyle} ${iconButtonDefaultState} ${
-            isLiked
-              ? 'text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-500'
-              : 'hover:text-red-500 dark:hover:text-red-400'
-          }`}
+          className={`${iconButtonBaseStyle} ${iconButtonDefaultState} ${isLiked ? 'text-destructive' : 'hover:text-destructive'}`}
           aria-pressed={isLiked}
           aria-label={isLiked ? "Unlike" : "Like"}
           title={isLiked ? "Unlike" : "Like"}
         >
           {isLiked ? <HeartSolidIcon className={`h-5 w-5 ${animateLike ? 'animate-heartbeat' : ''}`} /> : <HeartOutlineIcon className={`h-5 w-5 ${animateLike ? 'animate-heartbeat' : ''}`} />}
-          <span className={`ml-1.5 text-xs font-medium tabular-nums ${isLiked ? 'text-red-500 dark:text-red-400' : 'text-gray-600 dark:text-gray-400'}`}>
+          <span className={`ml-1.5 text-xs font-medium tabular-nums ${isLiked ? 'text-destructive' : 'text-muted-foreground'}`}>
             {currentLikes}
           </span>
         </button>
         <button
           onClick={handleBookmarkClick}
-          className={`${iconButtonBaseStyle} ${iconButtonDefaultState} ${
-            isBookmarked
-              ? 'text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-500'
-              : 'hover:text-purple-600 dark:hover:text-purple-400'
-          }`}
+          className={`${iconButtonBaseStyle} ${iconButtonDefaultState} ${isBookmarked ? 'text-primary' : 'hover:text-primary'}`}
           aria-pressed={isBookmarked}
           aria-label={isBookmarked ? "Remove bookmark" : "Bookmark"}
           title={isBookmarked ? "Remove Bookmark" : "Bookmark"}
@@ -148,20 +139,20 @@ export default function ArticleActions({
 
       {/* Right Group: Share, Contact, PDF, Audio, YouTube, More */}
       <div className="flex items-center space-x-1 sm:space-x-2">
-        <button onClick={handleShareClick} className={`${iconButtonBaseStyle} ${iconButtonDefaultState} hover:text-blue-500 dark:hover:text-blue-400`} aria-label="Share" title="Share">
+        <button onClick={handleShareClick} className={`${iconButtonBaseStyle} ${iconButtonDefaultState} hover:text-primary`} aria-label="Share" title="Share">
           <ShareIcon className="h-5 w-5" />
         </button>
 
         {/* Contact Button */}
         {contactEmail && (
-          <button onClick={handleContactClick} className={`${iconButtonBaseStyle} ${iconButtonDefaultState} hover:text-green-500 dark:hover:text-green-400`} aria-label="Contact" title="Contact">
+          <button onClick={handleContactClick} className={`${iconButtonBaseStyle} ${iconButtonDefaultState} hover:text-success`} aria-label="Contact" title="Contact">
             <EnvelopeIcon className="h-5 w-5" />
           </button>
         )}
 
         {/* PDF Button */}
         {pdfUrl && onDownloadPDF && (
-          <button onClick={(e) => { e.stopPropagation(); onDownloadPDF(); }} className={`${iconButtonBaseStyle} ${iconButtonDefaultState} hover:text-orange-500 dark:hover:text-orange-400`} aria-label="Download PDF" title="Download PDF">
+          <button onClick={(e) => { e.stopPropagation(); onDownloadPDF(); }} className={`${iconButtonBaseStyle} ${iconButtonDefaultState} hover:text-warning`} aria-label="Download PDF" title="Download PDF">
             <ArrowDownTrayIcon className="h-5 w-5" />
           </button>
         )}
@@ -175,12 +166,12 @@ export default function ArticleActions({
 
         {/* YouTube Button */}
         {youtubeUrl && onYoutubeClick && (
-          <button onClick={(e) => { e.stopPropagation(); onYoutubeClick(); }} className={`${iconButtonBaseStyle} ${iconButtonDefaultState} hover:text-red-600 dark:hover:text-red-500`} aria-label="Watch on YouTube" title="Watch on YouTube">
+          <button onClick={(e) => { e.stopPropagation(); onYoutubeClick(); }} className={`${iconButtonBaseStyle} ${iconButtonDefaultState} hover:text-destructive`} aria-label="Watch on YouTube" title="Watch on YouTube">
             <VideoCameraIcon className="h-5 w-5" />
           </button>
         )}
 
-        <a href="#" onClick={(e) => { e.stopPropagation(); console.log("More options clicked for item ID:", id); }} className={`${iconButtonBaseStyle} ${iconButtonDefaultState} hover:text-gray-700 dark:hover:text-gray-200`} aria-label="More options" title="More options">
+        <a href="#" onClick={(e) => { e.stopPropagation(); console.log("More options clicked for item ID:", id); }} className={`${iconButtonBaseStyle} ${iconButtonDefaultState} hover:text-foreground`} aria-label="More options" title="More options">
           <EllipsisHorizontalIcon className="h-5 w-5" />
         </a>
       </div>

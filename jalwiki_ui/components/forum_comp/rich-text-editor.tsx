@@ -91,27 +91,25 @@ export function RichTextEditor({
   }
 
   const toolbarButtonClass = cn(
-    "h-8 w-8",
+    "h-8 w-8 rounded-[var(--radius)] transition-colors",
     darkMode
-      ? "text-gray-300 hover:bg-gray-600 hover:text-gray-100"
-      : "text-gray-700 hover:bg-gray-200"
+      ? "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
   );
 
   const toolbarSeparatorClass = cn(
     "w-px h-6 mx-1 self-center",
-    darkMode ? "bg-gray-600" : "bg-gray-300"
+    darkMode ? "bg-border" : "bg-border"
   );
 
   return (
     <div className={cn(
-      "rounded-md overflow-hidden",
-      // The parent component (NewThreadForm) already applies a border to a wrapper div.
-      // If this editor is used standalone, you might want to add a border here:
-      // darkMode ? "border border-gray-600" : "border border-gray-300"
+      "rounded-[var(--radius)] overflow-hidden border border-border",
+      "bg-background text-foreground"
     )}>
       <div className={cn(
-        "p-2 flex flex-wrap gap-1",
-        darkMode ? "bg-gray-700 border-b border-gray-600" : "bg-gray-50 border-b border-gray-300"
+        "p-2 flex flex-wrap gap-1 border-b border-border",
+        darkMode ? "bg-card" : "bg-card"
       )}>
         <Button
           type="button"

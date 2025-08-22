@@ -8,31 +8,42 @@ export function Footer() {
   const { darkMode, toggleDarkMode } = useTheme()
 
   return (
-    <footer className={`border-t ${
-      darkMode 
-        ? 'bg-gray-900 border-gray-800 text-gray-300' 
-        : 'bg-gray-100 border-gray-200 text-gray-700'
-    } py-12 transition-colors duration-200`}>
+    <footer className="border-t border-border bg-background/50 py-12 transition-colors duration-200">
       <div className="container mx-auto px-4 sm:px-6 lg:px-16">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="space-y-4 text-left">
             <div className="flex items-center justify-between">
-              <Link href="/" className="text-xl font-bold tracking-tighter">
-                Jal<span className={darkMode ? "text-blue-400" : "text-blue-600"}>Wiki</span>
+              <Link href="/" className="text-xl font-bold tracking-tighter text-foreground">
+                Jal<span className="text-primary">WiKi</span>
               </Link>
             </div>
             
-            <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+            <p className="text-muted-foreground text-sm">
               Exploring sustainable water management and conservation techniques.
             </p>
             <div className="flex space-x-4">
-              <Link href="https://x.com/HeyAvishkar" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
+              <Link 
+                href="https://x.com/HeyAvishkar" 
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Twitter className="h-5 w-5" />
               </Link>
-              <Link href="https://github.com/AvishkarPatil/JalWiKi" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
+              <Link 
+                href="https://github.com/AvishkarPatil/JalWiKi" 
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Github className="h-5 w-5" />
               </Link>
-              <Link href="https://www.linkedin.com/in/TheAvishkar" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
+              <Link 
+                href="https://www.linkedin.com/in/TheAvishkar" 
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Linkedin className="h-5 w-5" />
               </Link>
               {/* <Link href="#" className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
@@ -44,17 +55,32 @@ export function Footer() {
             <h3 className="font-medium mb-4">Techniques</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="https://jalwiki.vercel.app/techniques/drip-irrigation-system" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                <Link 
+                  href="https://jalwiki.vercel.app/techniques/drip-irrigation-system" 
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Drip Irrigation System
                 </Link>
               </li>
               <li>
-                <Link href="https://jalwiki.vercel.app/techniques/contour-farming" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                <Link 
+                  href="https://jalwiki.vercel.app/techniques/contour-farming" 
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Contour Farming
                 </Link>
               </li>
               <li>
-                <Link href="https://jalwiki.vercel.app/techniques/rainwater-harvesting" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                <Link 
+                  href="https://jalwiki.vercel.app/techniques/rainwater-harvesting" 
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Rainwater Harvesting
                 </Link>
               </li>
@@ -64,17 +90,17 @@ export function Footer() {
             <h3 className="font-medium mb-4">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="#" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Tutorials
                 </Link>
               </li>
               <li>
-                <Link href="#" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Research Papers
                 </Link>
               </li>
               <li>
-                <Link href="#" className={`${darkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Case Studies
                 </Link>
               </li>
@@ -83,15 +109,15 @@ export function Footer() {
           <div className="text-left">
             <h3 className="font-medium mb-4">Contact</h3>
             <ul className="space-y-2 text-sm">
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2 text-muted-foreground">
                 <Mail className="h-4 w-4" />
                 <span>contact@jalwiki.com</span>
               </li>
             </ul>
           </div>
         </div>
-        <div className={`border-t ${darkMode ? 'border-gray-800' : 'border-gray-300'} mt-12 pt-6 text-sm text-left`}>
-          <p>© {new Date().getFullYear()} JalWiki. All rights reserved.</p>
+        <div className="border-t border-border mt-12 pt-6 text-sm text-left">
+          <p className="text-muted-foreground">© {new Date().getFullYear()} JalWiki. All rights reserved.</p>
         </div>
       </div>
     </footer>

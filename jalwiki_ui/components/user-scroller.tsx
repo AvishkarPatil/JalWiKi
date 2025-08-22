@@ -3,7 +3,6 @@
 import { useLayoutEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { useTheme } from "@/context/theme-context"
 import { cn } from "@/lib/utils"
 
 const usersData = [
@@ -29,72 +28,69 @@ const getIconUrl = (iconPath: string, name: string) => {
 // Duplicate users for the infinite scroll illusion
 const duplicatedUsers = [...usersData, ...usersData, ...usersData]; // Tripled for smoother long scroll
 
-// Function to get theme-aware classes with explicit color definitions
-const getThemeAwareCircleClasses = (baseColor: string, darkMode: boolean) => {
-  let bgClass = "", borderClass = "", hoverBgClass = "", hoverBorderClass = "";
+// Function to get theme-aware classes using design system tokens
+const getThemeAwareCircleClasses = (baseColor: string) => {
+  const colorMap = {
+    purple: {
+      bg: "bg-purple-100 dark:bg-purple-900/30",
+      border: "border-purple-300/50 dark:border-purple-500/30",
+      hover: "hover:bg-purple-200/80 dark:hover:bg-purple-800/40 hover:border-purple-400/70 dark:hover:border-purple-400/50"
+    },
+    green: {
+      bg: "bg-green-100 dark:bg-green-900/30",
+      border: "border-green-300/50 dark:border-green-500/30",
+      hover: "hover:bg-green-200/80 dark:hover:bg-green-800/40 hover:border-green-400/70 dark:hover:border-green-400/50"
+    },
+    yellow: {
+      bg: "bg-yellow-100 dark:bg-yellow-900/30",
+      border: "border-yellow-300/50 dark:border-yellow-500/30",
+      hover: "hover:bg-yellow-200/80 dark:hover:bg-yellow-800/40 hover:border-yellow-400/70 dark:hover:border-yellow-400/50"
+    },
+    blue: {
+      bg: "bg-blue-100 dark:bg-blue-900/30",
+      border: "border-blue-300/50 dark:border-blue-500/30",
+      hover: "hover:bg-blue-200/80 dark:hover:bg-blue-800/40 hover:border-blue-400/70 dark:hover:border-blue-400/50"
+    },
+    red: {
+      bg: "bg-red-100 dark:bg-red-900/30",
+      border: "border-red-300/50 dark:border-red-500/30",
+      hover: "hover:bg-red-200/80 dark:hover:bg-red-800/40 hover:border-red-400/70 dark:hover:border-red-400/50"
+    },
+    teal: {
+      bg: "bg-teal-100 dark:bg-teal-900/30",
+      border: "border-teal-300/50 dark:border-teal-500/30",
+      hover: "hover:bg-teal-200/80 dark:hover:bg-teal-800/40 hover:border-teal-400/70 dark:hover:border-teal-400/50"
+    },
+    orange: {
+      bg: "bg-orange-100 dark:bg-orange-900/30",
+      border: "border-orange-300/50 dark:border-orange-500/30",
+      hover: "hover:bg-orange-200/80 dark:hover:bg-orange-800/40 hover:border-orange-400/70 dark:hover:border-orange-400/50"
+    },
+    indigo: {
+      bg: "bg-indigo-100 dark:bg-indigo-900/30",
+      border: "border-indigo-300/50 dark:border-indigo-500/30",
+      hover: "hover:bg-indigo-200/80 dark:hover:bg-indigo-800/40 hover:border-indigo-400/70 dark:hover:border-indigo-400/50"
+    }
+  };
 
-  switch (baseColor) {
-    case "purple":
-      bgClass = darkMode ? "bg-purple-600/10" : "bg-purple-100";
-      borderClass = darkMode ? "border-purple-500/30" : "border-purple-300/50";
-      hoverBgClass = darkMode ? "group-hover:bg-purple-500/20" : "group-hover:bg-purple-200/80";
-      hoverBorderClass = darkMode ? "group-hover:border-purple-400/60" : "group-hover:border-purple-400/70";
-      break;
-    case "green":
-      bgClass = darkMode ? "bg-green-600/10" : "bg-green-100";
-      borderClass = darkMode ? "border-green-500/30" : "border-green-300/50";
-      hoverBgClass = darkMode ? "group-hover:bg-green-500/20" : "group-hover:bg-green-200/80";
-      hoverBorderClass = darkMode ? "group-hover:border-green-400/60" : "group-hover:border-green-400/70";
-      break;
-    case "yellow":
-      bgClass = darkMode ? "bg-yellow-500/10" : "bg-yellow-100"; // Adjusted yellow for dark mode
-      borderClass = darkMode ? "border-yellow-400/30" : "border-yellow-300/50";
-      hoverBgClass = darkMode ? "group-hover:bg-yellow-400/20" : "group-hover:bg-yellow-200/80";
-      hoverBorderClass = darkMode ? "group-hover:border-yellow-400/60" : "group-hover:border-yellow-400/70";
-      break;
-    case "blue":
-      bgClass = darkMode ? "bg-blue-600/10" : "bg-blue-100";
-      borderClass = darkMode ? "border-blue-500/30" : "border-blue-300/50";
-      hoverBgClass = darkMode ? "group-hover:bg-blue-500/20" : "group-hover:bg-blue-200/80";
-      hoverBorderClass = darkMode ? "group-hover:border-blue-400/60" : "group-hover:border-blue-400/70";
-      break;
-    case "red":
-      bgClass = darkMode ? "bg-red-600/10" : "bg-red-100";
-      borderClass = darkMode ? "border-red-500/30" : "border-red-300/50";
-      hoverBgClass = darkMode ? "group-hover:bg-red-500/20" : "group-hover:bg-red-200/80";
-      hoverBorderClass = darkMode ? "group-hover:border-red-400/60" : "group-hover:border-red-400/70";
-      break;
-    case "teal":
-      bgClass = darkMode ? "bg-teal-600/10" : "bg-teal-100";
-      borderClass = darkMode ? "border-teal-500/30" : "border-teal-300/50";
-      hoverBgClass = darkMode ? "group-hover:bg-teal-500/20" : "group-hover:bg-teal-200/80";
-      hoverBorderClass = darkMode ? "group-hover:border-teal-400/60" : "group-hover:border-teal-400/70";
-      break;
-    case "orange":
-      bgClass = darkMode ? "bg-orange-500/10" : "bg-orange-100"; // Adjusted orange for dark mode
-      borderClass = darkMode ? "border-orange-400/30" : "border-orange-300/50";
-      hoverBgClass = darkMode ? "group-hover:bg-orange-400/20" : "group-hover:bg-orange-200/80";
-      hoverBorderClass = darkMode ? "group-hover:border-orange-400/60" : "group-hover:border-orange-400/70";
-      break;
-    case "indigo":
-      bgClass = darkMode ? "bg-indigo-600/10" : "bg-indigo-100";
-      borderClass = darkMode ? "border-indigo-500/30" : "border-indigo-300/50";
-      hoverBgClass = darkMode ? "group-hover:bg-indigo-500/20" : "group-hover:bg-indigo-200/80";
-      hoverBorderClass = darkMode ? "group-hover:border-indigo-400/60" : "group-hover:border-indigo-400/70";
-      break;
-    default:
-      bgClass = darkMode ? "bg-gray-700/20" : "bg-gray-100";
-      borderClass = darkMode ? "border-gray-600/30" : "border-gray-300/50";
-      hoverBgClass = darkMode ? "group-hover:bg-gray-600/30" : "group-hover:bg-gray-200/80";
-      hoverBorderClass = darkMode ? "group-hover:border-gray-500/60" : "group-hover:border-gray-400/70";
-  }
-  return cn(bgClass, "border-2", borderClass, hoverBgClass, hoverBorderClass, "group-hover:shadow-xl");
+  const colors = colorMap[baseColor as keyof typeof colorMap] || {
+    bg: "bg-gray-100 dark:bg-gray-800/30",
+    border: "border-gray-300/50 dark:border-gray-500/30",
+    hover: "hover:bg-gray-200/80 dark:hover:bg-gray-700/40 hover:border-gray-400/70 dark:hover:border-gray-400/50"
+  };
+
+  return cn(
+    "border-2 transition-all duration-300 ease-out transform-gpu",
+    "group-hover:shadow-lg",
+    colors.bg,
+    colors.border,
+    colors.hover
+  );
 };
 
 
 export function UserScroller() {
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const { darkMode } = useTheme();
   const [scrollWidthToAnimate, setScrollWidthToAnimate] = useState(0);
 
   useLayoutEffect(() => {
@@ -196,7 +192,7 @@ export function UserScroller() {
               <div
                 className={cn(
                   "w-28 h-28 rounded-full flex items-center justify-center mb-4 overflow-hidden transition-all duration-300 ease-out transform-gpu", // Larger circles
-                  getThemeAwareCircleClasses(user.baseColor, darkMode)
+                  getThemeAwareCircleClasses(user.baseColor)
                 )}
               >
                 <Image
@@ -209,10 +205,7 @@ export function UserScroller() {
                 />
               </div>
               <span
-                className={cn(
-                  "text-base font-semibold transition-colors duration-300", // Slightly larger font
-                  darkMode ? "text-gray-200 group-hover:text-white" : "text-gray-700 group-hover:text-black"
-                )}
+                className="text-base font-semibold text-foreground/90 transition-colors duration-300 group-hover:text-foreground"
               >
                 {user.name}
               </span>

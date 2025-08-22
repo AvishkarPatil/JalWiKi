@@ -147,21 +147,21 @@ export default function GovtNGOPage() {
   // };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <main className="container mx-auto px-4 py-8">
         <div className="mb-10 text-center">
-          <h1 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-6 tracking-tight">
+          <h1 className="text-2xl font-bold text-primary mb-6 tracking-tight">
             Government & NGO Initiatives
           </h1>
-          <div className="max-w-2xl mx-auto flex items-center gap-3 p-1.5 bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-full shadow-lg border border-gray-200 dark:border-gray-700">
+          <div className="max-w-2xl mx-auto flex items-center gap-3 p-1.5 bg-card/50 backdrop-blur-md rounded-full shadow-lg border">
             <div className="relative flex-grow">
-              <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-purple-500 dark:text-purple-400 pointer-events-none" />
+              <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-primary pointer-events-none" />
               <input
                 type="text"
                 placeholder="Search schemes, initiatives..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-2.5 bg-transparent rounded-full focus:outline-none text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-base"
+                className="w-full pl-11 pr-4 py-2.5 bg-transparent rounded-full focus:outline-none text-foreground placeholder-muted-foreground text-base"
               />
             </div>
             <div className="flex space-x-1 flex-shrink-0 pr-1">
@@ -173,10 +173,10 @@ export default function GovtNGOPage() {
                 <button
                   key={typeOpt.value}
                   onClick={() => setFilterType(typeOpt.value)}
-                  className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-1 dark:focus:ring-offset-gray-800 focus:ring-purple-500
+                  className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-offset-background focus:ring-primary
                     ${filterType === typeOpt.value
-                      ? 'bg-purple-600 text-white shadow-md hover:bg-purple-700'
-                      : 'bg-purple-50 text-purple-600 hover:bg-purple-100 dark:bg-gray-700 dark:text-purple-300 dark:hover:bg-gray-600'
+                      ? 'bg-primary text-primary-foreground shadow-md hover:bg-primary/90'
+                      : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
                     }`}
                 >
                   {typeOpt.label}
@@ -191,14 +191,14 @@ export default function GovtNGOPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {isLoading ? (
                 Array.from({ length: 4 }).map((_, index) => (
-                  <div key={index} className="animate-pulse bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-                    <div className="h-48 bg-purple-200 dark:bg-purple-700/30"></div>
+                  <div key={index} className="animate-pulse bg-card rounded-xl shadow-lg border overflow-hidden">
+                    <div className="h-48 bg-muted/30"></div>
                     <div className="p-5">
-                      <div className="h-5 bg-purple-200 dark:bg-purple-700/50 rounded w-1/3 mb-3"></div>
-                      <div className="h-7 bg-purple-200 dark:bg-purple-700/50 rounded w-3/4 mb-4"></div>
-                      <div className="h-4 bg-gray-200 dark:bg-gray-600 rounded w-full mb-2"></div>
-                      <div className="h-4 bg-gray-200 dark:bg-gray-600 rounded w-5/6 mb-3"></div>
-                      <div className="h-8 bg-purple-200 dark:bg-purple-700/50 rounded w-1/4"></div>
+                      <div className="h-5 bg-muted rounded w-1/3 mb-3"></div>
+                      <div className="h-7 bg-muted rounded w-3/4 mb-4"></div>
+                      <div className="h-4 bg-muted/50 rounded w-full mb-2"></div>
+                      <div className="h-4 bg-muted/50 rounded w-5/6 mb-3"></div>
+                      <div className="h-8 bg-muted rounded w-1/4"></div>
                     </div>
                   </div>
                 ))
@@ -222,14 +222,14 @@ export default function GovtNGOPage() {
                   </AnimatedSection>
                 ))
               ) : (
-                <div className="md:col-span-2 text-center py-16 bg-white dark:bg-gray-800/70 backdrop-blur-sm rounded-xl shadow-xl border border-gray-200 dark:border-gray-700">
-                  <MagnifyingGlassIcon className="mx-auto h-16 w-16 text-purple-400 dark:text-purple-500 opacity-70" />
-                  <h3 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">No Results Found</h3>
-                  <p className="mt-2 text-base text-gray-500 dark:text-gray-400">We couldn't find any schemes or initiatives matching your search.</p>
+                <div className="md:col-span-2 text-center py-16 bg-card/70 backdrop-blur-sm rounded-xl shadow-xl border">
+                  <MagnifyingGlassIcon className="mx-auto h-16 w-16 text-muted-foreground/70" />
+                  <h3 className="mt-4 text-xl font-semibold text-foreground">No Results Found</h3>
+                  <p className="mt-2 text-base text-muted-foreground">We couldn't find any schemes or initiatives matching your search.</p>
                   <div className="mt-8">
                     <button
                       onClick={() => { setSearchTerm(''); setFilterType('all'); }}
-                      className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                      className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-primary-foreground bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
                     >
                       Clear Search & Filters
                     </button>
@@ -241,10 +241,10 @@ export default function GovtNGOPage() {
 
           <aside className="lg:w-1/3 xl:w-1/4 space-y-8 sticky top-8 self-start">
             <AnimatedSection delay={100}>
-              <div className="bg-white dark:bg-gray-800/70 backdrop-blur-sm rounded-xl shadow-xl p-5 border border-gray-200 dark:border-gray-700">
+              <div className="bg-card/70 backdrop-blur-sm rounded-xl shadow-xl p-5 border">
                 <div className="flex items-center mb-4">
-                  <NewspaperIcon className="h-6 w-6 text-purple-600 dark:text-purple-400 mr-3" />
-                  <h3 className="text-lg font-semibold text-purple-700 dark:text-purple-300">
+                  <NewspaperIcon className="h-6 w-6 text-primary mr-3" />
+                  <h3 className="text-lg font-semibold text-foreground">
                     Related Articles
                   </h3>
                 </div>
@@ -253,14 +253,14 @@ export default function GovtNGOPage() {
             </AnimatedSection>
 
             <AnimatedSection delay={200}>
-              <div className="bg-white dark:bg-gray-800/70 backdrop-blur-sm rounded-xl shadow-xl p-5 border border-gray-200 dark:border-gray-700">
+              <div className="bg-card/70 backdrop-blur-sm rounded-xl shadow-xl p-5 border">
                 <div className="flex items-center mb-4">
-                  <LightBulbIcon className="h-6 w-6 text-purple-600 dark:text-purple-400 mr-3" />
-                  <h3 className="text-lg font-semibold text-purple-700 dark:text-purple-300">
+                  <LightBulbIcon className="h-6 w-6 text-primary mr-3" />
+                  <h3 className="text-lg font-semibold text-foreground">
                     Water Facts
                   </h3>
                 </div>
-                <div className="max-h-80 overflow-y-auto pr-1 pl-4 space-y-3 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-purple-100 dark:scrollbar-thumb-purple-600 dark:scrollbar-track-gray-700 rounded-md">
+                <div className="max-h-80 overflow-y-auto pr-1 pl-4 space-y-3 scrollbar-thin scrollbar-thumb-muted-foreground/30 scrollbar-track-muted rounded-md">
                   {waterFactsData.map((fact, index) => (
                     <WaterFactCard key={`water-${index}`} fact={fact} />
                   ))}

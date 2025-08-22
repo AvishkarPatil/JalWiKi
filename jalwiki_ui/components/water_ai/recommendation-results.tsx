@@ -23,29 +23,25 @@ const getImpactBadgeStyle = (impact: "low" | "medium" | "high" | undefined) => {
   switch (impact) {
     case "high":
       return {
-        className: `bg-red-100 text-red-700 border-red-200 hover:bg-red-200
-                    dark:bg-red-900/60 dark:text-red-300 dark:border-red-700/70 dark:hover:bg-red-800/70`,
+        className: "bg-destructive/10 text-destructive-foreground border-destructive/20 hover:bg-destructive/20",
         icon: <ShieldCheck className="h-3.5 w-3.5 mr-1.5" />,
         text: "High Impact",
       }
     case "medium":
       return {
-        className: `bg-yellow-100 text-yellow-700 border-yellow-200 hover:bg-yellow-200
-                    dark:bg-yellow-900/60 dark:text-yellow-300 dark:border-yellow-700/70 dark:hover:bg-yellow-800/70`,
+        className: "bg-warning/10 text-warning-foreground border-warning/20 hover:bg-warning/20",
         icon: <Zap className="h-3.5 w-3.5 mr-1.5" />,
         text: "Medium Impact",
       }
     case "low":
       return {
-        className: `bg-green-100 text-green-700 border-green-200 hover:bg-green-200
-                    dark:bg-green-900/60 dark:text-green-300 dark:border-green-700/70 dark:hover:bg-green-800/70`,
+        className: "bg-success/10 text-success-foreground border-success/20 hover:bg-success/20",
         icon: <Leaf className="h-3.5 w-3.5 mr-1.5" />,
         text: "Low Impact",
       }
     default:
       return {
-        className: `bg-gray-100 text-gray-700 border-gray-200
-                    dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600`, // Adjusted for better contrast
+        className: "bg-muted text-muted-foreground border-border",
         icon: null,
         text: "Impact N/A",
       }
@@ -53,7 +49,7 @@ const getImpactBadgeStyle = (impact: "low" | "medium" | "high" | undefined) => {
 }
 
 export function RecommendationResults({ results, onStartNew, onEdit }: RecommendationResultsProps) {
-  const { darkMode } = useTheme(); // Use theme context
+  const { darkMode } = useTheme(); // Note: Consider removing if not used
   const [activeTab, setActiveTab] = useState("description")
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false)
   const [shareStatus, setShareStatus] = useState<"idle" | "copied" | "error">("idle")
@@ -233,17 +229,17 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
   return (
     <div className="space-y-6">
       <Card className={cn(
-        "shadow-xl overflow-hidden w-full",
-        darkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"
+        "shadow-lg overflow-hidden w-full",
+        darkMode ? "bg-card" : "bg-card"
       )}>
         <div className={cn(
           "p-6 border-b",
-          darkMode ? "bg-gray-800/70 border-gray-700" : "bg-gray-50 border-gray-200" // Header section slightly lighter
+          darkMode ? "bg-background" : "bg-background"
         )}>
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
             <div className="space-y-2">
-              <h2 className={cn("text-2xl font-bold", darkMode ? "text-purple-400" : "text-purple-700")}>{results.title}</h2>
-              <p className={cn("text-sm", darkMode ? "text-gray-400" : "text-gray-600")}>{results.summary}</p>
+              <h2 className={cn("text-2xl font-bold", darkMode ? "text-foreground" : "text-foreground")}>{results.title}</h2>
+              <p className={cn("text-sm", darkMode ? "text-foreground" : "text-foreground")}>{results.summary}</p>
               <div className="flex flex-wrap gap-2 pt-2 items-center">
                 <Badge variant="outline" className={`text-xs px-2.5 py-1 ${impactStyle.className}`}>
                   {impactStyle.icon}
@@ -257,8 +253,8 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
                       className={cn(
                         "text-xs",
                         darkMode
-                          ? "bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600"
-                          : "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200"
+                          ? "bg-background text-foreground border-border"
+                          : "bg-background text-foreground border-border"
                       )}
                     >
                       {category.name}
@@ -269,12 +265,16 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
             </div>
             <div className="flex space-x-2 shrink-0 mt-4 md:mt-0">
               <Button variant="outline" size="sm" onClick={() => window.print()}
-                      className={cn(darkMode ? "text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-gray-100" : "")}>
+                      className={cn(darkMode ? "text-foreground border-border hover:bg-background" : "text-foreground border-border hover:bg-background")}>
                 <Printer className="h-4 w-4 mr-2" />
                 Print
               </Button>
-              <Button variant="outline" size="sm" onClick={handleDownloadPdf} disabled={isDownloadingPdf}
-                      className={cn(darkMode ? "text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-gray-100" : "")}>
+              <Button
+                onClick={handleDownloadPdf}
+                variant="outline"
+                className="flex items-center"
+                disabled={isDownloadingPdf}
+              >
                 {isDownloadingPdf ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 ) : (
@@ -287,7 +287,7 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
                   variant="outline"
                   size="sm"
                   onClick={handleShare}
-                  className={cn(darkMode ? "text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-gray-100" : "")}
+                  className={cn(darkMode ? "text-foreground border-border hover:bg-background" : "text-foreground border-border hover:bg-background")}
                   aria-label="Share recommendation"
                 >
                   <Share2 className="h-4 w-4 mr-2" />
@@ -298,8 +298,8 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
                   <div className={cn(
                     "absolute z-10 left-0 mt-1 px-2 py-1 rounded text-xs whitespace-nowrap",
                     darkMode
-                      ? "bg-red-900 text-red-200 border border-red-700"
-                      : "bg-red-100 text-red-700 border border-red-300"
+                      ? "bg-destructive/10 text-destructive-foreground border-destructive/20"
+                      : "bg-destructive/10 text-destructive-foreground border-destructive/20"
                   )}>
                     {shareError || "Error sharing"}
                   </div>
@@ -308,8 +308,8 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
                   <div className={cn(
                     "absolute z-10 left-0 mt-1 px-2 py-1 rounded text-xs whitespace-nowrap",
                     darkMode
-                      ? "bg-green-900 text-green-200 border border-green-700"
-                      : "bg-green-100 text-green-700 border border-green-300"
+                      ? "bg-success/10 text-success-foreground border-success/20"
+                      : "bg-success/10 text-success-foreground border-success/20"
                   )}>
                     Link copied!
                   </div>
@@ -323,7 +323,7 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
           <Tabs defaultValue="description" value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className={cn(
               "w-full grid grid-cols-2 md:grid-cols-5 h-auto rounded-none border-b",
-              darkMode ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-200" // Tab list background
+              darkMode ? "bg-background" : "bg-background"
             )}>
               {["Description", "Steps", "Materials", "Benefits", "Gallery"].map((tabName) => (
                 <TabsTrigger
@@ -332,8 +332,8 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
                   className={cn(
                     "py-3 data-[state=active]:shadow-none data-[state=active]:font-semibold", // common active styles
                     darkMode
-                      ? "text-gray-400 data-[state=active]:bg-gray-900 data-[state=active]:text-purple-400" // dark mode specific
-                      : "text-gray-600 data-[state=active]:bg-white data-[state=active]:text-purple-700" // light mode specific
+                      ? "text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground" // dark mode specific
+                      : "text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground" // light mode specific
                   )}
                 >
                   {tabName === "Steps" ? "Implementation" : tabName}
@@ -342,13 +342,14 @@ export function RecommendationResults({ results, onStartNew, onEdit }: Recommend
             </TabsList>
 
             {/* Content area within card, ensuring its background matches active tab / card bg */}
-            <div className={cn("p-6", darkMode ? "bg-gray-900" : "bg-white")}>
+            <div className="p-6 rounded-lg shadow-lg bg-card">
               <TabsContent value="description" className={cn("mt-0 prose prose-sm max-w-none", darkMode && "dark:prose-invert")}>
-                <h3 className={cn("text-lg font-medium mb-3", darkMode ? "text-purple-400" : "text-purple-700")}>Overview</h3>
-                <p className={cn("leading-relaxed", darkMode ? "text-gray-300" : "text-gray-700")}>{results.detailed_content}</p>
+                <h3 className={cn("text-lg font-medium mb-3", darkMode ? "text-foreground" : "text-foreground")}>Overview</h3>
+                <p className={cn("leading-relaxed", darkMode ? "text-foreground" : "text-foreground")}>{results.detailed_content}</p>
               </TabsContent>
 
               <TabsContent value="steps" className={cn("mt-0 prose prose-sm max-w-none", darkMode && "dark:prose-invert")}>
+                <h3 className={cn("text-lg font-medium mb-3", darkMode ? "text-foreground" : "text-foreground")}>Implementation Steps</h3>
                 <h3 className={cn("text-lg font-medium mb-3", darkMode ? "text-purple-400" : "text-purple-700")}>Implementation Steps</h3>
                 {results.steps && results.steps.length > 0 ? (
                   <ol className={cn("list-decimal list-inside space-y-2 leading-relaxed", darkMode ? "text-gray-300" : "text-gray-700")}>

@@ -93,41 +93,20 @@ export function MainContent({ initialThreads, fetchError, searchQuery }: MainCon
   }, [threads, activeTab, sortOption, searchQuery]);
 
 
-  // Define button styles for better readability
-  const filterButtonBase = "rounded-full px-4 py-2 text-sm transition-colors duration-150";
-  const filterButtonActiveLight = "text-white";
-  const filterButtonActiveDark = "text-white"; // Often active buttons can share text color
-  const filterButtonInactiveLight = "border-gray-300 text-gray-700 hover:bg-gray-100";
-  const filterButtonInactiveDark = "border-gray-600 text-gray-300 hover:bg-gray-700/60";
-
-  const getFilterButtonClasses = (
-    tabName: ThreadType | "all",
-    colorLight: string, // e.g., "bg-purple-600 hover:bg-purple-700"
-    colorDark: string,  // e.g., "bg-purple-600 hover:bg-purple-700"
-    hoverTextLight: string, // e.g., "hover:text-purple-700"
-    hoverTextDark: string   // e.g., "hover:text-purple-400"
-  ) => {
+  // Define button styles using design system variables
+  const getFilterButtonClasses = (tabName: ThreadType | "all") => {
     const isActive = activeTab === tabName;
-    if (isActive) {
-      return cn(
-        filterButtonBase,
-        darkMode ? filterButtonActiveDark : filterButtonActiveLight,
-        darkMode ? colorDark : colorLight
-      );
-    }
     return cn(
-      filterButtonBase,
-      darkMode ? filterButtonInactiveDark : filterButtonInactiveLight,
-      darkMode ? hoverTextDark : hoverTextLight
+      "rounded-full px-4 py-2 text-sm transition-colors duration-150",
+      isActive 
+        ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+        : "border border-border text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground"
     );
   };
 
 
   if (fetchError) {
-    return <p className={cn(
-        "text-center py-8",
-        darkMode ? "text-red-400" : "text-red-500"
-    )}>Error: {fetchError}</p>;
+    return <p className="text-center py-8 text-destructive">Error: {fetchError}</p>;
   }
 
   let contentToRender;
@@ -143,52 +122,28 @@ export function MainContent({ initialThreads, fetchError, searchQuery }: MainCon
             <Button
               variant={activeTab === "all" ? "default" : "outline"}
               onClick={() => setActiveTab("all")}
-              className={getFilterButtonClasses(
-                "all",
-                "bg-purple-600 hover:bg-purple-700",
-                "bg-purple-600 hover:bg-purple-700", // Active dark purple
-                "hover:text-purple-700",
-                "hover:text-purple-400"
-              )}
+              className={getFilterButtonClasses("all")}
             >
               <Filter className="mr-2 h-4 w-4" /> All
             </Button>
             <Button
               variant={activeTab === "discussion" ? "default" : "outline"}
               onClick={() => setActiveTab("discussion")}
-              className={getFilterButtonClasses(
-                "discussion",
-                "bg-blue-500 hover:bg-blue-600",
-                "bg-blue-600 hover:bg-blue-700", // Active dark blue
-                "hover:text-blue-600",
-                "hover:text-blue-400"
-              )}
+              className={getFilterButtonClasses("discussion")}
             >
               <MessageSquare className="mr-2 h-4 w-4" /> Discussions
             </Button>
             <Button
               variant={activeTab === "resource" ? "default" : "outline"}
               onClick={() => setActiveTab("resource")}
-              className={getFilterButtonClasses(
-                "resource",
-                "bg-emerald-500 hover:bg-emerald-600",
-                "bg-emerald-600 hover:bg-emerald-700", // Active dark emerald
-                "hover:text-emerald-600",
-                "hover:text-emerald-400"
-              )}
+              className={getFilterButtonClasses("resource")}
             >
               <FileText className="mr-2 h-4 w-4" /> Resources
             </Button>
             <Button
               variant={activeTab === "announcement" ? "default" : "outline"}
               onClick={() => setActiveTab("announcement")}
-              className={getFilterButtonClasses(
-                "announcement",
-                "bg-amber-500 hover:bg-amber-600",
-                "bg-amber-600 hover:bg-amber-700", // Active dark amber
-                "hover:text-amber-600",
-                "hover:text-amber-400"
-              )}
+              className={getFilterButtonClasses("announcement")}
             >
               <Megaphone className="mr-2 h-4 w-4" /> Announcements
             </Button>
@@ -201,12 +156,7 @@ export function MainContent({ initialThreads, fetchError, searchQuery }: MainCon
                 const nextIndex = (currentIndex + 1) % options.length;
                 setSortOption(options[nextIndex]);
               }}
-              className={cn(
-                "ml-auto px-3 py-2 text-sm",
-                darkMode
-                  ? "text-gray-400 hover:text-purple-400 hover:bg-gray-700/60"
-                  : "text-gray-500 hover:text-purple-700"
-              )}
+              className="ml-auto px-3 py-2 text-sm text-muted-foreground hover:text-accent-foreground hover:bg-accent/50"
               title={`Sort by: ${sortOption.replace("-", " ")}`}
             >
               <ArrowUpDown className="h-4 w-4 mr-1" /> Sort: {sortOption.replace("-", " ")}
@@ -216,10 +166,7 @@ export function MainContent({ initialThreads, fetchError, searchQuery }: MainCon
         {filteredThreads.length > 0 ? (
           <ThreadList threads={filteredThreads} onThreadClick={handleThreadClick} />
         ) : (
-          <p className={cn(
-            "text-center py-8",
-            darkMode ? "text-gray-400" : "text-gray-600"
-          )}>
+          <p className="text-center py-8 text-muted-foreground">
             No threads match your current filters.
           </p>
         )}
@@ -230,20 +177,13 @@ export function MainContent({ initialThreads, fetchError, searchQuery }: MainCon
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <h1 className={cn(
-          "text-2xl font-bold",
-          darkMode ? "text-purple-400" : "text-purple-800"
-        )}>
+        <h1 className="text-2xl font-bold text-foreground">
           Explore Forums
         </h1>
         {!isCreatingThread && !selectedThread && (
             <Button
               onClick={handleCreateThread}
-              className={cn(
-                darkMode
-                  ? "bg-purple-600 hover:bg-purple-700 text-white" // Dark mode purple button
-                  : "bg-purple-600 hover:bg-purple-700 text-white" // Light mode purple button
-              )}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
                 <PlusCircle className="mr-2 h-4 w-4" />
                 New Thread

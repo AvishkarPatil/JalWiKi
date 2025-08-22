@@ -52,7 +52,11 @@ export default function AnimatedSection({
         isVisible
           ? 'opacity-100 translate-y-0'
           : 'opacity-0 translate-y-10'
-      } ${className}`}
+      } ${className} bg-card text-foreground`}
+      style={{
+        '--radius': 'var(--radius)',
+        '--shadow': 'var(--shadow-md)'
+      } as React.CSSProperties}
     >
       {children}
     </div>

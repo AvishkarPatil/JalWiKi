@@ -16,16 +16,16 @@ export default function WaterFactCard({ fact }: WaterFactCardProps) {
       className={`
         relative
         rounded-lg
-        bg-white dark:bg-slate-800
-        shadow-lg
+        bg-card text-card-foreground
+        shadow-sm
         overflow-hidden
         transition-all duration-300 ease-in-out
-        py-5 sm:py-6 px-6 sm:px-7
+        p-6
         group
-        ml-[5px] mt-[5px] mb-[8px] mr-[10px]
+        m-1
         ${isHovered
-          ? 'scale-[1.02] shadow-xl ring-2 ring-purple-500 dark:ring-purple-600'
-          : 'ring-1 ring-gray-200 dark:ring-slate-700'}
+          ? 'scale-[1.02] shadow-md ring-2 ring-primary/50'
+          : 'ring-1 ring-border'}
       `}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -38,7 +38,7 @@ export default function WaterFactCard({ fact }: WaterFactCardProps) {
         transform translate-x-1/4 translate-y-1/4
         group-hover:translate-x-[30%] group-hover:translate-y-[30%]
         transition-transform duration-300 ease-in-out
-        text-purple-100 dark:text-purple-800/70
+        text-primary/20
         opacity-30 group-hover:opacity-40
         pointer-events-none
         z-0
@@ -48,9 +48,9 @@ export default function WaterFactCard({ fact }: WaterFactCardProps) {
 
       <div className="relative z-10 flex items-start">
         <div className="flex-shrink-0 mr-3 mt-[2px]">
-           <InformationCircleIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+           <InformationCircleIcon className="h-5 w-5 text-primary" />
         </div>
-        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+        <p className="text-sm text-foreground/90 leading-relaxed">
           {fact}
         </p>
       </div>

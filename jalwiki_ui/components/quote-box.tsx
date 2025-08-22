@@ -50,17 +50,21 @@ export function QuoteBox() {
   return (
     <div
       className={cn(
-        "max-w-3xl mx-auto rounded-xl shadow-lg p-10",
+        "max-w-3xl mx-auto rounded-xl p-10",
+        "shadow-md",
         darkMode
-          ? "bg-gradient-to-r from-purple-800/30 via-purple-900/40 to-purple-800/30 border border-purple-700/50" // Dark mode gradient and border
-          : "bg-gradient-to-r from-purple-500/10 to-purple-600/20" // Light mode gradient
+          ? "bg-card border border-border"
+          : "bg-accent/30"
       )}
+      style={{
+        '--tw-shadow': 'var(--shadow-md)'
+      } as React.CSSProperties}
     >
       <div className="flex justify-center mb-6">
         <QuoteIcon
           className={cn(
             "h-10 w-10",
-            darkMode ? "text-purple-400" : "text-purple-500" // Dark mode icon color
+            darkMode ? "text-primary" : "text-primary"
           )}
         />
       </div>
@@ -71,16 +75,16 @@ export function QuoteBox() {
       >
         <blockquote
           className={cn(
-            "text-2xl font-medium mb-4 text-center", // Added text-center
-            darkMode ? "text-gray-100" : "text-gray-800" // Dark mode blockquote text
+            "text-2xl font-medium mb-4 text-center",
+            darkMode ? "text-foreground" : "text-foreground"
           )}
         >
           "{currentQuote.text}"
         </blockquote>
         <cite
           className={cn(
-            "block text-lg not-italic text-center", // Added block and text-center
-            darkMode ? "text-purple-300" : "text-gray-600" // Dark mode cite text
+            "block text-lg not-italic text-center",
+            darkMode ? "text-muted-foreground" : "text-muted-foreground"
           )}
         >
           — {currentQuote.author}

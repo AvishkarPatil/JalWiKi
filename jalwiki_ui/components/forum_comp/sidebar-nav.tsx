@@ -2,11 +2,11 @@
 
 import Link from "next/link"
 import { Home, PlusCircle, Bookmark, LayoutList, Droplets, Smile, TrendingUp } from "lucide-react"
-import { useTheme } from "@/context/theme-context"; // Import useTheme
+// Theme is now handled by CSS variables
 import { cn } from "@/lib/utils"; // Import cn
 
 export function SidebarNav() {
-  const { darkMode } = useTheme(); // Get darkMode state
+  // Theme is now handled by CSS variables
 
   // Placeholder static stats - these would ideally come from an API or be configurable
   const projectStats = {
@@ -15,11 +15,11 @@ export function SidebarNav() {
     projectsCompleted: "350"
   };
 
-  const navLinkBase = "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors";
-  const navLinkLight = "text-gray-700 hover:bg-gray-100 hover:text-purple-700";
-  const navLinkDark = "text-gray-300 hover:bg-gray-700/60 hover:text-purple-400";
-  const navIconLight = "text-purple-600";
-  const navIconDark = "text-purple-400";
+  const navLinkBase = cn(
+    "flex items-center gap-3 rounded-[var(--radius)] px-3 py-2 text-sm font-medium transition-colors",
+    "text-foreground hover:bg-accent hover:text-accent-foreground"
+  );
+  const navIconClass = "text-primary";
 
   return (
     <div className="flex flex-col h-full space-y-6">
@@ -27,68 +27,59 @@ export function SidebarNav() {
       <div className="space-y-1">
         <Link
           href="/forum"
-          className={cn(navLinkBase, darkMode ? navLinkDark : navLinkLight)}
+          className={navLinkBase}
         >
-          <Home className={cn("h-5 w-5", darkMode ? navIconDark : navIconLight)} />
+          <Home className={cn("h-5 w-5", navIconClass)} />
           <span>All Forums</span>
         </Link>
         <Link
           href="/forum/new"
-          className={cn(navLinkBase, darkMode ? navLinkDark : navLinkLight)}
+          className={navLinkBase}
         >
-          <PlusCircle className={cn("h-5 w-5", darkMode ? navIconDark : navIconLight)} />
+          <PlusCircle className={cn("h-5 w-5", navIconClass)} />
           <span>New Post</span>
         </Link>
         <Link
           href="/forum/my-threads"
-          className={cn(navLinkBase, darkMode ? navLinkDark : navLinkLight)}
+          className={navLinkBase}
         >
-          <LayoutList className={cn("h-5 w-5", darkMode ? navIconDark : navIconLight)} />
+          <LayoutList className={cn("h-5 w-5", navIconClass)} />
           <span>My Threads</span>
         </Link>
         <Link
           href="/forum/saved"
-          className={cn(navLinkBase, darkMode ? navLinkDark : navLinkLight)}
+          className={navLinkBase}
         >
-          <Bookmark className={cn("h-5 w-5", darkMode ? navIconDark : navIconLight)} />
+          <Bookmark className={cn("h-5 w-5", navIconClass)} />
           <span>Saved</span>
         </Link>
       </div>
 
       {/* Project Impact / Stats Section */}
-      <div className={cn(
-        "space-y-3 pt-4 border-t",
-        darkMode ? "border-gray-700" : "border-gray-200"
-      )}>
-        <h3 className={cn(
-          "px-3 text-xs font-semibold uppercase tracking-wider",
-          darkMode ? "text-gray-500" : "text-gray-500" // gray-500 often works for both, or text-gray-400 for dark
-        )}>
+      <div className="space-y-3 pt-4 border-t border-border">
+        <h3 className="px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           Our Impact
         </h3>
-        <div className={cn(
-          "space-y-2 px-3 text-sm",
-          darkMode ? "text-gray-400" : "text-gray-600"
-        )}>
+        <div className="space-y-2 px-3 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <Droplets className={cn("h-5 w-5", darkMode ? "text-blue-400" : "text-blue-500")} />
+            <Droplets className="h-5 w-5 text-blue-500" />
             <div>
-              <span className={cn("font-semibold", darkMode ? "text-gray-100" : "text-gray-800")}>{projectStats.waterSavedLiters}</span> Liters
-              <p className={cn("text-xs", darkMode ? "text-gray-500" : "text-gray-500")}>Water Saved Globally</p>
+              <span className="font-semibold text-foreground">{projectStats.waterSavedLiters}</span> Liters
+              <p className="text-xs text-muted-foreground/80">Water Saved Globally</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Smile className={cn("h-5 w-5", darkMode ? "text-green-400" : "text-green-500")} />
+            <Smile className="h-5 w-5 text-green-500" />
             <div>
-              <span className={cn("font-semibold", darkMode ? "text-gray-100" : "text-gray-800")}>{projectStats.happyPeople}</span> People
-              <p className={cn("text-xs", darkMode ? "text-gray-500" : "text-gray-500")}>Impacted Positively</p>
+              <span className="font-semibold text-foreground">{projectStats.happyPeople}</span> People
+              <p className="text-xs text-muted-foreground/80">Impacted Positively</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <TrendingUp className={cn("h-5 w-5", darkMode ? "text-indigo-400" : "text-indigo-500")} />
+            <TrendingUp className="h-5 w-5 text-indigo-500" />
             <div>
-              <span className={cn("font-semibold", darkMode ? "text-gray-100" : "text-gray-800")}>{projectStats.projectsCompleted}</span> Projects
-              <p className={cn("text-xs", darkMode ? "text-gray-500" : "text-gray-500")}>Conservation Initiatives</p>
+              <span className="font-semibold text-foreground">{projectStats.projectsCompleted}</span> Projects
+              <p className="text-xs text-muted-foreground/80">Conservation Initiatives</p>
             </div>
           </div>
         </div>

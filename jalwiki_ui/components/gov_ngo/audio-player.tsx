@@ -78,9 +78,9 @@ export default function AudioPlayer({ audioUrl, title }: AudioPlayerProps) {
   const progressPercentage = duration ? (currentTime / duration) * 100 : 0
   
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-3 mb-4">
-      <div className="text-sm font-medium text-blue-800 dark:text-blue-300 mb-2">
-        <SpeakerWaveIcon className="h-4 w-4 inline-block mr-1" />
+    <div className="bg-card text-foreground rounded-lg shadow-sm p-3 mb-4 border">
+      <div className="text-sm font-medium text-primary flex items-center mb-2">
+        <SpeakerWaveIcon className="h-4 w-4 mr-2" />
         {title}
       </div>
       
@@ -94,17 +94,17 @@ export default function AudioPlayer({ audioUrl, title }: AudioPlayerProps) {
         <div className="audio-player-controls">
           <button 
             onClick={togglePlay}
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
           >
             {isPlaying ? <PauseIcon className="h-4 w-4" /> : <PlayIcon className="h-4 w-4" />}
           </button>
           
-          <div className="text-xs text-blue-800 dark:text-blue-200 mx-2">
+          <div className="text-xs text-primary mx-2">
             {formatTime(currentTime)} / {formatTime(duration)}
           </div>
           
           <div className="flex items-center">
-            <SpeakerWaveIcon className="h-4 w-4 text-blue-600 dark:text-blue-400 mr-1" />
+            <SpeakerWaveIcon className="h-4 w-4 text-primary mr-1" />
             <input
               type="range"
               min="0"
@@ -112,7 +112,7 @@ export default function AudioPlayer({ audioUrl, title }: AudioPlayerProps) {
               step="0.01"
               value={volume}
               onChange={handleVolumeChange}
-              className="w-16 h-1 bg-blue-200 rounded-lg appearance-none cursor-pointer dark:bg-blue-700"
+              className="w-16 sm:w-20 h-1 bg-muted rounded-full appearance-none outline-none"
             />
           </div>
         </div>

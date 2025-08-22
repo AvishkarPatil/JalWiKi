@@ -25,18 +25,19 @@ export function HashtagSection({ minimal = false }: HashtagSectionProps) {
         <button
           key={index}
           className={cn(
-            "rounded-full transition-colors font-medium",
-            minimal
-              ? "px-3 py-1.5 text-xs"
-              : "px-4 py-2 text-sm",
-            minimal
-              ? darkMode
-                ? "bg-gray-700 hover:bg-gray-600 text-gray-200 border border-gray-600" // Minimal Dark
-                : "bg-gray-100 hover:bg-gray-200 text-gray-700" // Minimal Light
-              : darkMode
-              ? "bg-purple-800/50 hover:bg-purple-700/60 text-purple-300 border border-purple-700/70" // Default Dark
-              : "bg-purple-100 hover:bg-purple-200 text-purple-700" // Default Light
+            "transition-colors font-medium rounded-[var(--radius)] border",
+            "hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50",
+            minimal ? "px-3 py-1.5 text-xs" : "px-4 py-2 text-sm",
+            {
+              'bg-secondary text-secondary-foreground border-border': minimal,
+              'bg-accent text-accent-foreground border-accent/50': !minimal,
+              'hover:bg-accent/90': !minimal,
+              'hover:bg-secondary/80': minimal,
+            }
           )}
+          style={{
+            '--radius': '9999px', // Make it fully rounded for pill shape
+          } as React.CSSProperties}
         >
           {hashtag}
         </button>

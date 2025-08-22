@@ -265,294 +265,441 @@ export function AddTechniqueModal({
       : "bg-gray-50 border-gray-300 focus:border-purple-500 focus:ring-purple-500 placeholder-gray-400"
   );
   const labelClass = "block text-sm font-medium mb-1";
-
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={onClose}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+          onClick={(e) => e.target === e.currentTarget && onClose()}
         >
           <motion.div
-            variants={modalVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className={cn(
-              "relative w-full max-w-3xl rounded-xl shadow-2xl",
-              darkMode ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"
-            )}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
+            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-lg p-6 bg-card text-foreground"
+            style={{ boxShadow: 'var(--shadow-xl)' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className={cn("flex items-center justify-between p-6 border-b", darkMode ? "border-gray-700" : "border-gray-200")}>
-              <h2 className="text-xl font-semibold">Add New Water Saving Technique</h2>
-              <button
-                onClick={onClose}
-                className={cn("p-1 rounded-full transition-colors", darkMode ? "hover:bg-gray-700" : "hover:bg-gray-200")}
-                aria-label="Close modal"
-              >
-                <X size={24} />
-              </button>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-foreground">Add New Water Conservation Technique</h2>
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-full hover:bg-accent/50 transition-colors"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5 text-foreground" />
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Title */}
+            <div>
+              <label htmlFor="title" className="block text-sm font-medium text-foreground/80 mb-1">
+                Title <span className="text-destructive">*</span>
+              </label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none focus:border-transparent transition-colors"
+                placeholder="Enter technique title"
+              />
             </div>
 
-            <form onSubmit={handleSubmit} className="overflow-y-auto max-h-[calc(100vh-160px)]">
-              <div className="p-6 space-y-6">
-                {formError && <p className="text-sm text-red-500 bg-red-100 dark:bg-red-900/30 p-3 rounded-md">{formError}</p>}
-
-                {/* Section 1: Basic Info */}
-                <section>
-                  <h3 className={cn("text-lg font-semibold mb-3 border-b pb-2", darkMode ? "border-gray-700" : "border-gray-200")}>Basic Information</h3>
-                  <div>
-                    <label htmlFor="title" className={labelClass}>Title <span className="text-red-500">*</span></label>
-                    <input type="text" name="title" id="title" value={formData.title} onChange={handleInputChange} className={inputClass} required />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    <div>
-                      <label htmlFor="impact" className={labelClass}>Impact <span className="text-red-500">*</span></label>
-                      <select name="impact" id="impact" value={formData.impact} onChange={handleInputChange} className={inputClass} required>
-                        <option value="" disabled>Select impact level</option>
-                        <option value="low">Low</option>
-                        <option value="moderate">Moderate</option>
-                        <option value="high">High</option>
-                      </select>
-                    </div>
-
-                    {/* Categories Dropdown */}
-                    <div className="relative">
-                        <label className={labelClass}>Categories</label>
-                        <button type="button" onClick={() => {setShowCategoryDropdown(!showCategoryDropdown); setShowRegionDropdown(false);}}
-                            className={cn(inputClass, "flex justify-between items-center text-left")}>
-                            <span>{formData.categories.length > 0 ? formData.categories.map(c=>c.name).join(', ') : "Select categories"}</span>
-                            {showCategoryDropdown ? <ChevronUp size={18}/> : <ChevronDown size={18}/>}
-                        </button>
-                        {showCategoryDropdown && (
-                            <div className={cn("absolute z-10 w-full mt-1 rounded-md shadow-lg max-h-60 overflow-auto border", darkMode ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300")}>
-                                {existingCategories.map(cat => (
-                                    <div key={cat.id || cat.name} onClick={() => toggleCategory(cat)}
-                                        className={cn("px-3 py-2 cursor-pointer text-sm", darkMode ? "hover:bg-gray-600" : "hover:bg-gray-100", formData.categories.find(c=>(c.id && c.id === cat.id) || c.name === cat.name) && (darkMode ? "bg-purple-600/30" : "bg-purple-100"))}>
-                                        {cat.name}
-                                    </div>
-                                ))}
-                                <div className={cn("p-2 border-t", darkMode ? "border-gray-600" : "border-gray-200")}>
-                                    {addingNewCategory ? (
-                                        <div className="space-y-2">
-                                            <input type="text" placeholder="New category name" value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} className={cn(inputClass, "text-xs p-1.5")} />
-                                            <textarea placeholder="Description (optional)" value={newCategoryDesc} onChange={(e) => setNewCategoryDesc(e.target.value)} className={cn(inputClass, "text-xs p-1.5 h-16 resize-none")} />
-                                            <div className="flex gap-2">
-                                                <button type="button" onClick={handleAddNewCategory} className="text-xs bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded">Add</button>
-                                                <button type="button" onClick={() => setAddingNewCategory(false)} className="text-xs bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded">Cancel</button>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <button type="button" onClick={() => setAddingNewCategory(true)} className="w-full text-xs flex items-center justify-center text-purple-500 hover:text-purple-400">
-                                            <PlusCircle size={14} className="mr-1"/> Add New Category
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Regions Dropdown - Similar structure to Categories */}
-                    <div className="relative">
-                        <label className={labelClass}>Regions</label>
-                        <button type="button" onClick={() => {setShowRegionDropdown(!showRegionDropdown); setShowCategoryDropdown(false);}}
-                            className={cn(inputClass, "flex justify-between items-center text-left")}>
-                            <span>{formData.regions.length > 0 ? formData.regions.map(r=>r.name).join(', ') : "Select regions"}</span>
-                            {showRegionDropdown ? <ChevronUp size={18}/> : <ChevronDown size={18}/>}
-                        </button>
-                        {showRegionDropdown && (
-                             <div className={cn("absolute z-10 w-full mt-1 rounded-md shadow-lg max-h-60 overflow-auto border", darkMode ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300")}>
-                                {existingRegions.map(reg => (
-                                    <div key={reg.id || reg.name} onClick={() => toggleRegion(reg)}
-                                        className={cn("px-3 py-2 cursor-pointer text-sm", darkMode ? "hover:bg-gray-600" : "hover:bg-gray-100", formData.regions.find(r=>(r.id && r.id === reg.id) || r.name === reg.name) && (darkMode ? "bg-purple-600/30" : "bg-purple-100"))}>
-                                        {reg.name}
-                                    </div>
-                                ))}
-                                <div className={cn("p-2 border-t", darkMode ? "border-gray-600" : "border-gray-200")}>
-                                     {addingNewRegion ? (
-                                        <div className="flex gap-2 items-center">
-                                            <input type="text" placeholder="New region name" value={newRegionName} onChange={(e) => setNewRegionName(e.target.value)} className={cn(inputClass, "text-xs p-1.5 flex-grow")} />
-                                            <button type="button" onClick={handleAddNewRegion} className="text-xs bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded">Add</button>
-                                            <button type="button" onClick={() => setAddingNewRegion(false)} className="text-xs bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded">X</button>
-                                        </div>
-                                    ) : (
-                                        <button type="button" onClick={() => setAddingNewRegion(true)} className="w-full text-xs flex items-center justify-center text-purple-500 hover:text-purple-400">
-                                            <PlusCircle size={14} className="mr-1"/> Add New Region
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                  </div>
-                </section>
-
-                {/* Section 2: Details */}
-                <section>
-                  <h3 className={cn("text-lg font-semibold mb-3 border-b pb-2", darkMode ? "border-gray-700" : "border-gray-200")}>Technique Details</h3>
-                  <div>
-                    <label htmlFor="summary" className={labelClass}>Summary <span className="text-red-500">*</span></label>
-                    <textarea name="summary" id="summary" value={formData.summary} onChange={handleInputChange} rows={3} className={cn(inputClass, "resize-none")} required />
-                  </div>
-                  <div className="mt-4">
-                    <label htmlFor="detailed_content" className={labelClass}>Detailed Content</label>
-                    <textarea name="detailed_content" id="detailed_content" value={formData.detailed_content} onChange={handleInputChange} rows={6} className={cn(inputClass, "resize-none")} />
-                  </div>
-                </section>
-
-                {/* Section 3: Dynamic Lists (Benefits, Materials, Steps) */}
-                {(["benefits", "materials", "steps"] as const).map((listName) => (
-                  <section key={listName}>
-                    <h3 className={cn("text-lg font-semibold mb-3 border-b pb-2 capitalize", darkMode ? "border-gray-700" : "border-gray-200")}>{listName.replace("_", " ")}</h3>
-                    {formData[listName].map((item, index) => (
-                      <div key={index} className="flex items-center gap-2 mb-2">
-                        <input
-                          type="text"
-                          value={item}
-                          onChange={(e) => handleDynamicListChange(listName, index, e.target.value)}
-                          className={cn(inputClass, "flex-grow")}
-                          placeholder={`${listName.slice(0, -1)} #${index + 1}`}
-                        />
-                        {formData[listName].length > 1 && (
-                          <button type="button" onClick={() => removeDynamicListItem(listName, index)} className={cn("p-1.5 rounded text-red-500 hover:bg-red-500/10", darkMode ? "hover:text-red-400" : "")}>
-                            <Trash2 size={18} />
-                          </button>
-                        )}
-                      </div>
-                    ))}
-                    <button
-                      type="button"
-                      onClick={() => addDynamicListItem(listName)}
-                      className={cn("mt-1 text-sm flex items-center text-purple-600 hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300")}
-                    >
-                      <PlusCircle size={16} className="mr-1" /> Add {listName.slice(0, -1)}
-                    </button>
-                  </section>
+            {/* Impact */}
+            <div>
+              <label className="block text-sm font-medium text-foreground/80 mb-2">
+                Impact Level <span className="text-destructive">*</span>
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {['low', 'moderate', 'high'].map((level) => (
+                  <label
+                    key={level}
+                    className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition-colors ${
+                      formData.impact === level
+                        ? 'border-primary bg-primary/10 text-primary-foreground'
+                        : 'border-input hover:border-primary/50 bg-card hover:bg-accent/10'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="impact"
+                      value={level}
+                      checked={formData.impact === level}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-primary focus:ring-primary focus:ring-offset-2"
+                      required
+                    />
+                    <span className="ml-3 capitalize">{level}</span>
+                  </label>
                 ))}
+              </div>
+            </div>
 
-                {/* Section 4: Media */}
-                <section>
-                  <h3 className={cn("text-lg font-semibold mb-3 border-b pb-2", darkMode ? "border-gray-700" : "border-gray-200")}>Media</h3>
-                  {/* Main Image Upload */}
-                  <div>
-                    <label htmlFor="main_image_file" className={labelClass}>Main Image</label>
-                    <div className={cn("mt-1 flex justify-center px-6 pt-5 pb-6 border-2 rounded-md transition-colors",
-                        darkMode ? "border-gray-600 border-dashed hover:border-purple-500" : "border-gray-300 border-dashed hover:border-purple-400"
-                    )}>
-                      <div className="space-y-1 text-center">
-                        {formData.main_image_preview ? (
-                          <div className="relative w-48 h-32 mx-auto">
-                            <img src={formData.main_image_preview} alt="Main preview" className="object-contain w-full h-full rounded-md" />
-                            <button type="button" onClick={() => setFormData(prev => ({...prev, main_image_file: null, main_image_preview: null}))}
-                                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600">
-                                <X size={14}/>
-                            </button>
-                          </div>
-                        ) : (
-                          <UploadCloud className={cn("mx-auto h-12 w-12", darkMode ? "text-gray-500" : "text-gray-400")} />
-                        )}
-                        <div className="flex text-sm text-gray-600 dark:text-gray-400">
-                          <label
-                            htmlFor="main_image_file_input"
-                            className="relative cursor-pointer rounded-md font-medium text-purple-600 dark:text-purple-400 hover:text-purple-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-purple-500"
-                          >
-                            <span>Upload a file</span>
-                            <input id="main_image_file_input" name="main_image_file" type="file" className="sr-only" accept="image/*" onChange={handleMainImageChange} />
-                          </label>
-                          <p className="pl-1">or drag and drop</p>
-                        </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-500">PNG, JPG, GIF up to 10MB</p>
-                      </div>
-                    </div>
-                  </div>
+            {/* Summary */}
+            <div>
+              <label htmlFor="summary" className="block text-sm font-medium text-foreground/80 mb-1">
+                Summary <span className="text-destructive">*</span>
+              </label>
+              <textarea
+                id="summary"
+                name="summary"
+                value={formData.summary}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none focus:border-transparent transition-colors"
+                placeholder="Enter summary"
+              />
+            </div>
 
-                  {/* Gallery Images Upload */}
-                  <div className="mt-6">
-                    <label className={labelClass}>Gallery Images</label>
-                    <div className={cn("mt-1 flex justify-center px-6 pt-5 pb-6 border-2 rounded-md transition-colors",
-                        darkMode ? "border-gray-600 border-dashed hover:border-purple-500" : "border-gray-300 border-dashed hover:border-purple-400"
-                    )}>
-                       <div className="space-y-1 text-center w-full">
-                         <ImageIcon className={cn("mx-auto h-12 w-12", darkMode ? "text-gray-500" : "text-gray-400")} />
-                         <div className="flex text-sm text-gray-600 dark:text-gray-400 justify-center">
-                            <label
-                                htmlFor="gallery_images_input"
-                                className="relative cursor-pointer rounded-md font-medium text-purple-600 dark:text-purple-400 hover:text-purple-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-purple-500"
-                            >
-                                <span>Upload gallery images</span>
-                                <input id="gallery_images_input" name="gallery_images" type="file" multiple className="sr-only" accept="image/*" onChange={handleGalleryImageChange} />
-                            </label>
-                         </div>
-                         <p className="text-xs text-gray-500 dark:text-gray-500">Select multiple images</p>
-                       </div>
-                    </div>
-                    {formData.gallery_images.length > 0 && (
-                        <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                            {formData.gallery_images.map((item, index) => (
-                                <div key={index} className={cn("p-2 border rounded-md relative", darkMode ? "bg-gray-700/50 border-gray-600" : "bg-gray-50 border-gray-200")}>
-                                    {item.previewUrl && <img src={item.previewUrl} alt={`Gallery item ${index + 1}`} className="w-full h-24 object-cover rounded-md mb-2"/>}
-                                    <input type="text" placeholder="Caption" value={item.caption} onChange={(e) => updateGalleryItem(index, 'caption', e.target.value)} className={cn(inputClass, "text-xs p-1 mb-1")} />
-                                    <select value={item.type} onChange={(e) => updateGalleryItem(index, 'type', e.target.value)} className={cn(inputClass, "text-xs p-1")}>
-                                        <option value="photo">Photo</option>
-                                        <option value="diagram">Diagram</option>
-                                        <option value="illustration">Illustration</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                    <button type="button" onClick={() => removeGalleryItem(index)}
-                                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600">
-                                        <X size={14}/>
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
+            {/* Detailed Content */}
+            <div>
+              <label htmlFor="detailed_content" className="block text-sm font-medium text-foreground/80 mb-1">
+                Detailed Content
+              </label>
+              <textarea
+                id="detailed_content"
+                name="detailed_content"
+                value={formData.detailed_content}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none focus:border-transparent transition-colors"
+                placeholder="Enter detailed content"
+              />
+            </div>
+
+            {/* Categories */}
+            <div>
+              <label className="block text-sm font-medium text-foreground/80 mb-2">
+                Categories
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {existingCategories.map((category) => (
+                  <label
+                    key={category.id || category.name}
+                    className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition-colors ${
+                      formData.categories.some((c) => (c.id && c.id === category.id) || c.name === category.name)
+                        ? 'border-primary bg-primary/10 text-primary-foreground'
+                        : 'border-input hover:border-primary/50 bg-card hover:bg-accent/10'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      name="categories"
+                      value={category.name}
+                      checked={formData.categories.some((c) => (c.id && c.id === category.id) || c.name === category.name)}
+                      onChange={(e) => toggleCategory(category)}
+                      className="h-4 w-4 text-primary focus:ring-primary focus:ring-offset-2"
+                    />
+                    <span className="ml-3">{category.name}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Regions */}
+            <div>
+              <label className="block text-sm font-medium text-foreground/80 mb-2">
+                Regions
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {existingRegions.map((region) => (
+                  <label
+                    key={region.id || region.name}
+                    className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition-colors ${
+                      formData.regions.some((r) => (r.id && r.id === region.id) || r.name === region.name)
+                        ? 'border-primary bg-primary/10 text-primary-foreground'
+                        : 'border-input hover:border-primary/50 bg-card hover:bg-accent/10'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      name="regions"
+                      value={region.name}
+                      checked={formData.regions.some((r) => (r.id && r.id === region.id) || r.name === region.name)}
+                      onChange={(e) => toggleRegion(region)}
+                      className="h-4 w-4 text-primary focus:ring-primary focus:ring-offset-2"
+                    />
+                    <span className="ml-3">{region.name}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Benefits */}
+            <div>
+              <label className="block text-sm font-medium text-foreground/80 mb-2">
+                Benefits
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {formData.benefits.map((benefit, index) => (
+                  <div key={index} className="flex items-center p-3 rounded-lg border-2 cursor-pointer transition-colors">
+                    <input
+                      type="text"
+                      value={benefit}
+                      onChange={(e) => handleDynamicListChange('benefits', index, e.target.value)}
+                      className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none focus:border-transparent transition-colors"
+                      placeholder={`Benefit #${index + 1}`}
+                    />
+                    {formData.benefits.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeDynamicListItem('benefits', index)}
+                        className="ml-2 p-1.5 rounded-full hover:bg-accent/50 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4 text-foreground" />
+                      </button>
                     )}
                   </div>
-                </section>
-
-                {/* Publish Toggle */}
-                 <div className="flex items-center justify-between pt-4">
-                    <span className={labelClass}>Publish this technique?</span>
-                    <label htmlFor="is_published" className="flex items-center cursor-pointer">
-                        <div className="relative">
-                        <input type="checkbox" id="is_published" className="sr-only" checked={formData.is_published} onChange={(e) => setFormData(prev => ({...prev, is_published: e.target.checked}))} />
-                        <div className={cn("block w-10 h-6 rounded-full", formData.is_published ? (darkMode ? "bg-purple-500" : "bg-purple-600") : (darkMode ? "bg-gray-600" : "bg-gray-300"))}></div>
-                        <div className={cn("dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform", formData.is_published && "translate-x-full")}></div>
-                        </div>
-                    </label>
-                </div>
-
-              </div>
-
-              {/* Sticky Footer for Actions */}
-              <div className={cn("flex items-center justify-end p-6 border-t sticky bottom-0 z-10", darkMode ? "border-gray-700 bg-gray-800" : "border-gray-200 bg-white")}>
+                ))}
                 <button
                   type="button"
-                  onClick={onClose}
-                  className={cn("px-4 py-2 rounded-md text-sm font-medium mr-3 transition-colors",
-                    darkMode ? "bg-gray-600 hover:bg-gray-500 text-gray-200" : "bg-gray-200 hover:bg-gray-300 text-gray-700"
-                  )}
-                  disabled={isSubmitting}
+                  onClick={() => addDynamicListItem('benefits')}
+                  className="mt-2 text-sm flex items-center text-accent-foreground hover:text-accent-foreground/80 transition-colors"
                 >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className={cn("px-6 py-2 rounded-md text-sm font-medium text-white flex items-center transition-colors",
-                    darkMode ? "bg-purple-600 hover:bg-purple-700" : "bg-purple-600 hover:bg-purple-700",
-                    isSubmitting ? "opacity-60 cursor-not-allowed" : "hover:shadow-md hover:shadow-purple-500/30"
-                  )}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  {isSubmitting ? "Saving..." : "Add Technique"}
+                  <PlusCircle className="mr-1 w-4 h-4" /> Add Benefit
                 </button>
               </div>
-            </form>
+            </div>
+
+            {/* Materials */}
+            <div>
+              <label className="block text-sm font-medium text-foreground/80 mb-2">
+                Materials
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {formData.materials.map((material, index) => (
+                  <div key={index} className="flex items-center p-3 rounded-lg border-2 cursor-pointer transition-colors">
+                    <input
+                      type="text"
+                      value={material}
+                      onChange={(e) => handleDynamicListChange('materials', index, e.target.value)}
+                      className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none focus:border-transparent transition-colors"
+                      placeholder={`Material #${index + 1}`}
+                    />
+                    {formData.materials.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeDynamicListItem('materials', index)}
+                        className="ml-2 p-1.5 rounded-full hover:bg-accent/50 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4 text-foreground" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => addDynamicListItem('materials')}
+                  className="mt-2 text-sm flex items-center text-accent-foreground hover:text-accent-foreground/80 transition-colors"
+                >
+                  <PlusCircle className="mr-1 w-4 h-4" /> Add Material
+                </button>
+              </div>
+            </div>
+
+            {/* Steps */}
+            <div>
+              <label className="block text-sm font-medium text-foreground/80 mb-2">
+                Steps
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {formData.steps.map((step, index) => (
+                  <div key={index} className="flex items-center p-3 rounded-lg border-2 cursor-pointer transition-colors">
+                    <input
+                      type="text"
+                      value={step}
+                      onChange={(e) => handleDynamicListChange('steps', index, e.target.value)}
+                      className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none focus:border-transparent transition-colors"
+                      placeholder={`Step #${index + 1}`}
+                    />
+                    {formData.steps.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeDynamicListItem('steps', index)}
+                        className="ml-2 p-1.5 rounded-full hover:bg-accent/50 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4 text-foreground" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => addDynamicListItem('steps')}
+                  className="mt-2 text-sm flex items-center text-accent-foreground hover:text-accent-foreground/80 transition-colors"
+                >
+                  <PlusCircle className="mr-1 w-4 h-4" /> Add Step
+                </button>
+              </div>
+            </div>
+
+            {/* Main Image */}
+            <div>
+              <label className="block text-sm font-medium text-foreground/80 mb-2">
+                Main Image
+              </label>
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 rounded-md transition-colors border-input">
+                <div className="space-y-1 text-center w-full">
+                  {formData.main_image_preview ? (
+                    <div className="relative w-48 h-32 mx-auto">
+                      <img src={formData.main_image_preview} alt="Main preview" className="object-contain w-full h-full rounded-md" />
+                      <button
+                        type="button"
+                        onClick={() => setFormData((prev) => ({ ...prev, main_image_file: null, main_image_preview: null }))}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <UploadCloud className="mx-auto h-12 w-12 text-foreground/80" />
+                  )}
+                  <div className="flex text-sm text-foreground/80 justify-center">
+                    <label
+                      htmlFor="main_image_file_input"
+                      className="relative cursor-pointer rounded-md font-medium text-accent-foreground hover:text-accent-foreground/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
+                    >
+                      <span>Upload a file</span>
+                      <input
+                        id="main_image_file_input"
+                        name="main_image_file"
+                        type="file"
+                        className="sr-only"
+                        accept="image/*"
+                        onChange={handleMainImageChange}
+                      />
+                    </label>
+                    <p className="pl-1">or drag and drop</p>
+                  </div>
+                  <p className="text-xs text-foreground/80">PNG, JPG, GIF up to 10MB</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Gallery Images */}
+            <div>
+              <label className="block text-sm font-medium text-foreground/80 mb-2">
+                Gallery Images
+              </label>
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 rounded-md transition-colors border-input">
+                <div className="space-y-1 text-center w-full">
+                  <ImageIcon className="mx-auto h-12 w-12 text-foreground/80" />
+                  <div className="flex text-sm text-foreground/80 justify-center">
+                    <label
+                      htmlFor="gallery_images_input"
+                      className="relative cursor-pointer rounded-md font-medium text-accent-foreground hover:text-accent-foreground/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
+                    >
+                      <span>Upload gallery images</span>
+                      <input
+                        id="gallery_images_input"
+                        name="gallery_images"
+                        type="file"
+                        multiple
+                        className="sr-only"
+                        accept="image/*"
+                        onChange={handleGalleryImageChange}
+                      />
+                    </label>
+                  </div>
+                  <p className="text-xs text-foreground/80">Select multiple images</p>
+                </div>
+              </div>
+              {formData.gallery_images.length > 0 && (
+                <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  {formData.gallery_images.map((item, index) => (
+                    <div key={index} className="p-2 border rounded-md relative bg-card">
+                      {item.previewUrl && (
+                        <img src={item.previewUrl} alt={`Gallery item ${index + 1}`} className="w-full h-24 object-cover rounded-md mb-2" />
+                      )}
+                      <input
+                        type="text"
+                        placeholder="Caption"
+                        value={item.caption}
+                        onChange={(e) => updateGalleryItem(index, 'caption', e.target.value)}
+                        className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none focus:border-transparent transition-colors"
+                      />
+                      <select
+                        value={item.type}
+                        onChange={(e) => updateGalleryItem(index, 'type', e.target.value)}
+                        className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none focus:border-transparent transition-colors"
+                      >
+                        <option value="photo">Photo</option>
+                        <option value="diagram">Diagram</option>
+                        <option value="illustration">Illustration</option>
+                        <option value="other">Other</option>
+                      </select>
+                      <button
+                        type="button"
+                        onClick={() => removeGalleryItem(index)}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Publish */}
+            <div className="flex items-center justify-between pt-4">
+              <span className="block text-sm font-medium text-foreground/80">
+                Publish this technique?
+              </span>
+              <label htmlFor="is_published" className="flex items-center cursor-pointer">
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    id="is_published"
+                    className="sr-only"
+                    checked={formData.is_published}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, is_published: e.target.checked }))}
+                  />
+                  <div
+                    className={`block w-10 h-6 rounded-full ${
+                      formData.is_published ? 'bg-primary' : 'bg-input'
+                    }`}
+                  ></div>
+                  <div
+                    className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${
+                      formData.is_published && 'translate-x-full'
+                    }`}
+                  ></div>
+                </div>
+              </label>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex justify-end space-x-3 pt-4 border-t border-border">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 text-sm font-medium rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="px-4 py-2 text-sm font-medium rounded-md text-primary-foreground bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center">
+                    <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                    Saving...
+                  </span>
+                ) : (
+                  'Save Technique'
+                )}
+              </button>
+            </div>
+          </form>
           </motion.div>
         </motion.div>
       )}
@@ -560,7 +707,4 @@ export function AddTechniqueModal({
   );
 }
 
-// Helper Loader2 component if not imported from lucide-react or similar
-// const Loader2 = (props: React.SVGProps<SVGSVGElement>) => (
-//   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-// );
+export default AddTechniqueModal;

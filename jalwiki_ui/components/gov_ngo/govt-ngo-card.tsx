@@ -84,18 +84,19 @@ export default function GovtNGOCard({
     relative
     rounded-xl
     transition-all duration-300 ease-in-out
-    bg-gradient-to-br from-white via-purple-50/40 to-purple-100/20 dark:from-slate-800 dark:to-slate-900
-    border border-gray-200 dark:border-slate-700
+    bg-card text-card-foreground
+    border border-border
     flex flex-col h-full
     overflow-hidden
+    shadow-sm hover:shadow-md
   `
   const cardHoverStyle = `
-    transform scale-[1.02]
-    shadow-xl
-    border-purple-300 dark:border-purple-600
+    transform scale-[1.01]
+    shadow-md
+    ring-1 ring-primary/50
   `
   const popularRingStyle = `
-    ring-2 ring-offset-1 ring-offset-white dark:ring-offset-slate-800 ring-purple-500
+    ring-2 ring-offset-1 ring-offset-card ring-primary
   `
 
   return (
@@ -108,7 +109,7 @@ export default function GovtNGOCard({
     >
       {isPopular && (
         <div
-          className="absolute top-3 right-3 bg-purple-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md z-10"
+          className="absolute top-3 right-3 bg-primary text-primary-foreground text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm z-10"
         >
           POPULAR
         </div>
@@ -118,20 +119,20 @@ export default function GovtNGOCard({
         <span
           className={`inline-block self-start px-3 py-1 text-xs font-semibold rounded-full mb-3
           ${type === 'government'
-            ? 'bg-purple-100 text-purple-700 dark:bg-purple-800/40 dark:text-purple-300'
-            : 'bg-teal-100 text-teal-700 dark:bg-teal-800/40 dark:text-teal-300'
+            ? 'bg-primary/10 text-primary'
+            : 'bg-secondary/80 text-secondary-foreground'
           }`}
         >
           {type === 'government' ? 'Government Scheme' : 'NGO Initiative'}
         </span>
 
-        <h3 id={`card-title-${id}`} className="text-lg md:text-xl font-bold text-gray-800 dark:text-white mb-3 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors">
+        <h3 id={`card-title-${id}`} className="text-lg md:text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
           {title}
         </h3>
 
         <div className="flex items-start gap-3 sm:gap-4 mb-4">
           {imageUrl && (
-            <div className="relative flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-lg border-2 border-white dark:border-slate-600">
+            <div className="relative flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-sm border-2 border-card">
               <Image
                 src={imageUrl}
                 alt={`Image for ${title}`}
@@ -142,13 +143,13 @@ export default function GovtNGOCard({
               {/* The small "POP" badge on the image has been removed from here */}
             </div>
           )}
-          <p className={`text-sm leading-relaxed text-gray-600 dark:text-gray-400 ${imageUrl ? 'line-clamp-4 sm:line-clamp-5' : 'line-clamp-5 sm:line-clamp-6'} flex-grow`}>
+          <p className={`text-sm leading-relaxed text-muted-foreground ${imageUrl ? 'line-clamp-4 sm:line-clamp-5' : 'line-clamp-5 sm:line-clamp-6'} flex-grow`}>
             {description}
           </p>
         </div>
       </div>
 
-      <div className="mt-auto px-5 sm:px-6 py-3 sm:py-4 border-t border-gray-200/80 dark:border-slate-700/70">
+      <div className="mt-auto px-5 sm:px-6 py-3 sm:py-4 border-t border-border/80">
         <ArticleActions
           id={id}
           title={title}

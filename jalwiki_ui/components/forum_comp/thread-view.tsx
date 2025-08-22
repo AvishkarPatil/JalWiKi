@@ -14,29 +14,23 @@ import Link from "next/link";
 import { useTheme } from "@/context/theme-context";
 import { cn } from "@/lib/utils";
 
-const getTypeBadgeProps = (type: ApiThread['type'] | undefined, darkMode: boolean) => {
+const getTypeBadgeProps = (type: ApiThread['type'] | undefined) => {
   switch (type) {
     case "announcement":
       return {
         text: "Announcement",
-        className: darkMode
-          ? "bg-amber-900/60 text-amber-300 border-amber-700/70 hover:bg-amber-800/70 text-xs px-2 py-0.5"
-          : "bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200 text-xs px-2 py-0.5",
+        className: "bg-warning/10 text-warning-foreground border border-warning/20 hover:bg-warning/20 text-xs px-2 py-0.5"
       };
     case "resource":
       return {
         text: "Resource",
-        className: darkMode
-          ? "bg-emerald-900/60 text-emerald-300 border-emerald-700/70 hover:bg-emerald-800/70 text-xs px-2 py-0.5"
-          : "bg-emerald-100 text-emerald-800 border-emerald-300 hover:bg-emerald-200 text-xs px-2 py-0.5",
+        className: "bg-success/10 text-success-foreground border border-success/20 hover:bg-success/20 text-xs px-2 py-0.5"
       };
     case "discussion":
     default:
       return {
         text: "Discussion",
-        className: darkMode
-          ? "bg-blue-900/60 text-blue-300 border-blue-700/70 hover:bg-blue-800/70 text-xs px-2 py-0.5"
-          : "bg-blue-100 text-blue-800 border-blue-300 hover:bg-blue-200 text-xs px-2 py-0.5",
+        className: "bg-primary/10 text-primary-foreground border border-primary/20 hover:bg-primary/20 text-xs px-2 py-0.5"
       };
   }
 };
@@ -57,7 +51,6 @@ interface CommentItemProps {
 }
 
 const CommentItemDisplay: React.FC<CommentItemProps> = ({ comment, threadId, onCommentUpdatedOrReplied, currentUserId }) => {
-  const { darkMode } = useTheme();
   const [isReplying, setIsReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -123,15 +116,17 @@ const CommentItemDisplay: React.FC<CommentItemProps> = ({ comment, threadId, onC
   };
 
   return (
-    <div className={cn("py-3 border-b last:border-b-0", darkMode ? "border-gray-700" : "border-gray-200")}>
+    <div className="py-3 border-b last:border-b-0 border-border">
       <div className="flex items-start space-x-3">
-        <Avatar className="h-8 w-8">
+        <Avatar className="h-8 w-8 border border-border">
           <AvatarImage src={comment.author.profile_pic_url || undefined} alt={comment.author.username} />
-          <AvatarFallback>{comment.author.username ? comment.author.username.substring(0,1).toUpperCase() : 'U'}</AvatarFallback>
+          <AvatarFallback className="bg-muted text-foreground">
+            {comment.author.username ? comment.author.username.substring(0,1).toUpperCase() : 'U'}
+          </AvatarFallback>
         </Avatar>
         <div className="flex-1">
-          <div className={cn("flex items-center justify-between text-xs", darkMode ? "text-gray-500" : "text-gray-500")}>
-            <span className={cn("font-medium", darkMode ? "text-gray-200" : "text-gray-700")}>{comment.author.username || 'User'}</span>
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span className="font-medium text-foreground">{comment.author.username || 'User'}</span>
             <span>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
           </div>
           {isEditing ? (
@@ -140,54 +135,89 @@ const CommentItemDisplay: React.FC<CommentItemProps> = ({ comment, threadId, onC
                 value={editedContent}
                 onChange={(e) => setEditedContent(e.target.value)}
                 rows={2}
-                className={cn("w-full text-sm", darkMode ? "bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 focus:border-purple-500" : "border-gray-300 focus:border-purple-500")}
+                className="w-full text-sm bg-background text-foreground placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 required
               />
-              {error && <p className={cn("text-xs mt-1", darkMode ? "text-red-400" : "text-red-500")}>{error}</p>}
+              {error && <p className="text-xs mt-1 text-destructive">{error}</p>}
               <div className="flex gap-2 mt-1">
-                <Button type="submit" size="sm" variant="default" disabled={isSubmitting} className={cn(darkMode ? "bg-purple-600 hover:bg-purple-700 text-white" : "bg-purple-600 hover:bg-purple-700")}>Save</Button>
-                <Button type="button" size="sm" variant="outline" onClick={() => {setIsEditing(false); setEditedContent(comment.content); setError(null);}} disabled={isSubmitting} className={cn(darkMode ? "text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-gray-100" : "")}>Cancel</Button>
+                <Button type="submit" size="sm" disabled={isSubmitting}>
+                  Save
+                </Button>
+                <Button 
+                  type="button" 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={() => {setIsEditing(false); setEditedContent(comment.content); setError(null);}} 
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </Button>
               </div>
             </form>
           ) : (
-            <p className={cn("text-sm mt-1 whitespace-pre-wrap", darkMode ? "text-gray-300" : "text-gray-800")}>{comment.content}</p>
+            <p className="text-sm mt-1 whitespace-pre-wrap text-foreground">{comment.content}</p>
           )}
           {!isEditing && (
             <div className="mt-2 flex items-center space-x-3 text-xs">
-              <Button variant="ghost" size="sm" onClick={handleCommentUpvote} className={cn("p-0 h-auto", darkMode ? "text-gray-400 hover:text-purple-400" : "text-gray-500 hover:text-purple-600")}>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={handleCommentUpvote} 
+                className="p-0 h-auto text-muted-foreground hover:text-foreground"
+              >
                 <ThumbsUp className="h-3.5 w-3.5 mr-1" /> {comment.upvote_count}
               </Button>
               {currentUserId && (
-                <Button variant="ghost" size="sm" onClick={() => setIsReplying(!isReplying)} className={cn("p-0 h-auto", darkMode ? "text-gray-400 hover:text-purple-400" : "text-gray-500 hover:text-purple-600")}>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => setIsReplying(!isReplying)} 
+                  className="p-0 h-auto text-muted-foreground hover:text-foreground"
+                >
                   <MessageSquare className="h-3.5 w-3.5 mr-1" /> Reply
                 </Button>
               )}
               {isAuthor && (
-                <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)} className={cn("p-0 h-auto", darkMode ? "text-gray-400 hover:text-purple-400" : "text-gray-500 hover:text-purple-600")}>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => setIsEditing(true)} 
+                  className="p-0 h-auto text-muted-foreground hover:text-foreground"
+                >
                   Edit
                 </Button>
               )}
             </div>
           )}
           {isReplying && (
-            <form onSubmit={handleReplySubmit} className={cn("mt-2 ml-4 pl-4 border-l-2", darkMode ? "border-gray-700" : "border-gray-200")}>
+            <form onSubmit={handleReplySubmit} className="mt-2 ml-4 pl-4 border-l-2 border-border">
               <Textarea
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
                 placeholder={`Replying to ${comment.author.username}...`}
                 rows={2}
-                className={cn("w-full text-sm", darkMode ? "bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 focus:border-purple-500" : "border-gray-300 focus:border-purple-500")}
+                className="w-full text-sm bg-background text-foreground placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 required
               />
-              {error && <p className={cn("text-xs mt-1", darkMode ? "text-red-400" : "text-red-500")}>{error}</p>}
+              {error && <p className="text-xs mt-1 text-destructive">{error}</p>}
               <div className="flex gap-2 mt-1">
-                <Button type="submit" size="sm" variant="default" disabled={isSubmitting} className={cn(darkMode ? "bg-purple-600 hover:bg-purple-700 text-white" : "bg-purple-600 hover:bg-purple-700")}>Post Reply</Button>
-                <Button type="button" size="sm" variant="outline" onClick={() => setIsReplying(false)} disabled={isSubmitting} className={cn(darkMode ? "text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-gray-100" : "")}>Cancel</Button>
+                <Button type="submit" size="sm" disabled={isSubmitting}>
+                  Post Reply
+                </Button>
+                <Button 
+                  type="button" 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={() => setIsReplying(false)} 
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </Button>
               </div>
             </form>
           )}
           {comment.replies && comment.replies.length > 0 && (
-            <div className={cn("mt-3 ml-4 pl-4 border-l-2 space-y-3", darkMode ? "border-gray-700" : "border-gray-200")}>
+            <div className="mt-3 ml-4 pl-4 border-l-2 space-y-3 border-border">
               {comment.replies.map(reply => (
                 <CommentItemDisplay key={reply.id} comment={reply} threadId={threadId} onCommentUpdatedOrReplied={onCommentUpdatedOrReplied} currentUserId={currentUserId} />
               ))}
@@ -199,14 +229,12 @@ const CommentItemDisplay: React.FC<CommentItemProps> = ({ comment, threadId, onC
   );
 };
 
-
 interface ThreadViewProps {
   thread: ApiThread;
   onBack: () => void;
 }
 
 export function ThreadView({ thread, onBack }: ThreadViewProps) {
-  const { darkMode } = useTheme();
   const [comments, setComments] = useState<ApiComment[]>([]);
   const [isLoadingComments, setIsLoadingComments] = useState(true);
   const [commentError, setCommentError] = useState<string | null>(null);
@@ -285,31 +313,33 @@ export function ThreadView({ thread, onBack }: ThreadViewProps) {
 
   if (!currentThread) return null;
 
-  const typeBadge = getTypeBadgeProps(currentThread.type, darkMode);
+  const typeBadge = getTypeBadgeProps(currentThread.type);
 
   return (
-    <div className={cn("p-4 md:p-6 rounded-lg", darkMode ? "bg-gray-900 border border-gray-700" : "bg-white shadow-lg")}>
+    <div className="p-4 md:p-6 rounded-lg bg-card border border-border shadow-sm">
       <Button
         variant="ghost"
         onClick={onBack}
-        className={cn("mb-4", darkMode ? "text-purple-400 hover:text-purple-300 hover:bg-gray-700/50" : "text-purple-600 hover:text-purple-700")}
+        className="mb-4 text-primary hover:text-primary/90 hover:bg-accent"
       >
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to List
       </Button>
       <article>
         <header className="mb-4">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-1">
-            <h1 className={cn("text-2xl font-bold", darkMode ? "text-gray-100" : "text-gray-800")}>{currentThread.title}</h1>
+            <h1 className="text-2xl font-bold text-foreground">{currentThread.title}</h1>
             <Badge variant="outline" className={typeBadge.className}>
               {typeBadge.text}
             </Badge>
           </div>
-          <div className={cn("flex items-center text-sm mt-1", darkMode ? "text-gray-400" : "text-gray-500")}>
-            <Avatar className="h-7 w-7 mr-2">
+          <div className="flex items-center text-sm mt-1 text-muted-foreground">
+            <Avatar className="h-7 w-7 mr-2 border border-border">
               <AvatarImage src={currentThread.author.profile_pic_url || undefined} alt={currentThread.author.username} />
-              <AvatarFallback>{currentThread.author.username ? currentThread.author.username.substring(0,1).toUpperCase() : 'U'}</AvatarFallback>
+              <AvatarFallback className="bg-muted text-foreground">
+                {currentThread.author.username ? currentThread.author.username.substring(0,1).toUpperCase() : 'U'}
+              </AvatarFallback>
             </Avatar>
-            <span className={cn(darkMode ? "text-gray-300" : "")}>{currentThread.author.username || 'User'}</span>
+            <span className="text-foreground">{currentThread.author.username || 'User'}</span>
             <span className="mx-1.5">·</span>
             <span>Posted {formatDistanceToNow(new Date(currentThread.created_at), { addSuffix: true })}</span>
             {currentThread.updated_at !== currentThread.created_at && (
@@ -321,30 +351,30 @@ export function ThreadView({ thread, onBack }: ThreadViewProps) {
               <Badge
                 key={tag.id}
                 variant="secondary"
-                className={cn(darkMode ? "bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600" : "")}
+                className="bg-muted text-foreground hover:bg-muted/80"
               >
                 {tag.name}
               </Badge>
             ))}
           </div>
         </header>
-        <div className={cn("prose prose-sm max-w-none mb-6 whitespace-pre-wrap", darkMode ? "text-gray-300 prose-invert" : "text-gray-700")}>
+        <div className="prose prose-sm max-w-none mb-6 whitespace-pre-wrap text-foreground">
           {currentThread.content}
         </div>
-        <div className={cn("flex items-center space-x-4 mb-6 pb-4 border-b", darkMode ? "border-gray-700" : "border-gray-200")}>
+        <div className="flex items-center space-x-4 mb-6 pb-4 border-b border-border">
           <Button
             variant="outline"
             size="sm"
             onClick={handleThreadUpvote}
             disabled={!currentUserId}
-            className={cn(darkMode ? "text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-gray-100" : "")}
+            className="text-foreground hover:bg-accent"
           >
             <ThumbsUp className="h-4 w-4 mr-1.5" /> Upvote ({currentThread.upvote_count})
           </Button>
         </div>
       </article>
       <section className="mt-6">
-        <h2 className={cn("text-lg font-semibold mb-3", darkMode ? "text-gray-100" : "text-gray-800")}>Comments ({currentThread.comment_count})</h2>
+        <h2 className="text-lg font-semibold mb-3 text-foreground">Comments ({currentThread.comment_count})</h2>
         {currentUserId && (
           <form onSubmit={handlePostComment} className="mb-6">
             <Label htmlFor="new-comment" className="sr-only">Add a comment</Label>
@@ -355,29 +385,28 @@ export function ThreadView({ thread, onBack }: ThreadViewProps) {
               placeholder="Add your comment..."
               rows={3}
               required
-              className={cn("mb-2", darkMode ? "bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 focus:border-purple-500" : "border-gray-300 focus:border-purple-500")}
+              className="mb-2 bg-background text-foreground placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
-            {commentError && <p className={cn("text-xs mb-1", darkMode ? "text-red-400" : "text-red-500")}>{commentError}</p>}
+            {commentError && <p className="text-xs mb-1 text-destructive">{commentError}</p>}
             <Button
               type="submit"
               disabled={isSubmittingComment || !currentUserId}
-              className={cn(darkMode ? "bg-purple-600 hover:bg-purple-700 text-white" : "bg-purple-600 hover:bg-purple-700")}
             >
               {isSubmittingComment ? "Posting..." : "Post Comment"}
             </Button>
           </form>
         )}
         {!currentUserId && (
-          <p className={cn("text-sm mb-4", darkMode ? "text-gray-400" : "text-gray-600")}>
-            Please <Link href="/auth" className={cn(darkMode ? "text-purple-400 hover:underline" : "text-purple-600 hover:underline")}>login</Link> to post comments.
+          <p className="text-sm mb-4 text-muted-foreground">
+            Please <Link href="/auth" className="text-primary hover:underline">login</Link> to post comments.
           </p>
         )}
-        {isLoadingComments && <p className={cn("text-sm", darkMode ? "text-gray-500" : "text-gray-500")}>Loading comments...</p>}
+        {isLoadingComments && <p className="text-sm text-muted-foreground">Loading comments...</p>}
         {!isLoadingComments && commentError && !comments.length && (
-          <p className={cn("text-sm", darkMode ? "text-red-400" : "text-red-500")}>{commentError}</p>
+          <p className="text-sm text-destructive">{commentError}</p>
         )}
         {!isLoadingComments && !commentError && comments.length === 0 && (
-          <p className={cn("text-sm", darkMode ? "text-gray-500" : "text-gray-500")}>No comments yet.</p>
+          <p className="text-sm text-muted-foreground">No comments yet.</p>
         )}
         <div className="space-y-3">
           {comments.map(comment => (

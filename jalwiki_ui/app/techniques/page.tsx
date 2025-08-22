@@ -218,8 +218,8 @@ export default function TechniquesPage() {
 
   if (isLoadingAuth) {
     return (
-      <div className={cn("flex min-h-screen items-center justify-center p-4", darkMode ? "bg-gray-950" : "bg-gray-100")}>
-        <Loader2 className="h-16 w-16 animate-spin text-purple-500" />
+      <div className="flex min-h-screen items-center justify-center p-4 bg-background">
+        <Loader2 className="h-16 w-16 animate-spin text-primary" />
       </div>
     );
   }
@@ -229,31 +229,17 @@ export default function TechniquesPage() {
   }
 
   return (
-    <div className={cn(
-      "flex flex-col min-h-screen transition-colors duration-300",
-      darkMode ? "bg-gray-950 text-gray-200" : "bg-gray-50 text-gray-900"
-    )}>
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="text-center mb-8">
-          <h1 className={cn(
-            "text-3xl font-bold mb-6",
-            darkMode ? "text-purple-400" : "text-purple-700"
-          )}>Water Techniques</h1>
+          <h1 className="text-3xl font-bold mb-6 text-primary">Water Techniques</h1>
           <form onSubmit={handleSearch} className="max-w-md mx-auto">
             <div className="relative">
-              <Search className={cn(
-                "absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5",
-                darkMode ? "text-gray-500" : "text-gray-400"
-              )} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 type="search"
                 placeholder="Search techniques..."
-                className={cn(
-                  "pl-10 pr-4 py-2 rounded-full focus:ring-purple-500",
-                  darkMode
-                    ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500"
-                    : "bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-purple-500"
-                )}
+                className="pl-10 pr-4 py-2 rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -265,11 +251,7 @@ export default function TechniquesPage() {
           <div className={cn("w-full md:w-64 flex-shrink-0 space-y-6 md:sticky md:top-8")}>
             <Button
               onClick={handleOpenModal}
-              className={cn(
-                "w-full flex items-center justify-center px-4 py-3 rounded-lg text-base font-medium text-white transition-all duration-300",
-                darkMode ? "bg-purple-600 hover:bg-purple-700" : "bg-purple-600 hover:bg-purple-700",
-                "hover:shadow-lg hover:shadow-purple-500/40 transform hover:-translate-y-0.5"
-              )}
+              className="w-full flex items-center justify-center px-4 py-3 rounded-lg text-base font-medium text-primary-foreground bg-primary hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/40 transform hover:-translate-y-0.5"
             >
               <Plus size={20} className="mr-2" />
               Add New Technique
@@ -303,7 +285,7 @@ export default function TechniquesPage() {
                             id={`impact-${impact}`}
                             checked={selectedImpacts.includes(impact)}
                             onChange={() => handleImpactChange(impact)}
-                            className={cn("rounded focus:ring-purple-500", darkMode ? "bg-gray-700 border-gray-600 text-purple-500" : "text-purple-600")}
+                            className="rounded text-primary focus:ring-primary border-border"
                           />
                           <label htmlFor={`impact-${impact}`} className="text-sm capitalize select-none cursor-pointer">
                             {impact}
@@ -320,9 +302,7 @@ export default function TechniquesPage() {
                     <div className={cn(
                       "space-y-2 pl-1 max-h-48 overflow-y-auto",
                       "scrollbar-thin",
-                      darkMode
-                        ? "scrollbar-track-gray-800 scrollbar-thumb-gray-600 hover:scrollbar-thumb-gray-500"
-                        : "scrollbar-track-gray-100 scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500"
+                      "scrollbar-track-muted scrollbar-thumb-border hover:scrollbar-thumb-foreground/50"
                     )}>
                       {filterableRegions.map((region) => ( // Use filterableRegions
                         <div key={region} className="flex items-center gap-2">
@@ -331,7 +311,7 @@ export default function TechniquesPage() {
                             id={`region-${region}`}
                             checked={selectedRegions.includes(region)}
                             onChange={() => handleRegionChange(region)}
-                            className={cn("rounded focus:ring-purple-500", darkMode ? "bg-gray-700 border-gray-600 text-purple-500" : "text-purple-600")}
+                            className="rounded text-primary focus:ring-primary border-border"
                           />
                           <label htmlFor={`region-${region}`} className="text-sm select-none cursor-pointer">
                             {region}
@@ -348,9 +328,7 @@ export default function TechniquesPage() {
                     <div className={cn(
                       "space-y-2 pl-1 max-h-48 overflow-y-auto",
                       "scrollbar-thin",
-                      darkMode
-                        ? "scrollbar-track-gray-800 scrollbar-thumb-gray-600 hover:scrollbar-thumb-gray-500"
-                        : "scrollbar-track-gray-100 scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500"
+                      "scrollbar-track-muted scrollbar-thumb-border hover:scrollbar-thumb-foreground/50"
                     )}>
                       {filterableCategories.map((category) => ( // Use filterableCategories
                         <div key={category} className="flex items-center gap-2">
@@ -359,7 +337,7 @@ export default function TechniquesPage() {
                             id={`category-${category}`}
                             checked={selectedCategories.includes(category)}
                             onChange={() => handleCategoryChange(category)}
-                            className={cn("rounded focus:ring-purple-500", darkMode ? "bg-gray-700 border-gray-600 text-purple-500" : "text-purple-600")}
+                            className="rounded text-primary focus:ring-primary border-border"
                           />
                           <label htmlFor={`category-${category}`} className="text-sm select-none cursor-pointer">
                             {category}
@@ -372,13 +350,13 @@ export default function TechniquesPage() {
               </Accordion>
 
               {(selectedRegions.length > 0 || selectedCategories.length > 0 || selectedImpacts.length > 0) && (
-                <div className={cn("mt-4 pt-4", darkMode ? "border-t border-gray-700" : "border-t")}>
+                <div className="mt-4 pt-4 border-t border-border">
                   <h3 className="text-sm font-medium mb-2">Applied Filters</h3>
                   <div className="flex flex-wrap gap-2">
                     {selectedImpacts.map((impact) => (
                       <Badge key={impact} variant="outline" className={cn(
                         "flex items-center gap-1 text-xs",
-                        darkMode ? "bg-purple-900/50 border-purple-700/50 text-purple-300" : "bg-purple-50 border-purple-200 text-purple-700"
+                        "bg-primary/10 border-primary/30 text-primary"
                       )}>
                         {impact}
                         <X className="h-3 w-3 cursor-pointer" onClick={() => handleImpactChange(impact)} />
@@ -387,7 +365,7 @@ export default function TechniquesPage() {
                     {selectedRegions.map((region) => (
                       <Badge key={region} variant="outline" className={cn(
                         "flex items-center gap-1 text-xs",
-                        darkMode ? "bg-purple-900/50 border-purple-700/50 text-purple-300" : "bg-purple-50 border-purple-200 text-purple-700"
+                        "bg-primary/10 border-primary/30 text-primary"
                       )}>
                         {region}
                         <X className="h-3 w-3 cursor-pointer" onClick={() => handleRegionChange(region)} />
@@ -396,7 +374,7 @@ export default function TechniquesPage() {
                     {selectedCategories.map((category) => (
                       <Badge key={category} variant="outline" className={cn(
                         "flex items-center gap-1 text-xs",
-                        darkMode ? "bg-purple-900/50 border-purple-700/50 text-purple-300" : "bg-purple-50 border-purple-200 text-purple-700"
+                        "bg-primary/10 border-primary/30 text-primary"
                       )}>
                         {category}
                         <X className="h-3 w-3 cursor-pointer" onClick={() => handleCategoryChange(category)} />
@@ -412,7 +390,7 @@ export default function TechniquesPage() {
           <div className="flex-1">
             <div className="flex flex-col space-y-6">
               <div className="flex justify-between items-center">
-                <p className={cn("text-sm", darkMode ? "text-gray-400" : "text-gray-500")}>
+                <p className="text-sm text-muted-foreground">
                   Showing {filteredTechniques.length > 0 ? startIndex + 1 : 0}-
                   {Math.min(startIndex + itemsPerPage, filteredTechniques.length)} of {filteredTechniques.length}{" "}
                   techniques
@@ -424,8 +402,8 @@ export default function TechniquesPage() {
                     onClick={() => setViewMode("grid")}
                     className={cn(
                       viewMode === "grid"
-                        ? (darkMode ? "bg-purple-600 hover:bg-purple-700 text-white" : "bg-purple-700 hover:bg-purple-800 text-white")
-                        : (darkMode ? "border-gray-600 hover:bg-gray-700" : "border-gray-300 hover:bg-gray-100")
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                        : "hover:bg-accent hover:text-accent-foreground"
                     )}
                   >
                     <Grid3x3 className="h-4 w-4" />
@@ -437,8 +415,8 @@ export default function TechniquesPage() {
                     onClick={() => setViewMode("list")}
                     className={cn(
                       viewMode === "list"
-                        ? (darkMode ? "bg-purple-600 hover:bg-purple-700 text-white" : "bg-purple-700 hover:bg-purple-800 text-white")
-                        : (darkMode ? "border-gray-600 hover:bg-gray-700" : "border-gray-300 hover:bg-gray-100")
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                        : "hover:bg-accent hover:text-accent-foreground"
                     )}
                   >
                     <List className="h-4 w-4" />
@@ -452,15 +430,15 @@ export default function TechniquesPage() {
                   viewMode === "grid" ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                       {Array(6).fill(0).map((_, i) => (
-                        <Card key={i} className={cn("overflow-hidden", darkMode ? "bg-gray-900 border-gray-700" : "bg-white")}>
-                          <Skeleton className={cn("h-48 w-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
+                        <Card key={i} className="overflow-hidden">
+                          <Skeleton className="h-48 w-full bg-muted" />
                           <div className="p-4 space-y-2">
-                            <Skeleton className={cn("h-6 w-3/4", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                            <Skeleton className={cn("h-4 w-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                            <Skeleton className={cn("h-4 w-2/3", darkMode ? "bg-gray-700" : "bg-gray-200")} />
+                            <Skeleton className="h-6 w-3/4 bg-muted" />
+                            <Skeleton className="h-4 w-full bg-muted" />
+                            <Skeleton className="h-4 w-2/3 bg-muted" />
                             <div className="flex gap-2 mt-3">
-                              <Skeleton className={cn("h-5 w-16 rounded-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                              <Skeleton className={cn("h-5 w-16 rounded-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
+                              <Skeleton className="h-5 w-16 rounded-full bg-muted" />
+                              <Skeleton className="h-5 w-16 rounded-full bg-muted" />
                             </div>
                           </div>
                         </Card>
@@ -469,15 +447,15 @@ export default function TechniquesPage() {
                   ) : (
                     <div className="flex flex-col gap-6">
                       {Array(6).fill(0).map((_, i) => (
-                        <Card key={i} className={cn("overflow-hidden", darkMode ? "bg-gray-900 border-gray-700" : "bg-white")}>
+                        <Card key={i} className="overflow-hidden">
                           <div className="p-4 flex gap-4">
-                            <Skeleton className={cn("h-24 w-24 rounded-md flex-shrink-0", darkMode ? "bg-gray-700" : "bg-gray-200")} />
+                            <Skeleton className="h-24 w-24 rounded-md flex-shrink-0 bg-muted" />
                             <div className="flex-1 space-y-2">
-                              <Skeleton className={cn("h-6 w-3/4", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                              <Skeleton className={cn("h-4 w-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
+                              <Skeleton className="h-6 w-3/4 bg-muted" />
+                              <Skeleton className="h-4 w-full bg-muted" />
                               <div className="flex gap-2 mt-2">
-                                <Skeleton className={cn("h-5 w-16 rounded-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
-                                <Skeleton className={cn("h-5 w-16 rounded-full", darkMode ? "bg-gray-700" : "bg-gray-200")} />
+                                <Skeleton className="h-5 w-16 rounded-full bg-muted" />
+                                <Skeleton className="h-5 w-16 rounded-full bg-muted" />
                               </div>
                             </div>
                           </div>
@@ -488,19 +466,13 @@ export default function TechniquesPage() {
                 ) : (
                   <>
                     {filteredTechniques.length === 0 ? (
-                      <div className={cn(
-                        "text-center py-12 rounded-lg border",
-                        darkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"
-                      )}>
-                        <div className={cn(
-                          "mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4",
-                          darkMode ? "bg-purple-900/50" : "bg-purple-100"
-                        )}>
-                          <WaterIcon className={cn("h-8 w-8", darkMode ? "text-purple-400" : "text-purple-700")} />
+                      <div className="text-center py-12 rounded-lg border border-border bg-card">
+                        <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-primary/10">
+                          <WaterIcon className="h-8 w-8 text-primary" />
                         </div>
                         <h3 className="text-lg font-medium">No techniques found</h3>
-                        <p className={cn("mt-2", darkMode ? "text-gray-400" : "text-gray-500")}>Try changing your search or filters.</p>
-                        <Button variant="outline" className={cn("mt-4", darkMode ? "border-gray-600 hover:bg-gray-700" : "border-gray-300 hover:bg-gray-100")} onClick={clearFilters}>
+                        <p className="mt-2 text-muted-foreground">Try changing your search or filters.</p>
+                        <Button variant="outline" className="mt-4" onClick={clearFilters}>
                           Clear all filters
                         </Button>
                       </div>
@@ -510,10 +482,7 @@ export default function TechniquesPage() {
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {paginatedTechniques.map((technique: Technique) => (
                               <Link href={`/techniques/${technique.slug}`} key={technique.id} className="group">
-                                <Card className={cn(
-                                  "overflow-hidden h-full transition-all duration-200 border hover:shadow-md",
-                                  darkMode ? "bg-gray-900 border-gray-700 hover:border-purple-700/50" : "bg-white border-gray-200 hover:border-purple-200"
-                                )}>
+                                <Card className="overflow-hidden h-full transition-all duration-200 border border-border hover:shadow-md hover:border-primary/50">
                                   <div className="relative h-48 overflow-hidden">
                                     <Image
                                       src={technique.main_image || "/placeholder.svg"}
@@ -523,32 +492,32 @@ export default function TechniquesPage() {
                                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                     />
                                     <div className="absolute top-2 right-2">
-                                      <Badge className={cn("capitalize", darkMode ? "bg-purple-600 text-white" : "bg-purple-700 text-white")}>{technique.impact}</Badge>
+                                      <Badge className="capitalize bg-primary text-primary-foreground">{technique.impact}</Badge>
                                     </div>
                                   </div>
                                   <CardContent className="p-4">
-                                    <h3 className={cn("font-semibold text-lg mb-2 transition-colors", darkMode ? "group-hover:text-purple-400" : "group-hover:text-purple-700")}>
+                                    <h3 className="font-semibold text-lg mb-2 transition-colors group-hover:text-primary">
                                       {technique.title}
                                     </h3>
-                                    <p className={cn("text-sm line-clamp-2 mb-3", darkMode ? "text-gray-400" : "text-gray-600")}>{technique.summary}</p>
+                                    <p className="text-sm line-clamp-2 mb-3 text-muted-foreground">{technique.summary}</p>
                                     <div className="flex flex-wrap gap-2 mt-3">
                                       {technique.categories.slice(0, 2).map((category: Category) => (
-                                        <Badge key={category.id} variant="outline" className={cn(darkMode ? "bg-gray-800 border-gray-600" : "bg-gray-50 border-gray-200")}>
+                                        <Badge key={category.id} variant="outline" className="bg-muted text-foreground">
                                           {category.name}
                                         </Badge>
                                       ))}
                                       {technique.categories.length > 2 && (
-                                        <Badge variant="outline" className={cn(darkMode ? "bg-gray-800 border-gray-600" : "bg-gray-50 border-gray-200")}>
+                                        <Badge variant="outline" className="bg-muted text-foreground">
                                           +{technique.categories.length - 2}
                                         </Badge>
                                       )}
                                     </div>
                                   </CardContent>
-                                  <CardFooter className={cn("px-4 py-3 flex justify-between items-center", darkMode ? "border-t border-gray-700" : "border-t")}>
-                                    <div className={cn("flex items-center gap-1 text-sm", darkMode ? "text-gray-400" : "text-gray-500")}>
+                                  <CardFooter className="px-4 py-3 flex justify-between items-center border-t border-border">
+                                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
                                       <span className="line-clamp-1">{technique.region.map((r: Region) => r.name).join(", ")}</span>
                                     </div>
-                                    <Button size="sm" variant="ghost" className={cn("hover:bg-opacity-50 -mr-2", darkMode ? "text-purple-400 hover:bg-purple-900" : "text-purple-700 hover:bg-purple-50")}>
+                                    <Button size="sm" variant="ghost" className="hover:bg-opacity-50 -mr-2 text-primary hover:bg-primary/10">
                                       Read more
                                     </Button>
                                   </CardFooter>
@@ -557,13 +526,10 @@ export default function TechniquesPage() {
                             ))}
                           </div>
                         ) : (
-                          <div className="flex flex-col gap-2">
+                          <div className="flex flex-col gap-6">
                             {paginatedTechniques.map((technique: Technique) => (
                               <Link href={`/techniques/${technique.slug}`} key={technique.id} className="group block">
-                                <Card className={cn(
-                                  "overflow-hidden transition-all duration-200 border hover:shadow-md",
-                                  darkMode ? "bg-gray-900 border-gray-700 hover:border-purple-700/50" : "bg-white border-gray-200 hover:border-purple-200"
-                                )}>
+                                <Card className="overflow-hidden transition-all duration-200 border border-border hover:shadow-md hover:border-primary/50">
                                   <div className="p-4 flex flex-col sm:flex-row gap-4">
                                     <div className="relative h-32 sm:h-24 w-full sm:w-32 rounded-md overflow-hidden flex-shrink-0">
                                       <Image
@@ -576,28 +542,28 @@ export default function TechniquesPage() {
                                     </div>
                                     <div className="flex-1">
                                       <div className="flex justify-between items-start mb-1 gap-2">
-                                        <h3 className={cn("font-semibold text-lg transition-colors", darkMode ? "group-hover:text-purple-400" : "group-hover:text-purple-700")}>
+                                        <h3 className="font-semibold text-lg transition-colors group-hover:text-primary">
                                           {technique.title}
                                         </h3>
-                                        <Badge className={cn("capitalize ml-2 flex-shrink-0", darkMode ? "bg-purple-600 text-white" : "bg-purple-700 text-white")}>
+                                        <Badge className="capitalize ml-2 flex-shrink-0 bg-primary text-primary-foreground">
                                           {technique.impact}
                                         </Badge>
                                       </div>
-                                      <p className={cn("text-sm line-clamp-2 mb-2", darkMode ? "text-gray-400" : "text-gray-600")}>{technique.summary}</p>
+                                      <p className="text-sm line-clamp-2 mb-2 text-muted-foreground">{technique.summary}</p>
                                       <div className="flex flex-wrap items-center justify-between mt-2 gap-2">
                                         <div className="flex flex-wrap gap-2">
                                           {technique.categories.slice(0, 2).map((category: Category) => (
-                                            <Badge key={category.id} variant="outline" className={cn(darkMode ? "bg-gray-800 border-gray-600" : "bg-gray-50 border-gray-200")}>
+                                            <Badge key={category.id} variant="outline" className="bg-muted text-foreground">
                                               {category.name}
                                             </Badge>
                                           ))}
                                           {technique.categories.length > 2 && (
-                                            <Badge variant="outline" className={cn(darkMode ? "bg-gray-800 border-gray-600" : "bg-gray-50 border-gray-200")}>
+                                            <Badge variant="outline" className="bg-muted text-foreground">
                                               +{technique.categories.length - 2}
                                             </Badge>
                                           )}
                                         </div>
-                                        <div className={cn("text-sm", darkMode ? "text-gray-400" : "text-gray-500")}>
+                                        <div className="text-sm text-muted-foreground">
                                           {technique.region.map((r: Region) => r.name).join(", ")}
                                         </div>
                                       </div>
@@ -615,34 +581,16 @@ export default function TechniquesPage() {
                               variant="outline"
                               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                               disabled={currentPage === 1}
-                              className={cn("flex items-center gap-1", darkMode ? "border-gray-600 hover:bg-gray-700" : "border-gray-300 hover:bg-gray-100")}
+                              className="flex items-center gap-1"
                             >
                               <ChevronLeft className="h-4 w-4" />
                               Previous
                             </Button>
-                            <div className="flex items-center gap-1">
-                              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                                <Button
-                                  key={page}
-                                  variant={currentPage === page ? "default" : "outline"}
-                                  size="icon"
-                                  className={cn(
-                                    "w-8 h-8",
-                                    currentPage === page
-                                      ? (darkMode ? "bg-purple-600 hover:bg-purple-700 text-white" : "bg-purple-700 hover:bg-purple-800 text-white")
-                                      : (darkMode ? "border-gray-600 hover:bg-gray-700" : "border-gray-300 hover:bg-gray-100")
-                                  )}
-                                  onClick={() => setCurrentPage(page)}
-                                >
-                                  {page}
-                                </Button>
-                              ))}
-                            </div>
                             <Button
                               variant="outline"
                               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                               disabled={currentPage === totalPages}
-                              className={cn("flex items-center gap-1", darkMode ? "border-gray-600 hover:bg-gray-700" : "border-gray-300 hover:bg-gray-100")}
+                              className="flex items-center gap-1"
                             >
                               Next
                               <ChevronRight className="h-4 w-4" />

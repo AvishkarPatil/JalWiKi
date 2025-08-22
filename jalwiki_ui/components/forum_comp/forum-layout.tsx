@@ -24,23 +24,17 @@ export function ForumLayout({ children }: { children: React.ReactNode }) {
   const { darkMode } = useTheme(); // Get darkMode state
 
   return (
-    <div className={cn(
-      "min-h-screen",
-      darkMode ? "bg-gray-950 text-gray-200" : "bg-gray-100 text-gray-900" // Page background and default text
-    )}>
+    <div className="min-h-screen bg-background text-foreground">
       {/* Top Navigation - Example of how it would be themed if active */}
       {/*
-      <header className={cn(
-        "sticky top-0 z-50 w-full border-b shadow-sm",
-        darkMode ? "bg-gray-900 border-gray-800" : "bg-white border-gray-200"
-      )}>
+      <header className="sticky top-0 z-50 w-full border-b shadow-sm bg-card text-card-foreground border-border">
         <div className="container flex h-16 items-center px-4 sm:px-6">
           <Button
             variant="ghost"
             size="icon"
             className={cn(
               "mr-2 md:hidden",
-              darkMode ? "text-gray-400 hover:bg-gray-700/60 hover:text-purple-400" : "text-gray-500 hover:bg-gray-100 hover:text-purple-600"
+              "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
             )}
             onClick={() => setIsMobileMenuOpen(true)}
           >
@@ -49,10 +43,10 @@ export function ForumLayout({ children }: { children: React.ReactNode }) {
           </Button>
 
           <Link href="/" className="flex items-center gap-2 mr-6">
-            <Droplet className={cn("h-6 w-6", darkMode ? "text-purple-400" : "text-purple-600")} />
+            <Droplet className="h-6 w-6 text-primary" />
             <span className={cn(
               "text-xl font-bold",
-              darkMode ? "text-purple-400" : "text-purple-700"
+              "text-primary"
             )}>WaterForum</span>
           </Link>
 
@@ -60,7 +54,7 @@ export function ForumLayout({ children }: { children: React.ReactNode }) {
             <Button
               variant="ghost"
               size="icon"
-              className={cn(darkMode ? "text-gray-400 hover:text-purple-400 hover:bg-gray-700/60" : "text-gray-500 hover:text-purple-600")}
+              className="text-muted-foreground hover:text-accent-foreground hover:bg-accent"
             >
               <Bell className="h-5 w-5" />
               <span className="sr-only">Notifications</span>
@@ -68,7 +62,7 @@ export function ForumLayout({ children }: { children: React.ReactNode }) {
             <Button
               variant="ghost"
               size="icon"
-              className={cn("rounded-full", darkMode ? "text-gray-400 hover:text-purple-400 hover:bg-gray-700/60" : "text-gray-500 hover:text-purple-600")}
+              className="rounded-full text-muted-foreground hover:text-accent-foreground hover:bg-accent"
             >
               <User className="h-5 w-5" />
               <span className="sr-only">Profile</span>

@@ -28,7 +28,6 @@ const threadTypeOptions: { value: ThreadType; label: string }[] = [
 ];
 
 export function NewThreadForm({ onSubmitSuccess, onCancel }: NewThreadFormProps) {
-  const { darkMode } = useTheme(); // Get darkMode state
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedType, setSelectedType] = useState<ThreadType>("discussion");
@@ -129,17 +128,11 @@ export function NewThreadForm({ onSubmitSuccess, onCancel }: NewThreadFormProps)
   };
 
   return (
-    <div className={cn(
-      "p-4 md:p-6 rounded-lg shadow-md",
-      darkMode ? "bg-gray-800 border border-gray-700" : "bg-white" // Main container
-    )}>
-      <h2 className={cn(
-        "text-xl font-semibold mb-6",
-        darkMode ? "text-purple-400" : "text-purple-700" // Heading
-      )}>Create New Thread</h2>
+    <div className="p-4 md:p-6 rounded-lg shadow-md bg-card border border-border">
+      <h2 className="text-xl font-semibold mb-6 text-foreground">Create New Thread</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <Label htmlFor="thread-title" className={cn("text-sm font-medium", darkMode ? "text-gray-300" : "text-gray-700")}>Title</Label>
+          <Label htmlFor="thread-title" className="text-sm font-medium text-foreground">Title</Label>
           <Input
             id="thread-title"
             type="text"
@@ -147,35 +140,22 @@ export function NewThreadForm({ onSubmitSuccess, onCancel }: NewThreadFormProps)
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter a clear and concise title"
             required
-            className={cn(
-              "mt-1",
-              darkMode ? "bg-gray-700 border-gray-600 text-gray-100 placeholder:text-gray-400 focus:border-purple-500" : "border-gray-300 focus:border-purple-500"
-            )}
+            className="mt-1"
           />
         </div>
 
         <div>
-          <Label htmlFor="thread-type" className={cn("text-sm font-medium", darkMode ? "text-gray-300" : "text-gray-700")}>Type</Label>
+          <Label htmlFor="thread-type" className="text-sm font-medium text-foreground">Type</Label>
           <Select
             value={selectedType}
             onValueChange={(value: ThreadType) => setSelectedType(value)}
           >
-            <SelectTrigger
-              id="thread-type"
-              className={cn(
-                "w-full mt-1",
-                darkMode ? "bg-gray-700 border-gray-600 text-gray-100 focus:ring-purple-500" : "border-gray-300 focus:ring-purple-500"
-              )}
-            >
+            <SelectTrigger id="thread-type" className="w-full mt-1">
               <SelectValue placeholder="Select thread type" />
             </SelectTrigger>
-            <SelectContent className={cn(darkMode ? "bg-gray-800 text-gray-200 border-gray-700" : "")}>
+            <SelectContent>
               {threadTypeOptions.map(option => (
-                <SelectItem
-                  key={option.value}
-                  value={option.value}
-                  className={cn(darkMode ? "focus:bg-gray-700" : "")}
-                >
+                <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
               ))}
@@ -184,25 +164,19 @@ export function NewThreadForm({ onSubmitSuccess, onCancel }: NewThreadFormProps)
         </div>
 
         <div>
-          <Label htmlFor="thread-content" className={cn("text-sm font-medium", darkMode ? "text-gray-300" : "text-gray-700")}>Content</Label>
-          <div className={cn(
-            "mt-1 rounded-md overflow-hidden", // Container for RichTextEditor
-            darkMode ? "border border-gray-600" : "border border-gray-300"
-          )}>
-            {/* RichTextEditor needs its own internal dark theme handling */}
-            {/* Pass darkMode prop if RichTextEditor supports it */}
+          <Label htmlFor="thread-content" className="text-sm font-medium text-foreground">Content</Label>
+          <div className="mt-1 rounded-md overflow-hidden border border-border">
             <RichTextEditor
               value={content}
               onChange={setContent}
               placeholder="Share your thoughts, questions, or resources..."
               minHeight="200px"
-              // darkMode={darkMode} // Example: if RichTextEditor accepts a darkMode prop
             />
           </div>
         </div>
 
         <div>
-          <Label htmlFor="thread-tags" className={cn("text-sm font-medium", darkMode ? "text-gray-300" : "text-gray-700")}>Tags</Label>
+          <Label htmlFor="thread-tags" className="text-sm font-medium text-foreground">Tags</Label>
           <div className="mt-1">
             <Popover open={isTagPopoverOpen} onOpenChange={setIsTagPopoverOpen}>
               <PopoverTrigger asChild>
@@ -210,28 +184,17 @@ export function NewThreadForm({ onSubmitSuccess, onCancel }: NewThreadFormProps)
                   variant="outline"
                   role="combobox"
                   aria-expanded={isTagPopoverOpen}
-                  className={cn(
-                    "w-full justify-between",
-                    darkMode
-                      ? "bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600 hover:text-gray-100"
-                      : "text-gray-500 hover:text-gray-700 border-gray-300"
-                  )}
+                  className="w-full justify-between"
                 >
                   {selectedTags.length > 0 ? `${selectedTags.length} tag(s) selected` : "Select or create tags..."}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent
-                className={cn(
-                  "w-[--radix-popover-trigger-width] p-0",
-                  darkMode ? "bg-gray-800 border-gray-700 text-gray-200" : ""
-                )}
+                className="w-[--radix-popover-trigger-width] p-0"
                 align="start"
               >
-                <Command
-                  shouldFilter={false}
-                  className={cn(darkMode ? "[&_[cmdk-input]]:bg-gray-700 [&_[cmdk-input]]:border-gray-600 [&_[cmdk-input]]:text-gray-100 [&_[cmdk-list]]:max-h-[200px]" : "[&_[cmdk-list]]:max-h-[200px]")}
-                >
+                <Command shouldFilter={false} className="[&_[cmdk-list]]:max-h-[200px]">
                   <CommandInput
                     placeholder="Search or create tag..."
                     value={tagInputValue}
@@ -239,27 +202,27 @@ export function NewThreadForm({ onSubmitSuccess, onCancel }: NewThreadFormProps)
                     // className applied via Command's className prop for specificity
                   />
                   <CommandList>
-                    {isLoadingTags && <CommandEmpty className={cn(darkMode ? "text-gray-400" : "")}>Loading tags...</CommandEmpty>}
+                    {isLoadingTags && <CommandEmpty>Loading tags...</CommandEmpty>}
                     {!isLoadingTags && filteredSuggestions.length === 0 && tagInputValue.trim() === "" && (
-                        <CommandEmpty className={cn(darkMode ? "text-gray-400" : "")}>Type to search or create a tag.</CommandEmpty>
+                        <CommandEmpty>Type to search or create a tag.</CommandEmpty>
                     )}
                     {!isLoadingTags && filteredSuggestions.length === 0 && tagInputValue.trim() !== "" && (
                         <CommandItem
                             key="create-new"
                             value={`__create__${tagInputValue.trim()}`}
                             onSelect={() => handleCreateAndSelectTag(tagInputValue.trim())}
-                            className={cn("cursor-pointer", darkMode ? "hover:bg-gray-700 aria-selected:bg-gray-600" : "")}
+                            className="cursor-pointer"
                         >
                         Create "{tagInputValue.trim()}"
                         </CommandItem>
                     )}
-                    <CommandGroup heading={cn(darkMode && filteredSuggestions.length > 0 ? "text-gray-400" : "")}>
+                    <CommandGroup heading={filteredSuggestions.length > 0 ? "Available Tags" : undefined}>
                       {filteredSuggestions.map((tag) => (
                         <CommandItem
                           key={tag.id}
                           value={tag.name}
                           onSelect={() => handleTagSelect(tag)}
-                          className={cn("cursor-pointer", darkMode ? "hover:bg-gray-700 aria-selected:bg-gray-600" : "")}
+                          className="cursor-pointer"
                         >
                           {tag.name}
                         </CommandItem>
@@ -270,7 +233,7 @@ export function NewThreadForm({ onSubmitSuccess, onCancel }: NewThreadFormProps)
                             key="create-new-explicit"
                             value={`__create__${tagInputValue.trim()}`}
                             onSelect={() => handleCreateAndSelectTag(tagInputValue.trim())}
-                            className={cn("cursor-pointer", darkMode ? "hover:bg-gray-700 aria-selected:bg-gray-600" : "")}
+                            className="cursor-pointer"
                         >
                         Create "{tagInputValue.trim()}"
                         </CommandItem>
@@ -286,20 +249,14 @@ export function NewThreadForm({ onSubmitSuccess, onCancel }: NewThreadFormProps)
                 <Badge
                   key={tag.id}
                   variant="secondary"
-                  className={cn(
-                    "flex items-center",
-                    darkMode ? "bg-gray-600 text-gray-100 border-gray-500" : ""
-                  )}
+                  className="flex items-center"
                 >
                   {tag.name}
                   <button
                     type="button"
                     onClick={() => handleRemoveTag(tag.id)}
-                    className={cn(
-                      "ml-1.5",
-                      darkMode ? "text-purple-400 hover:text-purple-300" : "text-purple-500 hover:text-purple-700"
-                    )}
-                    aria-label={`Remove ${tag.name} tag`}
+                    className="ml-1.5 text-muted-foreground hover:text-foreground"
+                    aria-label={`Remove ${tag.name}`}
                   >
                     <XIcon className="h-3 w-3" />
                   </button>
@@ -309,26 +266,22 @@ export function NewThreadForm({ onSubmitSuccess, onCancel }: NewThreadFormProps)
           )}
         </div>
 
-        {error && <p className={cn("text-sm", darkMode ? "text-red-400" : "text-red-600")}>{error}</p>}
-        <div className="flex justify-end gap-3 pt-4">
+        {error && <p className="text-sm text-red-600">{error}</p>}
+        <div className="flex justify-end space-x-3 mt-8">
           <Button
             type="button"
             variant="outline"
             onClick={onCancel}
             disabled={isSubmitting}
-            className={cn(darkMode ? "text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-gray-100" : "")}
           >
             Cancel
           </Button>
           <Button
             type="submit"
-            disabled={isSubmitting}
-            className={cn(
-              "text-white",
-              darkMode ? "bg-purple-600 hover:bg-purple-700" : "bg-purple-600 hover:bg-purple-700"
-            )}
+            disabled={isSubmitting || !title.trim() || !content.trim()}
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
           >
-            {isSubmitting ? "Submitting..." : "Create Thread"}
+            {isSubmitting ? 'Creating...' : 'Create Thread'}
           </Button>
         </div>
       </form>

@@ -29,13 +29,13 @@ export function Navbar() {
     return pathname === path;
   };
 
-  const navBg = darkMode ? "bg-gray-900/90 border-gray-800" : "bg-slate-50/90 border-gray-200";
+  const navBg = darkMode ? "bg-card/90 border-border" : "bg-card/90 border-border";
   const desktopLinkBase = "inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-150";
-  const desktopLinkActive = darkMode ? "text-purple-400 bg-purple-500/20" : "text-purple-600 bg-purple-500/10";
-  const desktopLinkInactive = darkMode ? "text-gray-400 hover:text-purple-400 hover:bg-gray-700/60" : "text-gray-500 hover:text-purple-600 hover:bg-gray-100";
+  const desktopLinkActive = darkMode ? "text-primary bg-accent/20" : "text-primary bg-accent/10";
+  const desktopLinkInactive = darkMode ? "text-muted-foreground hover:text-primary hover:bg-accent/20" : "text-muted-foreground hover:text-primary hover:bg-accent/10";
 
-  const themeToggleStyle = darkMode ? "bg-gray-800 text-gray-400 hover:text-purple-400 hover:bg-gray-700/60" : "bg-gray-200 text-gray-600 hover:text-purple-600 hover:bg-gray-100";
-  const iconButtonStyle = darkMode ? "text-gray-400 hover:text-purple-400 hover:bg-gray-700/60" : "text-gray-500 hover:text-purple-600 hover:bg-gray-100";
+  const themeToggleStyle = darkMode ? "bg-accent/10 text-primary-foreground hover:bg-accent/20" : "bg-accent/10 text-foreground hover:bg-accent/20";
+  const iconButtonStyle = darkMode ? "text-muted-foreground hover:text-primary hover:bg-accent/20" : "text-muted-foreground hover:text-primary hover:bg-accent/10";
 
   const navItems = [
     { href: "/", label: "Home", icon: Home },
@@ -50,7 +50,7 @@ export function Navbar() {
   const logoDark = "https://i.ibb.co/wNswRL0t/Jal-Wi-Ki-Dark.png";
 
   return (
-    <nav className={cn(navBg, "border-b transition-colors duration-200 sticky top-0 z-50 backdrop-blur-lg")}>
+    <nav className={cn(navBg, "border-b transition-colors duration-200 sticky top-0 z-50 backdrop-blur-lg shadow-sm")}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
@@ -62,10 +62,7 @@ export function Navbar() {
                   width={130}
                   height={40}
                   priority
-                  className={cn(
-                    "transition-all duration-300",
-                    darkMode && "drop-shadow-[0_0_0.3px_rgba(255,255,255,1.0)] hover:drop-shadow-[0_0_2px_rgba(255,255,255,0.4)]"
-                  )}
+                  className="transition-all duration-300 hover:opacity-90"
                 />
               </Link>
             </div>
@@ -93,7 +90,7 @@ export function Navbar() {
               className={cn("p-1.5 rounded-full", themeToggleStyle)}
               aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
-              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {darkMode ? <Sun className="h-5 w-5 text-primary" /> : <Moon className="h-5 w-5" />}
             </button>
 
             {user ? (
@@ -116,12 +113,7 @@ export function Navbar() {
             ) : (
               <Link
                 href="/auth"
-                className={cn(
-                  "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-150",
-                  darkMode
-                    ? "text-gray-300 hover:text-purple-400 hover:bg-gray-700/60"
-                    : "text-gray-500 hover:text-purple-600 hover:bg-gray-100"
-                )}
+                className={"flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-150 text-foreground hover:text-primary hover:bg-accent/10"}
               >
                 <LogIn className="h-4 w-4" />
                 Sign In
@@ -135,14 +127,11 @@ export function Navbar() {
               className={cn("mr-2 p-1.5 rounded-full", themeToggleStyle)}
               aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
-              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {darkMode ? <Sun className="h-5 w-5 text-primary" /> : <Moon className="h-5 w-5" />}
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={cn(
-                "inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500",
-                darkMode ? "text-gray-400 hover:text-purple-400 hover:bg-gray-700/60" : "text-gray-500 hover:text-purple-600 hover:bg-gray-100"
-              )}
+              className={"inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring text-muted-foreground hover:text-primary hover:bg-accent/10"}
               aria-expanded={mobileMenuOpen}
             >
               <span className="sr-only">Open main menu</span>
@@ -154,7 +143,7 @@ export function Navbar() {
 
       {mobileMenuOpen && (
         <div className="sm:hidden absolute top-20 inset-x-0 z-40 shadow-lg">
-          <div className={cn("px-2 pt-2 pb-3 space-y-1", darkMode ? "bg-gray-800/95 backdrop-blur-md" : "bg-slate-50/95 backdrop-blur-md")}>
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-card/95 backdrop-blur-md">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -163,15 +152,15 @@ export function Navbar() {
                 className={cn(
                   "flex items-center px-3 py-2 rounded-md text-base font-medium",
                   isActive(item.href)
-                    ? (darkMode ? "bg-purple-500/30 text-purple-300" : "bg-purple-100 text-purple-700")
-                    : (darkMode ? "text-gray-300 hover:bg-gray-700 hover:text-purple-400" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900")
+                    ? "bg-accent/20 text-primary"
+                    : "text-foreground hover:bg-accent/10 hover:text-primary"
                 )}
               >
                 <item.icon className="mr-3 h-5 w-5" />
                 {item.label}
               </Link>
             ))}
-            <div className={cn("pt-4 pb-2 border-t", darkMode ? "border-gray-700" : "border-gray-200")}>
+            <div className={cn("pt-4 border-border")}>
               {user ? (
                 <>
                   <Link
@@ -191,7 +180,7 @@ export function Navbar() {
                     onClick={() => { logout(); setMobileMenuOpen(false); }}
                     className={cn(
                       "w-full text-left flex items-center px-3 py-2 rounded-md text-base font-medium",
-                      darkMode ? "text-gray-300 hover:bg-gray-700 hover:text-purple-400" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      "text-foreground hover:bg-accent/10 hover:text-primary"
                     )}
                   >
                     <LogOut className="mr-3 h-5 w-5" />

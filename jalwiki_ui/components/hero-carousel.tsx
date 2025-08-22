@@ -68,9 +68,9 @@ export function HeroCarousel({ techniques }: HeroCarouselProps) {
               className="object-cover"
               priority={index === 0} // Only first image is high priority
             />
-            {/* Gradient overlay for text readability, works for both themes */}
+            {/* Localized gradient overlay only over text area */}
             <div
-              className="absolute inset-0 bg-gradient-to-l from-transparent via-black/40 to-black/70"
+              className="absolute inset-y-0 left-0 w-1/2 lg:w-2/5 bg-gradient-to-r from-black/80 via-black/60 to-transparent"
               style={{ zIndex: 1 }}
             />
 
@@ -85,21 +85,20 @@ export function HeroCarousel({ techniques }: HeroCarouselProps) {
                           // Common badge styles
                           "text-white", // Ensuring text is white for better contrast on these badges
                           darkMode
-                            ? "bg-sky-700 hover:bg-sky-600 border border-sky-600" // Dark mode badge
-                            : "bg-blue-500 hover:bg-blue-600 border border-blue-500" // Light mode badge
+                            ? "bg-primary/90 hover:bg-primary/80 border border-primary/80"
+                            : "bg-primary hover:bg-primary/90 border border-primary/90"
                         )}
                       >
                         {category.name}
                       </Badge>
                     ))}
                   </div>
-                  {/* Text is already white, suitable for dark overlay */}
+                  {/* White text for contrast against dark gradient */}
                   <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{technique.title}</h1>
                   <p className="text-lg text-white/90 mb-6">{technique.summary}</p>
-                  {/* Button style is accent, should work for both themes */}
                   <Button
                     asChild
-                    className="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-2 rounded-md shadow-md transition-all"
+                    className="font-medium px-6 py-2 shadow-md"
                   >
                     <Link href={`/techniques/${technique.slug}`}>View Technique</Link>
                   </Button>
@@ -115,24 +114,14 @@ export function HeroCarousel({ techniques }: HeroCarouselProps) {
         <>
           <button
             onClick={goToPrevious}
-            className={cn(
-              "absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full backdrop-blur-sm flex items-center justify-center text-white transition-colors z-10",
-              darkMode
-                ? "bg-black/40 hover:bg-black/60" // Dark mode nav button
-                : "bg-white/20 hover:bg-white/30" // Light mode nav button
-            )}
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full backdrop-blur-sm flex items-center justify-center text-white bg-black/20 hover:bg-black/40 transition-colors z-10"
             aria-label="Previous slide"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
           <button
             onClick={goToNext}
-            className={cn(
-              "absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full backdrop-blur-sm flex items-center justify-center text-white transition-colors z-10",
-              darkMode
-                ? "bg-black/40 hover:bg-black/60" // Dark mode nav button
-                : "bg-white/20 hover:bg-white/30" // Light mode nav button
-            )}
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full backdrop-blur-sm flex items-center justify-center text-white bg-black/20 hover:bg-black/40 transition-colors z-10"
             aria-label="Next slide"
           >
             <ChevronRight className="h-6 w-6" />
@@ -148,9 +137,12 @@ export function HeroCarousel({ techniques }: HeroCarouselProps) {
               key={index}
               onClick={() => setCurrentIndex(index)}
               // Indicator colors are white-based, work well on dark overlay
-              className={`w-3 h-3 rounded-full transition-colors ${
-                index === currentIndex ? "bg-white" : "bg-white/40 hover:bg-white/60"
-              }`}
+              className={cn(
+                "w-3 h-3 rounded-full transition-colors",
+                index === currentIndex
+                  ? "bg-primary"
+                  : "bg-muted-foreground/40 hover:bg-muted-foreground/60"
+              )}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}

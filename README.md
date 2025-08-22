@@ -25,6 +25,9 @@
 <br>
 <h4 align="center">⛩️ Live Website : <a href="https://jalwiki.vercel.app/">https://jalwiki.vercel.app</a></h4>
 
+<br>
+
+[![OSCI-Project-Banner.png](https://i.postimg.cc/76mJvBmF/OSCI-Project-Banner.png)](https://postimg.cc/8JfzMb84)
 
 ### Table of Contents
 - [Key Features](#key-features)

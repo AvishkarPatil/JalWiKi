@@ -57,8 +57,11 @@ if (typeof window !== 'undefined') {
         return Promise.reject(new Error("Unauthorized (401) - Redirecting to login."));
       }
 
-      // Handle other errors
-      console.error("API Response Interceptor Error (Non-401):", error.message, error.response?.data);
+      // Handle other errors with robust error checking
+      console.error("API Response Interceptor Error (Non-401):", 
+        error.message || 'Unknown error message', 
+        error.response?.data || 'No response data'
+      );
       return Promise.reject(error);
     }
   );

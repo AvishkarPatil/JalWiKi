@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -26,6 +26,7 @@ import { useTheme } from "@/context/theme-context"
 import { useAuth } from "@/context/auth-context"
 import { cn } from "@/lib/utils"
 import { AddTechniqueModal, TechniqueFormData } from "@/components/AddTechniqueModal" // Ensure this path is correct
+import { GlobalSearchBar } from "@/components/global-search-bar"
 
 interface Region { id: number; name: string; }
 interface Category { id: number; name: string; description: string; }
@@ -126,8 +127,8 @@ export default function TechniquesPage() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedTechniques = filteredTechniques.slice(startIndex, startIndex + itemsPerPage);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
     setIsDataLoading(true);
     setTimeout(() => { setCurrentPage(1); setIsDataLoading(false); }, 300);
   };
@@ -239,26 +240,12 @@ export default function TechniquesPage() {
             "text-3xl font-bold mb-6",
             darkMode ? "text-purple-400" : "text-purple-700"
           )}>Water Techniques</h1>
-          <form onSubmit={handleSearch} className="max-w-md mx-auto">
-            <div className="relative">
-              <Search className={cn(
-                "absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5",
-                darkMode ? "text-gray-500" : "text-gray-400"
-              )} />
-              <Input
-                type="search"
-                placeholder="Search techniques..."
-                className={cn(
-                  "pl-10 pr-4 py-2 rounded-full focus:ring-purple-500",
-                  darkMode
-                    ? "bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 focus:border-purple-500"
-                    : "bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-purple-500"
-                )}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </form>
+          <div className="max-w-md mx-auto">
+            <GlobalSearchBar 
+              onSearch={handleSearch}
+              placeholder="Search water conservation techniques..."
+            />
+          </div>
         </div>
 
         <div className="flex flex-col md:flex-row gap-6 md:items-start">

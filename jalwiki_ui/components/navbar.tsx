@@ -8,6 +8,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useTheme } from "@/context/theme-context";
 import { useAuth } from "@/context/auth-context";
 import { cn } from "@/lib/utils";
+import { GlobalSearchBar } from "@/components/global-search-bar";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -85,6 +86,11 @@ export function Navbar() {
                 {item.label}
               </Link>
             ))}
+          </div>
+
+          {/* Global Search Bar */}
+          <div className="hidden lg:flex lg:items-center lg:mx-4">
+            <GlobalSearchBar className="w-64" />
           </div>
 
           <div className="hidden sm:flex sm:items-center sm:space-x-3">

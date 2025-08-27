@@ -1,10 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-// Link and Image imports are not strictly necessary here if not used directly, but fine to keep
-// import Link from 'next/link'
-// import Image from 'next/image'
-import { MagnifyingGlassIcon, NewspaperIcon, LightBulbIcon } from '@heroicons/react/24/outline' // Removed unused icons
+import { MagnifyingGlassIcon, NewspaperIcon, LightBulbIcon } from '@heroicons/react/24/outline'
 import GovtNGOCard from '@/components/gov_ngo/govt-ngo-card'
 import AnimatedSection from '@/components/gov_ngo/animated-section'
 import PDFViewer from '@/components/gov_ngo/pdf-viewer'
@@ -18,7 +15,7 @@ interface SchemeData {
   type: 'government' | 'ngo'
   pdfUrl: string
   contactEmail: string
-  likes: number[] // This is an array of user IDs or similar
+  likes: number[]
   imageUrl?: string
   audioUrl?: string
   youtubeUrl?: string
@@ -34,48 +31,27 @@ interface Article {
 
 const sampleData: SchemeData[] = [
   {
-    id: 1,
-    title: 'National Water Mission',
-    description: 'A comprehensive plan for water conservation, minimizing wastage and ensuring equitable distribution across the country.',
-    type: 'government',
-    pdfUrl: '/documents/national-water-mission.pdf',
-    contactEmail: 'contact@nationalwatermission.gov.in',
-    likes: [1, 2, 3],
-    imageUrl: 'https://i.ibb.co/xx5GJfL/NJM.jpg',
-    isPopular: true,
-    audioUrl: '/audio/sample-audio.mp3',
-    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+    id: 3,
+    title: 'WaterAid India',
+    description: 'Working to improve access to clean water, decent toilets and good hygiene for everyone, everywhere within a generation.',
+    type: 'ngo',
+    pdfUrl: '/documents/wateraid-india.pdf',
+    contactEmail: 'waindia@wateraid.org',
+    likes: [1,2,3,4,5],
+    imageUrl: 'https://i.ibb.co/bMr2mmgM/WAid.jpg',
+    isPopular: false,
+    audioUrl: '/audio/wateraid.mp3'
   },
   {
-    id: 2,
-    title: 'Jal Shakti Abhiyan',
-    description: 'A time-bound campaign with a mission-mode approach to improve water availability including ground water conditions in water-stressed blocks.',
-    type: 'government',
-    pdfUrl: '/documents/jal-shakti-abhiyan.pdf',
-    contactEmail: 'jalshakti@gov.in',
-    likes: [1],
-    imageUrl: 'https://i.ibb.co/bR2SM6JC/JSA.jpg'
-  },
-  {
-    id: 4,
-    title: 'Atal Bhujal Yojana',
-    description: 'A Central Sector Scheme for sustainable management of ground water with community participation.',
-    type: 'government',
-    pdfUrl: '/documents/atal-bhujal-yojana.pdf',
-    contactEmail: 'atalbhujal@gov.in',
-    likes: [],
-    imageUrl: 'https://i.ibb.co/7tWVKmky/AbhJal.jpg',
-    isPopular: true
-  },
-  {
-    id: 6,
-    title: 'Namami Gange Programme',
-    description: 'An Integrated Conservation Mission to accomplish the twin objectives of effective abatement of pollution and conservation and rejuvenation of River Ganga.',
-    type: 'government',
-    pdfUrl: '/documents/namami-gange.pdf',
-    contactEmail: 'info@nmcg.nic.in',
-    likes: [],
-    imageUrl: 'https://i.ibb.co/99mc2Rz2/nmgg.jpg'
+    id: 5,
+    title: 'Water For People India',
+    description: 'Working to develop high-quality drinking water and sanitation services, accessible to all, and sustained by strong communities.',
+    type: 'ngo',
+    pdfUrl: '/documents/water-for-people.pdf',
+    contactEmail: 'india@waterforpeople.org',
+    likes: [1,2],
+    imageUrl: 'https://i.ibb.co/vvrT68LC/Wappl.jpg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=somevideo'
   }
 ];
 
@@ -93,9 +69,9 @@ const waterFactsData = [
   "The average annual per capita water availability in India has decreased significantly over the past decades.",
   "Over 600 million Indians face high to extreme water stress.",
   "By 2030, India's water demand is projected to be twice the available supply if current trends continue."
-];
+]
 
-export default function GovtPage() {
+export default function NGOPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<SchemeData[]>(sampleData);
   const [isLoading, setIsLoading] = useState(true);
@@ -115,24 +91,19 @@ export default function GovtPage() {
     setFilteredData(filtered);
   }, [searchTerm]);
 
-  // This function is not directly used by GovtNGOCard for its internal PDF button anymore
-  // const handleOpenPdfFromCard = (item: SchemeData) => {
-  //   setSelectedPdf({ url: item.pdfUrl, title: item.title });
-  // };
-
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-200 transition-colors duration-300">
       <main className="container mx-auto px-4 py-8">
         <div className="mb-10 text-center">
           <h1 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-6 tracking-tight">
-            Government Initiatives
+            NGO Initiatives
           </h1>
           <div className="max-w-2xl mx-auto flex items-center gap-3 p-1.5 bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-full shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="relative flex-grow">
               <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-purple-500 dark:text-purple-400 pointer-events-none" />
               <input
                 type="text"
-                placeholder="Search government schemes..."
+                placeholder="Search NGO initiatives..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-11 pr-4 py-2.5 bg-transparent rounded-full focus:outline-none text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-base"
@@ -145,7 +116,7 @@ export default function GovtPage() {
           <div className="lg:w-2/3 xl:w-3/4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {isLoading ? (
-                Array.from({ length: 4 }).map((_, index) => (
+                Array.from({ length: 2 }).map((_, index) => (
                   <div key={index} className="animate-pulse bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
                     <div className="h-48 bg-purple-200 dark:bg-purple-700/30"></div>
                     <div className="p-5">
@@ -160,7 +131,6 @@ export default function GovtPage() {
               ) : filteredData.length > 0 ? (
                 filteredData.map((item, index) => (
                   <AnimatedSection key={item.id} delay={index * 100}>
-                    {/* No @ts-ignore needed if GovtNGOCard.tsx is correctly typed */}
                     <GovtNGOCard
                       id={item.id}
                       title={item.title}
@@ -168,7 +138,7 @@ export default function GovtPage() {
                       type={item.type}
                       pdfUrl={item.pdfUrl}
                       contactEmail={item.contactEmail}
-                      likes={item.likes.length} // Pass the count of likes
+                      likes={item.likes.length}
                       imageUrl={item.imageUrl}
                       audioUrl={item.audioUrl}
                       youtubeUrl={item.youtubeUrl}
@@ -180,7 +150,7 @@ export default function GovtPage() {
                 <div className="md:col-span-2 text-center py-16 bg-white dark:bg-gray-800/70 backdrop-blur-sm rounded-xl shadow-xl border border-gray-200 dark:border-gray-700">
                   <MagnifyingGlassIcon className="mx-auto h-16 w-16 text-purple-400 dark:text-purple-500 opacity-70" />
                   <h3 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">No Results Found</h3>
-                  <p className="mt-2 text-base text-gray-500 dark:text-gray-400">We couldn't find any schemes or initiatives matching your search.</p>
+                  <p className="mt-2 text-base text-gray-500 dark:text-gray-400">We couldn't find any NGO initiatives matching your search.</p>
                   <div className="mt-8">
                     <button
                       onClick={() => setSearchTerm('')}

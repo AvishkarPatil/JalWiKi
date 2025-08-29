@@ -155,7 +155,7 @@ export const techniques = [
     title: "Greywater Recycling",
     slug: "greywater-recycling",
     added_by: 2,
-    impact: "moderate",
+    impact: "medium",
     region: [
       {
         id: 9,

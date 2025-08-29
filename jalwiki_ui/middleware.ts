@@ -23,14 +23,14 @@ export function middleware(request: NextRequest) {
 
   console.log(`Middleware Check (QUICK FIX): Path=${path}, IsPublic=${isPublicPath}, HasTokenCookie=${!!tokenCookie}`);
 
-  /*
+  
   if (!isPublicPath && !tokenCookie) {
     console.log(`Middleware: Access denied to "${path}" (protected route, no auth cookie). Redirecting to /auth.`);
     const url = request.nextUrl.clone();
     url.pathname = '/auth';
     return NextResponse.redirect(url);
   }
-  */
+  
 
   if (tokenCookie && path === '/auth') {
     console.log(`Middleware: Logged-in user (has auth cookie) accessing /auth. Redirecting to /.`);

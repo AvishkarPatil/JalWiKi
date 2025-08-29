@@ -68,18 +68,19 @@ export default function ArticleActions({
   }
 
   const handleShareClick = (e: React.MouseEvent) => {
+    const url = (typeof window !== 'undefined') ? window.location.href : '';
     e.stopPropagation()
     if (navigator.share) {
-      navigator.share({ title, text: `Check out: ${title}`, url: window.location.href })
+      navigator.share({ title, text: `Check out: ${title}`, url })
         .catch((error) => console.error('Error sharing:', error));
     } else {
-      alert(`Share this article: ${title}\n${window.location.href}`);
+      console.log(`Fallback share: ${url}`);
     }
   }
 
   const handleContactClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (contactEmail) {
+    if (contactEmail && typeof window !== 'undefined') {
       window.location.href = `mailto:${contactEmail}`;
     }
   };

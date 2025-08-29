@@ -1167,10 +1167,9 @@ GET /api/techniques/?fields=id,title,summary
 
 3. **File Uploads**: Use `multipart/form-data` content type for file uploads.
 
-4. **Endpoint Identifiers (id vs. slug)**: 
-Technique Management, User Management, Category Management, and Region Management endpoints use numerical id values to identify resources (e.g., /api/techniques/{id}/).
-
-Forum Management endpoints for threads use a user-friendly slug (e.g., /api/forum-threads/{slug}/) in the URL for better readability and SEO. All other forum-related endpoints (comments, tags) use id.
+4. **Endpoint Identifiers (`id` vs. `slug`)**:
+    * **Most resources** (Techniques, Users, Categories, and Regions) use the numerical `id` in the URL.
+    * **Forum Threads** use a user-friendly `slug` in the URL for better readability and SEO. All other forum-related endpoints (comments, tags) use `id`.
 
 5. **Timestamps**: All timestamps are in ISO 8601 format with UTC timezone.
 

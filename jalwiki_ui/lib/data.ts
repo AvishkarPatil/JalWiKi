@@ -226,7 +226,7 @@ export const techniques = [
     title: "Mulching Technique",
     slug: "mulching-technique",
     added_by: 7,
-    impact: "moderate",
+    impact: "medium",
     region: [
       {
         id: 7,
@@ -362,7 +362,7 @@ export const techniques = [
     title: "Rooftop Gardening",
     slug: "rooftop-gardening",
     added_by: 6,
-    impact: "moderate",
+    impact: "medium",
     region: [
       {
         id: 11,
@@ -506,7 +506,7 @@ export const techniques = [
     title: "Fog Water Collection",
     slug: "fog-water-collection",
     added_by: 3,
-    impact: "moderate",
+    impact: "medium",
     region: [
       {
         id: 13,
@@ -579,7 +579,7 @@ export const techniques = [
     title: "Permeable Pavements",
     slug: "permeable-pavements",
     added_by: 5,
-    impact: "moderate",
+    impact: "medium",
     region: [
       {
         id: 14,
@@ -653,7 +653,7 @@ export const techniques = [
     title: "Keyhole Garden",
     slug: "keyhole-garden",
     added_by: 7,
-    impact: "moderate",
+    impact: "medium",
     region: [
       {
         id: 8,

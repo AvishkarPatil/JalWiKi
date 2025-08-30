@@ -9,13 +9,18 @@ import type {
     UpdateCommentData
 } from '@/types/forum'; // Adjust path as needed
 
+function handleAxiosError(error: any, defaultMessage: string): Error {
+  const errorMessage = error.response?.data ? JSON.stringify(error.response.data) : error.message;
+  return new Error(`${defaultMessage}: ${errorMessage}`);
+}
+
 export async function fetchForumThreads(): Promise<ApiThread[]> {
   try {
     const response = await api.get<ApiThread[]>('/forum-threads/');
     return response.data;
   } catch (error: any) {
     console.error("Error fetching forum threads:", error.response?.data || error.message);
-    throw error.response?.data || new Error('Failed to fetch forum threads');
+    throw handleAxiosError(error, 'Failed to fetch forum threads');
   }
 }
 
@@ -25,7 +30,7 @@ export async function fetchForumThreadBySlug(slug: string): Promise<ApiThread> {
     return response.data;
   } catch (error: any) {
     console.error(`Error fetching forum thread by slug ${slug}:`, error.response?.data || error.message);
-    throw error.response?.data || new Error('Failed to fetch forum thread');
+    throw handleAxiosError(error, 'Failed to fetch forum thread');
   }
 }
 
@@ -36,7 +41,7 @@ export async function fetchCommentsForThread(threadSlug: string): Promise<ApiCom
     return response.data;
   } catch (error: any) {
     console.error(`Error fetching comments for thread ${threadSlug}:`, error.response?.data || error.message);
-    throw error.response?.data || new Error('Failed to fetch comments');
+    throw handleAxiosError(error, 'Failed to fetch comments');
   }
 }
 
@@ -46,7 +51,7 @@ export async function createForumThread(data: NewThreadData): Promise<ApiThread>
     return response.data;
   } catch (error: any) {
     console.error("Error creating forum thread:", error.response?.data || error.message);
-    throw error.response?.data || new Error('Failed to create forum thread');
+    throw handleAxiosError(error, 'Failed to create forum thread');
   }
 }
 
@@ -63,7 +68,7 @@ export async function postComment(data: NewCommentData): Promise<ApiComment> {
     return response.data;
   } catch (error: any) {
     console.error("Error posting comment:", error.response?.data || error.message);
-    throw error.response?.data || new Error('Failed to post comment');
+    throw handleAxiosError(error, 'Failed to post comment');
   }
 }
 
@@ -73,7 +78,7 @@ export async function upvoteThread(threadSlug: string): Promise<{ status: string
     return response.data;
   } catch (error: any) {
     console.error(`Error upvoting thread ${threadSlug}:`, error.response?.data || error.message);
-    throw error.response?.data || new Error('Failed to upvote thread');
+    throw handleAxiosError(error, 'Failed to upvote thread');
   }
 }
 
@@ -83,7 +88,7 @@ export async function upvoteComment(commentId: number): Promise<{ status: string
     return response.data;
   } catch (error: any) {
     console.error(`Error upvoting comment ${commentId}:`, error.response?.data || error.message);
-    throw error.response?.data || new Error('Failed to upvote comment');
+    throw handleAxiosError(error, 'Failed to upvote comment');
   }
 }
 
@@ -94,7 +99,7 @@ export async function updateComment(commentId: number, data: UpdateCommentData):
     return response.data;
   } catch (error: any) {
     console.error(`Error updating comment ${commentId}:`, error.response?.data || error.message);
-    throw error.response?.data || new Error('Failed to update comment');
+    throw handleAxiosError(error, 'Failed to update comment');
   }
 }
 
@@ -105,7 +110,7 @@ export async function fetchForumTags(): Promise<ApiForumTag[]> {
     return response.data;
   } catch (error: any) {
     console.error("Error fetching forum tags:", error.response?.data || error.message);
-    throw error.response?.data || new Error('Failed to fetch forum tags');
+    throw handleAxiosError(error, 'Failed to fetch forum tags');
   }
 }
 
@@ -116,6 +121,6 @@ export async function createForumTag(name: string): Promise<ApiForumTag> {
     return response.data;
   } catch (error: any) {
     console.error(`Error creating forum tag "${name}":`, error.response?.data || error.message);
-    throw error.response?.data || new Error('Failed to create forum tag');
+    throw handleAxiosError(error, 'Failed to create forum tag');
   }
 }

@@ -19,7 +19,7 @@ from .serializers import UserSerializer, CategorySerializer, TechniqueSerializer
 class RegionViewSet(viewsets.ModelViewSet):
     queryset = Region.objects.all()
     serializer_class = RegionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name']
     ordering_fields = ['name']
@@ -162,7 +162,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name']
     ordering_fields = ['name']
@@ -174,7 +174,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class TechniqueViewSet(viewsets.ModelViewSet):
     queryset = Technique.objects.all()
     serializer_class = TechniqueSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['categories__id', 'added_by', 'is_published', 'regions__id']
     search_fields = ['title', 'summary', 'detailed_content', 'impact', 'benefits', 'materials', 'steps']

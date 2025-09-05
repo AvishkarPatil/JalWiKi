@@ -51,6 +51,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'jalwiki_pro.pagination.DefaultPagination',
 }
 
 AUTH_USER_MODEL = 'jalwiki_app.User'

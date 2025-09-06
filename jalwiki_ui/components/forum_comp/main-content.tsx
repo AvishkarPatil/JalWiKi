@@ -20,7 +20,7 @@ export function MainContent({ initialThreads, fetchError, searchQuery }: MainCon
   const { darkMode } = useTheme(); // Get darkMode state
   const [activeTab, setActiveTab] = useState<ThreadType | "all">("all");
   const [sortOption, setSortOption] = useState("latest");
-  const [threads, setThreads] = useState<ApiThread[]>(initialThreads);
+  const [threads, setThreads] = useState<ApiThread[]>(initialThreads || []);
   const [selectedThread, setSelectedThread] = useState<ApiThread | null>(null);
   const [isCreatingThread, setIsCreatingThread] = useState(false);
   const [filteredThreads, setFilteredThreads] = useState<ApiThread[]>(threads);
@@ -57,6 +57,12 @@ export function MainContent({ initialThreads, fetchError, searchQuery }: MainCon
   };
 
   useEffect(() => {
+    // Safety check: ensure threads is an array
+    if (!Array.isArray(threads)) {
+      console.warn('threads is not an array:', threads);
+      return;
+    }
+    
     let tempFilteredThreads = [...threads];
 
     if (searchQuery) {

@@ -11,8 +11,15 @@ import type {
 
 export async function fetchForumThreads(): Promise<ApiThread[]> {
   try {
-    const response = await api.get<ApiThread[]>('/forum-threads/');
-    return response.data;
+    const response = await api.get('/forum-threads/');
+    
+    // Handle paginated response from PR #58
+    if (response.data && typeof response.data === 'object' && 'results' in response.data) {
+      return response.data.results || [];
+    }
+    
+    // Fallback for direct array response
+    return Array.isArray(response.data) ? response.data : [];
   } catch (error: any) {
     console.error("Error fetching forum threads:", error.response?.data || error.message);
     throw error.response?.data || new Error('Failed to fetch forum threads');

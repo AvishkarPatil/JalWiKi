@@ -7,6 +7,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/context/theme-context" // For theme toggling
 import { cn } from "@/lib/utils" // For conditional class names
+import ContactUSForm from "../../components/ContactUsForm.tsx"
 
 export default function AboutPage() {
   const { darkMode } = useTheme(); // Get current theme state
@@ -301,6 +302,7 @@ export default function AboutPage() {
           </motion.div>
         </div>
       </motion.section>
+      <ContactUSForm></ContactUSForm>
     </div>
   )
 }

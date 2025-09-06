@@ -266,7 +266,7 @@ GET /api/users/
 GET /api/techniques/
 ```
 
-**Authentication:** `Bearer Token`
+**Authentication:** `None` *(Public read — create/update/delete require Bearer Token)*
 
 **Query Parameters:**
 - `search`: Search in title, summary, content
@@ -275,6 +275,8 @@ GET /api/techniques/
 - `impact`: Filter by impact level (`low`, `medium`, `high`)
 - `is_published`: Filter by publication status
 - `ordering`: Sort by fields (`created_on`, `updated_on`, `-created_on`)
+- `page`: Page number (1-based)
+- `page_size`: Items per page (default 12)
 
 **Example:**
 ```http
@@ -283,32 +285,28 @@ GET /api/techniques/?search=irrigation&impact=high&ordering=-created_on
 
 **Response (200 OK):**
 ```json
-[
-  {
-    "id": 1,
-    "title": "Drip Irrigation System",
-    "slug": "drip-irrigation-system",
-    "summary": "Efficient water delivery system for agriculture",
-    "main_image": "/media/technique_images/drip_irrigation.jpg",
-    "created_on": "2025-01-15T10:30:00Z",
-    "updated_on": "2025-01-15T10:30:00Z",
-    "is_published": true,
-    "categories": [
-      {
-        "id": 1,
-        "name": "Agriculture",
-        "description": "Agricultural water conservation"
-      }
-    ],
-    "regions": [
-      {
-        "id": 1,
-        "name": "Maharashtra"
-      }
-    ],
-    "added_by_username": "johndoe"
-  }
-]
+{
+  "count": 25,
+  "next": "http://localhost:8000/api/techniques/?page=2",
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "title": "Drip Irrigation System",
+      "slug": "drip-irrigation-system",
+      "summary": "Efficient water delivery system for agriculture",
+      "main_image": "/media/technique_images/drip_irrigation.jpg",
+      "created_on": "2025-01-15T10:30:00Z",
+      "updated_on": "2025-01-15T10:30:00Z",
+      "is_published": true,
+      "categories": [
+        { "id": 1, "name": "Agriculture", "description": "Agricultural water conservation" }
+      ],
+      "regions": [ { "id": 1, "name": "Maharashtra" } ],
+      "added_by_username": "johndoe"
+    }
+  ]
+}
 ```
 
 ### **Get Technique Details**
@@ -317,7 +315,7 @@ GET /api/techniques/?search=irrigation&impact=high&ordering=-created_on
 GET /api/techniques/{id}/
 ```
 
-**Authentication:** `Bearer Token`
+**Authentication:** `None` *(Public read — write requires Bearer Token)*
 
 **Response (200 OK):**
 ```json
@@ -557,18 +555,15 @@ GET /api/categories/
 
 **Response (200 OK):**
 ```json
-[
-  {
-    "id": 1,
-    "name": "Agriculture",
-    "description": "Agricultural water conservation techniques"
-  },
-  {
-    "id": 2,
-    "name": "Household",
-    "description": "Home water conservation methods"
-  }
-]
+{
+  "count": 2,
+  "next": null,
+  "previous": null,
+  "results": [
+    { "id": 1, "name": "Agriculture", "description": "Agricultural water conservation techniques" },
+    { "id": 2, "name": "Household", "description": "Home water conservation methods" }
+  ]
+}
 ```
 
 ### **Create Category**
@@ -577,7 +572,7 @@ GET /api/categories/
 POST /api/categories/
 ```
 
-**Authentication:** `Bearer Token`
+**Authentication:** `None` *(Public read — write requires Bearer Token)*
 
 **Request Body:**
 ```json
@@ -639,16 +634,15 @@ GET /api/regions/
 
 **Response (200 OK):**
 ```json
-[
-  {
-    "id": 1,
-    "name": "Maharashtra"
-  },
-  {
-    "id": 2,
-    "name": "Karnataka"
-  }
-]
+{
+  "count": 2,
+  "next": null,
+  "previous": null,
+  "results": [
+    { "id": 1, "name": "Maharashtra" },
+    { "id": 2, "name": "Karnataka" }
+  ]
+}
 ```
 
 ### **Create Region**

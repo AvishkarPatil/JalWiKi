@@ -27,8 +27,6 @@
 
 <br>
 
-[![OSCI-Project-Banner.png](https://i.postimg.cc/76mJvBmF/OSCI-Project-Banner.png)](https://postimg.cc/8JfzMb84)
-
 ### Table of Contents
 - [Key Features](#key-features)
 - [Technology Stack](#technology-stack)
@@ -37,7 +35,7 @@
 - [API Documentation](#api-documentation)
 - [Screenshots](#screenshots)
 - [Contributing](#-contributing)
-- [Support & Contact](#-support--contact)
+- [Support](#-support)
 
 ---
 ### Key Features
@@ -102,11 +100,10 @@ Contributions are what make the open-source community such an amazing place to l
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 
 
-### 📞 Support & Contact
+### 📞 Support
 
 For questions, support, or collaboration opportunities:
 
-- **📧 Email**: [me.avishkarpatil@gmail.com](mailto:me.avishkarpatil@gmail.com)
 - **🐛 Issues**: [GitHub Issues](https://github.com/AvishkarPatil/JalWiKi/issues)
 - **💬 Discussions**: [GitHub Discussions](https://github.com/AvishkarPatil/JalWiKi/discussions)
 

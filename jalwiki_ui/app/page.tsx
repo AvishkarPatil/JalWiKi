@@ -12,6 +12,8 @@ import { QuoteBox } from "@/components/quote-box"
 import { HashtagSection } from "@/components/hashtag-section"
 import { useTheme } from "@/context/theme-context" // Import useTheme
 import { cn } from "@/lib/utils" // Import cn
+import Feedback from "@/components/Feedback";
+
 
 export default function HomePage() {
   const { darkMode } = useTheme() // Get darkMode state
@@ -99,6 +101,25 @@ export default function HomePage() {
           <UserScroller /> {/* Ensure UserScroller is themed */}
         </div>
       </section>
+
+     <section
+  className={cn(
+    "py-16 px-4 sm:px-6 lg:px-8",
+    darkMode ? "bg-gray-800" : "bg-blue-50"
+  )}
+>
+  <div className="container mx-auto max-w-4xl">
+    <h2
+      className={cn(
+        "text-3xl font-bold text-center mb-8",
+        darkMode ? "text-gray-100" : "text-gray-900"
+      )}
+    >
+      Feedback
+    </h2>
+    <Feedback />
+  </div>
+</section>
 
       {/* Quote Box Section */}
       <section
